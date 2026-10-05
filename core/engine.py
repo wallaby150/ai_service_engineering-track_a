@@ -202,9 +202,10 @@ class Engine:
         """조건이 나올 때까지 시드를 하나씩 올려 가며 뽑는다. 상한을 넘으면 멈춘다."""
         target = self.check_target(target)
         for i in range(max_tries):
-            steps = self._draw(random.Random(seed + i), None)
+            s_i = (seed + i) % (MAX_SEED + 1)  # 돌려받은 시드로 다시 요청할 수 있게 범위 안에 감는다
+            steps = self._draw(random.Random(s_i), None)
             if target.matches({s.node: s.value for s in steps}):
-                life = Life(seed=seed + i, country=self._by_iso3[steps[0].value or ""], steps=steps)
+                life = Life(seed=s_i, country=self._by_iso3[steps[0].value or ""], steps=steps)
                 return UntilResult(True, i + 1, max_tries, life)
         return UntilResult(False, max_tries, max_tries, None)
 

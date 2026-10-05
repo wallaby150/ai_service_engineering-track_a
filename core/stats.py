@@ -102,3 +102,9 @@ def snapshot_from_dict(data: dict) -> Snapshot:
 
 def load_snapshot(path: Optional[Path] = None) -> Snapshot:
     return snapshot_from_dict(json.loads((path or DEFAULT_SNAPSHOT).read_text(encoding="utf-8")))
+
+
+def load_manifest(path: Optional[Path] = None) -> dict:
+    """스냅샷을 언제, 어디서, 어떤 해시로 만들었는지. 없으면 빈 dict."""
+    p = path or DEFAULT_SNAPSHOT.with_name("MANIFEST.json")
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
