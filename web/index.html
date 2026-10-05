@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>다시 태어난다면</title>
+<style>
+  :root {
+    --bg: #f7f6f3; --panel: #ffffff; --ink: #1d1d1b; --muted: #6b6a66;
+    --line: #e4e2dc; --accent: #2f5d8a; --accent-ink: #ffffff; --warn: #9a4a12;
+    --chip: #eef2f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #161615; --panel: #1f1f1d; --ink: #ecebe7; --muted: #a3a29c;
+            --line: #33322f; --accent: #7fb0e0; --accent-ink: #111; --warn: #f0a46b; --chip: #2a2f35; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.6 -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 24px 16px 64px; }
+  header h1 { margin: 0; font-size: 28px; }
+  header p { margin: 4px 0 0; color: var(--muted); }
+  .banner { margin: 16px 0; padding: 10px 14px; border: 1px dashed var(--warn); color: var(--warn);
+            border-radius: 8px; font-size: 14px; }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+            padding: 20px; margin-top: 20px; }
+  section h2 { margin: 0 0 12px; font-size: 20px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
+  label { display: flex; flex-direction: column; font-size: 13px; color: var(--muted); gap: 4px; }
+  select, input { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
+                  background: var(--bg); color: var(--ink); min-width: 140px; }
+  button { font: inherit; padding: 9px 16px; border: 0; border-radius: 8px; background: var(--accent);
+           color: var(--accent-ink); cursor: pointer; }
+  button.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  button:disabled { opacity: .5; cursor: progress; }
+  .status { min-height: 1.6em; font-size: 14px; color: var(--muted); margin-top: 10px; }
+  .status.error { color: var(--warn); }
+  .chain { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 8px; }
+  .chain li { display: grid; grid-template-columns: 110px 1fr auto; gap: 10px; align-items: baseline;
+              padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; }
+  .chain .k { color: var(--muted); font-size: 14px; }
+  .chain .v { font-weight: 600; }
+  .chain .p { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; }
+  .chain .src { grid-column: 2 / 4; font-size: 12px; color: var(--muted); }
+  .big { font-size: 22px; font-weight: 700; margin: 14px 0 4px; }
+  .story { margin-top: 16px; padding: 14px; background: var(--bg); border-radius: 8px; }
+  .story h3 { margin: 0 0 6px; font-size: 15px; }
+  .tag { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 999px;
+         background: var(--chip); color: var(--muted); margin-left: 6px; vertical-align: middle; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+  .stat { padding: 12px; border: 1px solid var(--line); border-radius: 8px; }
+  .stat .n { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .stat .d { font-size: 13px; color: var(--muted); }
+  footer { margin-top: 24px; font-size: 13px; color: var(--muted); }
+  @media (max-width: 560px) {
+    .chain li { grid-template-columns: 1fr auto; }
+    .chain .k { grid-column: 1 / 3; }
+    .chain .src { grid-column: 1 / 3; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>다시 태어난다면</h1>
+    <p>실제 공공 통계에 비례해 뽑는 출생 조건, 그리고 원하는 조건으로 태어날 확률</p>
+  </header>
+
+  <div class="banner" id="banner">샘플 화면입니다. 버튼은 아직 동작하지 않고, 숫자는 모양을 보여 주기 위한 예시입니다.</div>
+
+  <section id="reborn">
+    <h2>다시 태어나기</h2>
+    <div class="controls">
+      <label>국가
+        <select id="reborn-country"><option value="">통계에 맡기기</option></select>
+      </label>
+      <label>시드 (같은 시드 = 같은 인생)
+        <input id="reborn-seed" type="number" placeholder="비우면 무작위">
+      </label>
+      <button id="reborn-go">다시 태어나기</button>
+    </div>
+    <div class="status" id="reborn-status"></div>
+
+    <div id="reborn-result">
+      <div class="big">예시: 인도에서 여자아이로 태어났습니다</div>
+      <ul class="chain">
+        <li><span class="k">국가</span><span class="v">인도</span><span class="p">00.0%</span>
+            <span class="src">세계 출생아 중 이 나라의 비중 · World Bank</span></li>
+        <li><span class="k">성별</span><span class="v">여자</span><span class="p">00.0%</span>
+            <span class="src">출생 성비 · World Bank</span></li>
+        <li><span class="k">다섯 살까지</span><span class="v">살아남았다</span><span class="p">00.0%</span>
+            <span class="src">영아·5세 미만 사망률 · UN IGME</span></li>
+        <li><span class="k">경제 수준</span><span class="v">하루 $4.20~$8.30</span><span class="p">00.0%</span>
+            <span class="src">빈곤율(2021 PPP) · World Bank PIP</span></li>
+      </ul>
+      <p>이 조합으로 태어날 확률은 <b>약 1/000</b>입니다.</p>
+      <div class="story">
+        <h3>이 사람의 이야기 <span class="tag">템플릿 서사</span></h3>
+        <p>예시 문장이 들어갈 자리입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="odds">
+    <h2>이렇게 태어날 확률</h2>
+    <div class="controls">
+      <label>국가 <select id="odds-country"><option value="">상관없음</option></select></label>
+      <label>성별 <select id="odds-sex"><option value="">상관없음</option></select></label>
+      <label>다섯 살까지 <select id="odds-survival"><option value="">상관없음</option></select></label>
+      <label>경제 수준 <select id="odds-economy"><option value="">상관없음</option></select></label>
+      <button id="odds-go">확률 계산</button>
+    </div>
+    <div class="status" id="odds-status"></div>
+
+    <div id="odds-result">
+      <div class="big">예시: 약 1/000</div>
+      <div class="stats">
+        <div class="stat"><div class="n">0.00%</div><div class="d">정확한 확률</div></div>
+        <div class="stat"><div class="n">000번</div><div class="d">평균적으로 필요한 다시 태어나기</div></div>
+        <div class="stat"><div class="n">000번</div><div class="d">50% 확률로 한 번은 나오는 횟수</div></div>
+        <div class="stat"><div class="n">000번</div><div class="d">90% 확률로 한 번은 나오는 횟수</div></div>
+      </div>
+      <p><button class="secondary" id="odds-until">될 때까지 다시 태어나기</button></p>
+    </div>
+  </section>
+
+  <footer>
+    데이터: World Bank WDI · UN IGME · World Bank PIP. 통계는 집단의 분포일 뿐, 한 사람의 삶을 규정하지 않습니다.
+  </footer>
+</main>
+</body>
+</html>
