@@ -1,0 +1,7 @@
+# 개발 오버라이드: 소스를 마운트하고 고치면 바로 다시 뜬다
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+services:
+  app:
+    volumes:
+      - .:/app
+    command: ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
