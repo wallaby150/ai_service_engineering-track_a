@@ -17,16 +17,48 @@
 
 | 버전 | 내용 | 상태 |
 |---|---|---|
-| v0.1 | 문서, 확률 모델 설계, 동작하지 않는 샘플 화면 | 진행 중 |
-| v0.2 | AI 없이 도는 뽑기·역확률 + 목 UI + 테스트 | 예정 |
+| v0.1 | 문서, 확률 모델 설계, 동작하지 않는 샘플 화면 | 완료 |
+| v0.2 | AI 없이 도는 뽑기·역확률 + 목 UI + 테스트 | 완료 |
 | v0.3 | 한국 상세(시도·직업·소득 분위) | 예정 |
 | v0.5 | AI 인생 서사(ReWOO) | 예정 |
 
 ## 실행 방법
 
-아직 없음. v0.2에서 `docker compose up` 한 줄로 뜨게 만든다.
+API 키가 하나도 없어도 전부 돈다. 이야기는 템플릿(각본 대역)이 쓴다.
 
-샘플 화면은 `web/index.html`을 브라우저로 열면 보인다(버튼은 아직 동작하지 않는다).
+```bash
+docker compose up --build        # → http://localhost:8000  (API 문서: /docs)
+docker compose exec app pytest   # 테스트
+```
+
+개발할 때는 소스를 마운트하고 고치면 바로 다시 뜬다.
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+```
+
+Docker 없이:
+
+```bash
+python -m venv .venv && . .venv/bin/activate
+pip install -r requirements-dev.txt
+uvicorn api.main:app --reload
+```
+
+### 할 수 있는 것
+
+| 화면 | API | 하는 일 |
+|---|---|---|
+| 다시 태어나기 | `POST /api/simulate` | 통계에 비례해 국가 → 성별 → 다섯 살까지의 생존 → 경제 수준을 뽑는다. 국가를 고정할 수 있고, 같은 시드는 같은 인생(공유 링크) |
+| 이렇게 태어날 확률 | `POST /api/odds` | 고른 조건의 정확한 확률, 평균 시도 횟수, 50%·90% 확률로 나오는 횟수 |
+| 될 때까지 다시 태어나기 | `POST /api/until` | 조건이 나올 때까지 실제로 뽑는다(상한 10만 번) |
+
+### 데이터 다시 만들기
+
+```bash
+python scripts/fetch_worldbank.py   # 원본 → data/raw/ (커밋하지 않음)
+python scripts/prepare_data.py      # → data/snapshot/ + reports/prepare_report.txt
+```
 
 ## 데이터 출처
 
