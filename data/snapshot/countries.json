@@ -1,0 +1,9120 @@
+{
+ "sources": {
+  "births": "World Bank WDI SP.DYN.CBRT.IN × SP.POP.TOTL",
+  "sex_ratio": "World Bank WDI SP.POP.BRTH.MF",
+  "survival": "UN IGME via World Bank WDI SP.DYN.IMRT.* / SH.DYN.MORT.*",
+  "economy": "World Bank PIP SI.POV.DDAY / SI.POV.LMIC / SI.POV.UMIC (2021 PPP)",
+  "life_expectancy": "World Bank WDI SP.DYN.LE00.MA.IN / SP.DYN.LE00.FE.IN"
+ },
+ "total_births": 134225530,
+ "countries": [
+  {
+   "iso3": "IND",
+   "iso2": "IN",
+   "name_ko": "인도",
+   "name_en": "India",
+   "region": "South Asia",
+   "income_level": "Lower middle income",
+   "births": 23394035,
+   "births_basis": {
+    "crude_birth_rate": 15.981,
+    "cbr_year": 2024,
+    "population": 1463865525,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.071,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 23.6,
+     "u5mr": 26.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 23.0,
+     "u5mr": 26.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 5.3,
+    "pct_below_4_20": 23.9,
+    "pct_below_8_30": 82.1,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 70.729,
+    "female": 73.856,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "CHN",
+   "iso2": "CN",
+   "name_ko": "중국",
+   "name_en": "China",
+   "region": "East Asia & Pacific",
+   "income_level": "Upper middle income",
+   "births": 9522580,
+   "births_basis": {
+    "crude_birth_rate": 6.77,
+    "cbr_year": 2024,
+    "population": 1406585000,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.103,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 4.3,
+     "u5mr": 6.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 3.9,
+     "u5mr": 5.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.0,
+    "pct_below_4_20": 0.5,
+    "pct_below_8_30": 21.3,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 75.249,
+    "female": 80.966,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "NGA",
+   "iso2": "NG",
+   "name_ko": "나이지리아",
+   "name_en": "Nigeria",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 7717990,
+   "births_basis": {
+    "crude_birth_rate": 32.493,
+    "cbr_year": 2024,
+    "population": 237527782,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.038,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 76.0,
+     "u5mr": 121.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 63.2,
+     "u5mr": 109.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 41.8,
+    "pct_below_4_20": 64.0,
+    "pct_below_8_30": 92.9,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 54.327,
+    "female": 54.939,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "PAK",
+   "iso2": "PK",
+   "name_ko": "파키스탄",
+   "name_en": "Pakistan",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "Lower middle income",
+   "births": 6996078,
+   "births_basis": {
+    "crude_birth_rate": 27.412,
+    "cbr_year": 2024,
+    "population": 255219554,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.055,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 53.3,
+     "u5mr": 60.8,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 42.8,
+     "u5mr": 50.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 23.0,
+    "pct_below_4_20": 47.9,
+    "pct_below_8_30": 87.1,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 65.462,
+    "female": 70.322,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "COD",
+   "iso2": "CD",
+   "name_ko": "콩고민주공화국",
+   "name_en": "Congo, Dem. Rep.",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 4613156,
+   "births_basis": {
+    "crude_birth_rate": 40.885,
+    "cbr_year": 2024,
+    "population": 112832473,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.023,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 62.4,
+     "u5mr": 97.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 50.3,
+     "u5mr": 81.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 85.3,
+    "pct_below_4_20": 92.5,
+    "pct_below_8_30": 98.0,
+    "year": 2020
+   },
+   "life_expectancy": {
+    "male": 59.959,
+    "female": 64.23,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "IDN",
+   "iso2": "ID",
+   "name_ko": "인도네시아",
+   "name_en": "Indonesia",
+   "region": "East Asia & Pacific",
+   "income_level": "Upper middle income",
+   "births": 4503538,
+   "births_basis": {
+    "crude_birth_rate": 15.762,
+    "cbr_year": 2024,
+    "population": 285721236,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.06,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 16.7,
+     "u5mr": 19.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 13.5,
+     "u5mr": 15.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 4.0,
+    "pct_below_4_20": 16.4,
+    "pct_below_8_30": 65.2,
+    "year": 2025
+   },
+   "life_expectancy": {
+    "male": 69.16,
+    "female": 73.434,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ETH",
+   "iso2": "ET",
+   "name_ko": "에티오피아",
+   "name_en": "Ethiopia",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 4263170,
+   "births_basis": {
+    "crude_birth_rate": 31.469,
+    "cbr_year": 2024,
+    "population": 135472051,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.055,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 39.6,
+     "u5mr": 50.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 29.1,
+     "u5mr": 38.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 38.6,
+    "pct_below_4_20": 63.7,
+    "pct_below_8_30": 93.5,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 64.355,
+    "female": 71.021,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "USA",
+   "iso2": "US",
+   "name_ko": "미국",
+   "name_en": "United States",
+   "region": "North America",
+   "income_level": "High income",
+   "births": 3622919,
+   "births_basis": {
+    "crude_birth_rate": 10.6,
+    "cbr_year": 2024,
+    "population": 341784857,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.049,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 5.9,
+     "u5mr": 7.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 5.0,
+     "u5mr": 5.9,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 1.1,
+    "pct_below_4_20": 1.2,
+    "pct_below_8_30": 1.8,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 76.5,
+    "female": 81.4,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BGD",
+   "iso2": "BD",
+   "name_ko": "방글라데시",
+   "name_en": "Bangladesh",
+   "region": "South Asia",
+   "income_level": "Lower middle income",
+   "births": 3511630,
+   "births_basis": {
+    "crude_birth_rate": 19.988,
+    "cbr_year": 2024,
+    "population": 175686899,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.049,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 26.1,
+     "u5mr": 32.6,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 22.7,
+     "u5mr": 28.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 5.9,
+    "pct_below_4_20": 20.5,
+    "pct_below_8_30": 71.5,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 73.304,
+    "female": 76.667,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BRA",
+   "iso2": "BR",
+   "name_ko": "브라질",
+   "name_en": "Brazil",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 2582053,
+   "births_basis": {
+    "crude_birth_rate": 12.133,
+    "cbr_year": 2024,
+    "population": 212812405,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.045,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 13.6,
+     "u5mr": 15.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 10.8,
+     "u5mr": 12.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 3.0,
+    "pct_below_4_20": 6.2,
+    "pct_below_8_30": 20.6,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 72.95,
+    "female": 79.145,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "EGY",
+   "iso2": "EG",
+   "name_ko": "이집트",
+   "name_en": "Egypt, Arab Rep.",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "Lower middle income",
+   "births": 2475625,
+   "births_basis": {
+    "crude_birth_rate": 20.915,
+    "cbr_year": 2024,
+    "population": 118365995,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.055,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 22.3,
+     "u5mr": 23.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 19.2,
+     "u5mr": 20.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 1.4,
+    "pct_below_4_20": 7.1,
+    "pct_below_8_30": 58.5,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 69.652,
+    "female": 74.009,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "TZA",
+   "iso2": "TZ",
+   "name_ko": "탄자니아",
+   "name_en": "Tanzania",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 2455067,
+   "births_basis": {
+    "crude_birth_rate": 34.801,
+    "cbr_year": 2024,
+    "population": 70545865,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.031,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 31.5,
+     "u5mr": 40.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 25.7,
+     "u5mr": 33.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 51.3,
+    "pct_below_4_20": 70.0,
+    "pct_below_8_30": 91.5,
+    "year": 2018
+   },
+   "life_expectancy": {
+    "male": 64.396,
+    "female": 69.999,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MEX",
+   "iso2": "MX",
+   "name_ko": "멕시코",
+   "name_en": "Mexico",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 2040427,
+   "births_basis": {
+    "crude_birth_rate": 15.464,
+    "cbr_year": 2024,
+    "population": 131946900,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.039,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 13.3,
+     "u5mr": 14.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 10.8,
+     "u5mr": 11.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 1.6,
+    "pct_below_4_20": 4.1,
+    "pct_below_8_30": 21.4,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 72.443,
+    "female": 77.999,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "PHL",
+   "iso2": "PH",
+   "name_ko": "필리핀",
+   "name_en": "Philippines",
+   "region": "East Asia & Pacific",
+   "income_level": "Upper middle income",
+   "births": 1856212,
+   "births_basis": {
+    "crude_birth_rate": 15.894,
+    "cbr_year": 2024,
+    "population": 116786962,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.077,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 24.0,
+     "u5mr": 29.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 19.2,
+     "u5mr": 23.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 5.3,
+    "pct_below_4_20": 16.9,
+    "pct_below_8_30": 58.7,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 66.993,
+    "female": 72.962,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "UGA",
+   "iso2": "UG",
+   "name_ko": "우간다",
+   "name_en": "Uganda",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 1769490,
+   "births_basis": {
+    "crude_birth_rate": 34.436,
+    "cbr_year": 2024,
+    "population": 51384894,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.029,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 39.7,
+     "u5mr": 53.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 32.0,
+     "u5mr": 43.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 59.8,
+    "pct_below_4_20": 76.3,
+    "pct_below_8_30": 93.6,
+    "year": 2019
+   },
+   "life_expectancy": {
+    "male": 65.487,
+    "female": 71.365,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SDN",
+   "iso2": "SD",
+   "name_ko": "수단",
+   "name_en": "Sudan",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 1704644,
+   "births_basis": {
+    "crude_birth_rate": 32.996,
+    "cbr_year": 2024,
+    "population": 51662147,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.041,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 47.2,
+     "u5mr": 66.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 38.4,
+     "u5mr": 56.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 10.1,
+    "pct_below_4_20": 26.0,
+    "pct_below_8_30": 73.2,
+    "year": 2014
+   },
+   "life_expectancy": {
+    "male": 63.448,
+    "female": 69.825,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "KEN",
+   "iso2": "KE",
+   "name_ko": "케냐",
+   "name_en": "Kenya",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 1551536,
+   "births_basis": {
+    "crude_birth_rate": 26.968,
+    "cbr_year": 2024,
+    "population": 57532493,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.021,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 37.6,
+     "u5mr": 42.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 30.4,
+     "u5mr": 34.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 45.5,
+    "pct_below_4_20": 65.5,
+    "pct_below_8_30": 90.1,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 61.637,
+    "female": 66.122,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "AFG",
+   "iso2": "AF",
+   "name_ko": "아프가니스탄",
+   "name_en": "Afghanistan",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "Low income",
+   "births": 1534851,
+   "births_basis": {
+    "crude_birth_rate": 35.007,
+    "cbr_year": 2024,
+    "population": 43844111,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.051,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 52.0,
+     "u5mr": 57.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 44.5,
+     "u5mr": 48.9,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 64.704,
+    "female": 67.812,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "AGO",
+   "iso2": "AO",
+   "name_ko": "앙골라",
+   "name_en": "Angola",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 1450650,
+   "births_basis": {
+    "crude_birth_rate": 37.158,
+    "cbr_year": 2024,
+    "population": 39040039,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.028,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 35.8,
+     "u5mr": 53.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 28.3,
+     "u5mr": 44.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 39.3,
+    "pct_below_4_20": 53.7,
+    "pct_below_8_30": 80.0,
+    "year": 2018
+   },
+   "life_expectancy": {
+    "male": 62.275,
+    "female": 67.344,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "YEM",
+   "iso2": "YE",
+   "name_ko": "예멘",
+   "name_en": "Yemen, Rep.",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "Low income",
+   "births": 1435309,
+   "births_basis": {
+    "crude_birth_rate": 34.359,
+    "cbr_year": 2024,
+    "population": 41773878,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.059,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 37.1,
+     "u5mr": 41.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 30.3,
+     "u5mr": 34.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 33.3,
+    "pct_below_4_20": 57.7,
+    "pct_below_8_30": 88.0,
+    "year": 2014
+   },
+   "life_expectancy": {
+    "male": 67.366,
+    "female": 71.549,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "VNM",
+   "iso2": "VN",
+   "name_ko": "베트남",
+   "name_en": "Viet Nam",
+   "region": "East Asia & Pacific",
+   "income_level": "Upper middle income",
+   "births": 1363757,
+   "births_basis": {
+    "crude_birth_rate": 13.423,
+    "cbr_year": 2024,
+    "population": 101598527,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.106,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 13.4,
+     "u5mr": 20.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 10.5,
+     "u5mr": 14.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 1.6,
+    "pct_below_4_20": 4.2,
+    "pct_below_8_30": 21.5,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 70.051,
+    "female": 79.382,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MOZ",
+   "iso2": "MZ",
+   "name_ko": "모잠비크",
+   "name_en": "Mozambique",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 1319369,
+   "births_basis": {
+    "crude_birth_rate": 37.028,
+    "cbr_year": 2024,
+    "population": 35631653,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.02,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 47.3,
+     "u5mr": 63.6,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 39.8,
+     "u5mr": 55.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 81.4,
+    "pct_below_4_20": 89.1,
+    "pct_below_8_30": 96.3,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 60.486,
+    "female": 66.743,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "RUS",
+   "iso2": "RU",
+   "name_ko": "러시아",
+   "name_en": "Russian Federation",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 1205512,
+   "births_basis": {
+    "crude_birth_rate": 8.4,
+    "cbr_year": 2024,
+    "population": 143513328,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.057,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 4.5,
+     "u5mr": 5.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 3.7,
+     "u5mr": 4.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.1,
+    "pct_below_4_20": 0.2,
+    "pct_below_8_30": 0.9,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 68.26,
+    "female": 78.88,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "IRQ",
+   "iso2": "IQ",
+   "name_ko": "이라크",
+   "name_en": "Iraq",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "Upper middle income",
+   "births": 1202791,
+   "births_basis": {
+    "crude_birth_rate": 25.58,
+    "cbr_year": 2024,
+    "population": 47020774,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.057,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 22.0,
+     "u5mr": 23.8,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 18.1,
+     "u5mr": 19.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.5,
+    "pct_below_4_20": 2.4,
+    "pct_below_8_30": 28.0,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 70.503,
+    "female": 74.184,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ZAF",
+   "iso2": "ZA",
+   "name_ko": "남아프리카",
+   "name_en": "South Africa",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Upper middle income",
+   "births": 1196530,
+   "births_basis": {
+    "crude_birth_rate": 18.48,
+    "cbr_year": 2024,
+    "population": 64747319,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.04,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 26.1,
+     "u5mr": 37.6,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 22.2,
+     "u5mr": 32.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 17.4,
+    "pct_below_4_20": 30.2,
+    "pct_below_8_30": 59.6,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 62.783,
+    "female": 69.792,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "IRN",
+   "iso2": "IR",
+   "name_ko": "이란",
+   "name_en": "Iran, Islamic Rep.",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "Upper middle income",
+   "births": 1161783,
+   "births_basis": {
+    "crude_birth_rate": 12.571,
+    "cbr_year": 2024,
+    "population": 92417681,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.052,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 10.9,
+     "u5mr": 11.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 9.7,
+     "u5mr": 10.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 2.5,
+    "pct_below_4_20": 7.5,
+    "pct_below_8_30": 36.0,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 76.003,
+    "female": 79.81,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "NER",
+   "iso2": "NE",
+   "name_ko": "니제르",
+   "name_en": "Niger",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 1156357,
+   "births_basis": {
+    "crude_birth_rate": 41.42,
+    "cbr_year": 2024,
+    "population": 27917831,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.04,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 70.6,
+     "u5mr": 114.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 60.4,
+     "u5mr": 106.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 60.5,
+    "pct_below_4_20": 79.7,
+    "pct_below_8_30": 96.1,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 60.487,
+    "female": 62.405,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MDG",
+   "iso2": "MG",
+   "name_ko": "마다가스카르",
+   "name_en": "Madagascar",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 1038338,
+   "births_basis": {
+    "crude_birth_rate": 31.714,
+    "cbr_year": 2024,
+    "population": 32740678,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.038,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 47.3,
+     "u5mr": 67.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 38.4,
+     "u5mr": 57.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 69.2,
+    "pct_below_4_20": 83.9,
+    "pct_below_8_30": 96.6,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 62.121,
+    "female": 65.601,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "CIV",
+   "iso2": "CI",
+   "name_ko": "코트디부아르",
+   "name_en": "Cote d'Ivoire",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 1032507,
+   "births_basis": {
+    "crude_birth_rate": 31.564,
+    "cbr_year": 2024,
+    "population": 32711547,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.03,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 50.4,
+     "u5mr": 71.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 38.9,
+     "u5mr": 57.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 20.8,
+    "pct_below_4_20": 41.6,
+    "pct_below_8_30": 80.9,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 60.168,
+    "female": 64.311,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "CMR",
+   "iso2": "CM",
+   "name_ko": "카메룬",
+   "name_en": "Cameroon",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 996297,
+   "births_basis": {
+    "crude_birth_rate": 33.344,
+    "cbr_year": 2024,
+    "population": 29879337,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.03,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 44.6,
+     "u5mr": 69.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 35.8,
+     "u5mr": 59.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 26.7,
+    "pct_below_4_20": 41.3,
+    "pct_below_8_30": 74.0,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 61.778,
+    "female": 66.225,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MLI",
+   "iso2": "ML",
+   "name_ko": "말리",
+   "name_en": "Mali",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 996160,
+   "births_basis": {
+    "crude_birth_rate": 39.532,
+    "cbr_year": 2024,
+    "population": 25198821,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.033,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 51.6,
+     "u5mr": 77.1,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 43.3,
+     "u5mr": 68.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 36.1,
+    "pct_below_4_20": 59.5,
+    "pct_below_8_30": 88.6,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 59.254,
+    "female": 62.15,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "UZB",
+   "iso2": "UZ",
+   "name_ko": "우즈베키스탄",
+   "name_en": "Uzbekistan",
+   "region": "Europe & Central Asia",
+   "income_level": "Lower middle income",
+   "births": 946974,
+   "births_basis": {
+    "crude_birth_rate": 25.557,
+    "cbr_year": 2024,
+    "population": 37053428,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.078,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 14.4,
+     "u5mr": 15.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 11.1,
+     "u5mr": 11.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 2.3,
+    "pct_below_4_20": 4.0,
+    "pct_below_8_30": 12.4,
+    "year": 2025
+   },
+   "life_expectancy": {
+    "male": 69.564,
+    "female": 75.547,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "TUR",
+   "iso2": "TR",
+   "name_ko": "튀르키예",
+   "name_en": "Turkiye",
+   "region": "Europe & Central Asia",
+   "income_level": "Upper middle income",
+   "births": 944664,
+   "births_basis": {
+    "crude_birth_rate": 11.0,
+    "cbr_year": 2024,
+    "population": 85878556,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.05,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 8.7,
+     "u5mr": 10.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 7.4,
+     "u5mr": 8.9,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.2,
+    "pct_below_4_20": 0.4,
+    "pct_below_8_30": 4.1,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 74.619,
+    "female": 80.342,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "GHA",
+   "iso2": "GH",
+   "name_ko": "가나",
+   "name_en": "Ghana",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 908866,
+   "births_basis": {
+    "crude_birth_rate": 25.92,
+    "cbr_year": 2024,
+    "population": 35064272,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.038,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 30.7,
+     "u5mr": 39.8,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 24.1,
+     "u5mr": 31.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 39.0,
+    "pct_below_4_20": 56.3,
+    "pct_below_8_30": 85.4,
+    "year": 2016
+   },
+   "life_expectancy": {
+    "male": 63.314,
+    "female": 68.159,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "TCD",
+   "iso2": "TD",
+   "name_ko": "차드",
+   "name_en": "Chad",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 908704,
+   "births_basis": {
+    "crude_birth_rate": 43.264,
+    "cbr_year": 2024,
+    "population": 21003705,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.042,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 61.8,
+     "u5mr": 103.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 50.4,
+     "u5mr": 91.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 39.5,
+    "pct_below_4_20": 61.4,
+    "pct_below_8_30": 89.5,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 53.361,
+    "female": 57.193,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MMR",
+   "iso2": "MM",
+   "name_ko": "미얀마",
+   "name_en": "Myanmar",
+   "region": "East Asia & Pacific",
+   "income_level": "Lower middle income",
+   "births": 903061,
+   "births_basis": {
+    "crude_birth_rate": 16.464,
+    "cbr_year": 2024,
+    "population": 54850648,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.066,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 36.1,
+     "u5mr": 40.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 29.2,
+     "u5mr": 33.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 10.3,
+    "pct_below_4_20": 29.1,
+    "pct_below_8_30": 79.8,
+    "year": 2017
+   },
+   "life_expectancy": {
+    "male": 63.986,
+    "female": 70.378,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "DZA",
+   "iso2": "DZ",
+   "name_ko": "알제리",
+   "name_en": "Algeria",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "Upper middle income",
+   "births": 893539,
+   "births_basis": {
+    "crude_birth_rate": 18.837,
+    "cbr_year": 2024,
+    "population": 47435312,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.046,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 21.2,
+     "u5mr": 23.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 17.7,
+     "u5mr": 19.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.0,
+    "pct_below_4_20": 4.7,
+    "pct_below_8_30": 41.8,
+    "year": 2011
+   },
+   "life_expectancy": {
+    "male": 75.096,
+    "female": 77.912,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SOM",
+   "iso2": "SO",
+   "name_ko": "소말리아",
+   "name_en": "Somalia, Fed. Rep.",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 832300,
+   "births_basis": {
+    "crude_birth_rate": 42.346,
+    "cbr_year": 2024,
+    "population": 19654739,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.044,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 70.6,
+     "u5mr": 106.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 60.0,
+     "u5mr": 95.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 56.49,
+    "female": 61.551,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BFA",
+   "iso2": "BF",
+   "name_ko": "부르키나파소",
+   "name_en": "Burkina Faso",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 754401,
+   "births_basis": {
+    "crude_birth_rate": 31.336,
+    "cbr_year": 2024,
+    "population": 24074580,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.042,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 47.9,
+     "u5mr": 79.1,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 39.2,
+     "u5mr": 70.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 42.1,
+    "pct_below_4_20": 64.6,
+    "pct_below_8_30": 90.4,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 59.109,
+    "female": 63.432,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ZMB",
+   "iso2": "ZM",
+   "name_ko": "잠비아",
+   "name_en": "Zambia",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 717110,
+   "births_basis": {
+    "crude_birth_rate": 32.724,
+    "cbr_year": 2024,
+    "population": 21913874,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.011,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 38.1,
+     "u5mr": 52.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 31.0,
+     "u5mr": 43.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 71.7,
+    "pct_below_4_20": 81.4,
+    "pct_below_8_30": 94.0,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 64.1,
+    "female": 68.874,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "COL",
+   "iso2": "CO",
+   "name_ko": "콜롬비아",
+   "name_en": "Colombia",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 707943,
+   "births_basis": {
+    "crude_birth_rate": 13.251,
+    "cbr_year": 2024,
+    "population": 53425635,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.046,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 11.6,
+     "u5mr": 12.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 9.3,
+     "u5mr": 10.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 8.5,
+    "pct_below_4_20": 14.7,
+    "pct_below_8_30": 37.0,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 75.159,
+    "female": 80.613,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "JPN",
+   "iso2": "JP",
+   "name_ko": "일본",
+   "name_en": "Japan",
+   "region": "East Asia & Pacific",
+   "income_level": "High income",
+   "births": 703190,
+   "births_basis": {
+    "crude_birth_rate": 5.7,
+    "cbr_year": 2024,
+    "population": 123366734,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.051,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 1.9,
+     "u5mr": 2.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 1.7,
+     "u5mr": 2.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 1.2,
+    "pct_below_4_20": 1.6,
+    "pct_below_8_30": 3.3,
+    "year": 2020
+   },
+   "life_expectancy": {
+    "male": 81.09,
+    "female": 87.13,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MWI",
+   "iso2": "MW",
+   "name_ko": "말라위",
+   "name_en": "Malawi",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 691877,
+   "births_basis": {
+    "crude_birth_rate": 31.143,
+    "cbr_year": 2024,
+    "population": 22216120,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.014,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 42.2,
+     "u5mr": 53.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 33.5,
+     "u5mr": 43.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 75.4,
+    "pct_below_4_20": 87.3,
+    "pct_below_8_30": 97.1,
+    "year": 2019
+   },
+   "life_expectancy": {
+    "male": 64.271,
+    "female": 70.773,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "GBR",
+   "iso2": "GB",
+   "name_ko": "영국",
+   "name_en": "United Kingdom",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 687365,
+   "births_basis": {
+    "crude_birth_rate": 9.892,
+    "cbr_year": 2024,
+    "population": 69487000,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.055,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 4.6,
+     "u5mr": 5.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 3.7,
+     "u5mr": 4.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.4,
+    "pct_below_4_20": 0.5,
+    "pct_below_8_30": 0.9,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 79.541,
+    "female": 83.325,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "DEU",
+   "iso2": "DE",
+   "name_ko": "독일",
+   "name_en": "Germany",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 676279,
+   "births_basis": {
+    "crude_birth_rate": 8.1,
+    "cbr_year": 2024,
+    "population": 83491249,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.056,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 3.3,
+     "u5mr": 4.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.9,
+     "u5mr": 3.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.7,
+    "pct_below_4_20": 0.9,
+    "pct_below_8_30": 1.6,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 78.5,
+    "female": 83.2,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "FRA",
+   "iso2": "FR",
+   "name_ko": "프랑스",
+   "name_en": "France",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 666587,
+   "births_basis": {
+    "crude_birth_rate": 9.7,
+    "cbr_year": 2024,
+    "population": 68720337,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.05,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 3.7,
+     "u5mr": 4.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 3.1,
+     "u5mr": 4.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.1,
+    "pct_below_4_20": 0.1,
+    "pct_below_8_30": 0.3,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 80.2,
+    "female": 85.9,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MAR",
+   "iso2": "MA",
+   "name_ko": "모로코",
+   "name_en": "Morocco",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "Lower middle income",
+   "births": 630341,
+   "births_basis": {
+    "crude_birth_rate": 16.402,
+    "cbr_year": 2024,
+    "population": 38430770,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.047,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 16.2,
+     "u5mr": 17.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 13.1,
+     "u5mr": 14.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 3.7,
+    "pct_below_4_20": 11.6,
+    "pct_below_8_30": 49.0,
+    "year": 2013
+   },
+   "life_expectancy": {
+    "male": 73.347,
+    "female": 77.777,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SAU",
+   "iso2": "SA",
+   "name_ko": "사우디아라비아",
+   "name_en": "Saudi Arabia",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "High income",
+   "births": 609879,
+   "births_basis": {
+    "crude_birth_rate": 16.495,
+    "cbr_year": 2024,
+    "population": 36973555,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.051,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 4.9,
+     "u5mr": 6.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 4.4,
+     "u5mr": 5.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 77.329,
+    "female": 81.33,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SYR",
+   "iso2": "SY",
+   "name_ko": "시리아",
+   "name_en": "Syrian Arab Republic",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "Low income",
+   "births": 593420,
+   "births_basis": {
+    "crude_birth_rate": 23.162,
+    "cbr_year": 2024,
+    "population": 25620427,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.053,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 19.4,
+     "u5mr": 20.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 15.9,
+     "u5mr": 16.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 18.0,
+    "pct_below_4_20": 42.1,
+    "pct_below_8_30": 89.3,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 70.21,
+    "female": 74.916,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "THA",
+   "iso2": "TH",
+   "name_ko": "태국",
+   "name_en": "Thailand",
+   "region": "East Asia & Pacific",
+   "income_level": "Upper middle income",
+   "births": 581267,
+   "births_basis": {
+    "crude_birth_rate": 8.116,
+    "cbr_year": 2024,
+    "population": 71619863,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.064,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 8.6,
+     "u5mr": 9.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 6.9,
+     "u5mr": 8.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.0,
+    "pct_below_4_20": 0.2,
+    "pct_below_8_30": 11.7,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 72.342,
+    "female": 80.978,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "NPL",
+   "iso2": "NP",
+   "name_ko": "네팔",
+   "name_en": "Nepal",
+   "region": "South Asia",
+   "income_level": "Lower middle income",
+   "births": 561619,
+   "births_basis": {
+    "crude_birth_rate": 18.962,
+    "cbr_year": 2024,
+    "population": 29618118,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.049,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 24.1,
+     "u5mr": 27.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 20.2,
+     "u5mr": 23.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 2.4,
+    "pct_below_4_20": 9.1,
+    "pct_below_8_30": 52.7,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 69.09,
+    "female": 72.138,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SEN",
+   "iso2": "SN",
+   "name_ko": "세네갈",
+   "name_en": "Senegal",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 552510,
+   "births_basis": {
+    "crude_birth_rate": 29.184,
+    "cbr_year": 2024,
+    "population": 18931966,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.031,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 32.5,
+     "u5mr": 40.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 25.1,
+     "u5mr": 32.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 17.9,
+    "pct_below_4_20": 37.3,
+    "pct_below_8_30": 78.6,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 67.006,
+    "female": 71.012,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "PER",
+   "iso2": "PE",
+   "name_ko": "페루",
+   "name_en": "Peru",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 544617,
+   "births_basis": {
+    "crude_birth_rate": 15.751,
+    "cbr_year": 2024,
+    "population": 34576665,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.041,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 12.0,
+     "u5mr": 14.1,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 9.8,
+     "u5mr": 11.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 5.1,
+    "pct_below_4_20": 10.7,
+    "pct_below_8_30": 36.2,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 75.629,
+    "female": 80.3,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ARG",
+   "iso2": "AR",
+   "name_ko": "아르헨티나",
+   "name_en": "Argentina",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 508308,
+   "births_basis": {
+    "crude_birth_rate": 11.086,
+    "cbr_year": 2024,
+    "population": 45851378,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.051,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 8.9,
+     "u5mr": 10.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 7.1,
+     "u5mr": 8.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 1.0,
+    "pct_below_4_20": 2.8,
+    "pct_below_8_30": 15.2,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 74.976,
+    "female": 80.02,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ZWE",
+   "iso2": "ZW",
+   "name_ko": "짐바브웨",
+   "name_en": "Zimbabwe",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 506676,
+   "births_basis": {
+    "crude_birth_rate": 29.891,
+    "cbr_year": 2024,
+    "population": 16950795,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.025,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 68.6,
+     "u5mr": 71.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 55.8,
+     "u5mr": 57.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 49.2,
+    "pct_below_4_20": 64.6,
+    "pct_below_8_30": 86.2,
+    "year": 2019
+   },
+   "life_expectancy": {
+    "male": 60.492,
+    "female": 65.313,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "GIN",
+   "iso2": "GN",
+   "name_ko": "기니",
+   "name_en": "Guinea",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 503198,
+   "births_basis": {
+    "crude_birth_rate": 33.325,
+    "cbr_year": 2024,
+    "population": 15099727,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.045,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 66.0,
+     "u5mr": 98.8,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 53.2,
+     "u5mr": 85.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 11.7,
+    "pct_below_4_20": 29.2,
+    "pct_below_8_30": 76.6,
+    "year": 2018
+   },
+   "life_expectancy": {
+    "male": 59.659,
+    "female": 62.085,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BEN",
+   "iso2": "BJ",
+   "name_ko": "베냉",
+   "name_en": "Benin",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 495084,
+   "births_basis": {
+    "crude_birth_rate": 33.419,
+    "cbr_year": 2024,
+    "population": 14814460,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.042,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 49.8,
+     "u5mr": 79.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 40.2,
+     "u5mr": 69.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 27.2,
+    "pct_below_4_20": 50.0,
+    "pct_below_8_30": 86.5,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 59.517,
+    "female": 62.416,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BDI",
+   "iso2": "BI",
+   "name_ko": "부룬디",
+   "name_en": "Burundi",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 477906,
+   "births_basis": {
+    "crude_birth_rate": 33.211,
+    "cbr_year": 2024,
+    "population": 14390003,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.025,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 33.9,
+     "u5mr": 51.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 26.9,
+     "u5mr": 43.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 74.2,
+    "pct_below_4_20": 87.2,
+    "pct_below_8_30": 97.4,
+    "year": 2020
+   },
+   "life_expectancy": {
+    "male": 61.752,
+    "female": 65.881,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MYS",
+   "iso2": "MY",
+   "name_ko": "말레이시아",
+   "name_en": "Malaysia",
+   "region": "East Asia & Pacific",
+   "income_level": "Upper middle income",
+   "births": 444758,
+   "births_basis": {
+    "crude_birth_rate": 12.362,
+    "cbr_year": 2024,
+    "population": 35977838,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.065,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 7.6,
+     "u5mr": 9.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 6.3,
+     "u5mr": 7.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.0,
+    "pct_below_4_20": 0.1,
+    "pct_below_8_30": 2.9,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 74.448,
+    "female": 79.521,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "VEN",
+   "iso2": "VE",
+   "name_ko": "베네수엘라",
+   "name_en": "Venezuela, RB",
+   "region": "Latin America & Caribbean",
+   "income_level": "Lower middle income",
+   "births": 434341,
+   "births_basis": {
+    "crude_birth_rate": 15.231,
+    "cbr_year": 2024,
+    "population": 28516896,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.052,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 23.0,
+     "u5mr": 26.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 19.2,
+     "u5mr": 22.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 9.7,
+    "pct_below_4_20": 16.4,
+    "pct_below_8_30": 43.3,
+    "year": 2006
+   },
+   "life_expectancy": {
+    "male": 68.885,
+    "female": 76.655,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "RWA",
+   "iso2": "RW",
+   "name_ko": "르완다",
+   "name_en": "Rwanda",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 408845,
+   "births_basis": {
+    "crude_birth_rate": 28.062,
+    "cbr_year": 2024,
+    "population": 14569341,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.026,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 32.3,
+     "u5mr": 41.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 26.2,
+     "u5mr": 34.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 38.6,
+    "pct_below_4_20": 62.2,
+    "pct_below_8_30": 89.8,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 65.708,
+    "female": 70.138,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "KAZ",
+   "iso2": "KZ",
+   "name_ko": "카자흐스탄",
+   "name_en": "Kazakhstan",
+   "region": "Europe & Central Asia",
+   "income_level": "Upper middle income",
+   "births": 406891,
+   "births_basis": {
+    "crude_birth_rate": 19.521,
+    "cbr_year": 2024,
+    "population": 20843754,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.064,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 8.3,
+     "u5mr": 10.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 6.5,
+     "u5mr": 8.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.0,
+    "pct_below_4_20": 0.3,
+    "pct_below_8_30": 15.2,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 70.266,
+    "female": 78.515,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "GTM",
+   "iso2": "GT",
+   "name_ko": "과테말라",
+   "name_en": "Guatemala",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 385325,
+   "births_basis": {
+    "crude_birth_rate": 20.619,
+    "cbr_year": 2024,
+    "population": 18687881,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.039,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 19.1,
+     "u5mr": 22.6,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 15.2,
+     "u5mr": 18.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 9.7,
+    "pct_below_4_20": 17.6,
+    "pct_below_8_30": 47.3,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 70.441,
+    "female": 75.043,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ITA",
+   "iso2": "IT",
+   "name_ko": "이탈리아",
+   "name_en": "Italy",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 371169,
+   "births_basis": {
+    "crude_birth_rate": 6.3,
+    "cbr_year": 2024,
+    "population": 58915656,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.059,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.5,
+     "u5mr": 2.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.1,
+     "u5mr": 2.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.9,
+    "pct_below_4_20": 1.0,
+    "pct_below_8_30": 1.9,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 82.0,
+    "female": 86.0,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "CAN",
+   "iso2": "CA",
+   "name_ko": "캐나다",
+   "name_en": "Canada",
+   "region": "North America",
+   "income_level": "High income",
+   "births": 370700,
+   "births_basis": {
+    "crude_birth_rate": 8.9,
+    "cbr_year": 2024,
+    "population": 41651653,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.055,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 5.1,
+     "u5mr": 5.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 4.3,
+     "u5mr": 5.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.3,
+    "pct_below_4_20": 0.3,
+    "pct_below_8_30": 0.6,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 80.03,
+    "female": 84.29,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "KHM",
+   "iso2": "KH",
+   "name_ko": "캄보디아",
+   "name_en": "Cambodia",
+   "region": "East Asia & Pacific",
+   "income_level": "Lower middle income",
+   "births": 362475,
+   "births_basis": {
+    "crude_birth_rate": 20.309,
+    "cbr_year": 2024,
+    "population": 17847982,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.053,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 18.2,
+     "u5mr": 20.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 14.4,
+     "u5mr": 16.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 68.149,
+    "female": 73.357,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SSD",
+   "iso2": "SS",
+   "name_ko": "남수단",
+   "name_en": "South Sudan",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 356181,
+   "births_basis": {
+    "crude_birth_rate": 29.222,
+    "cbr_year": 2024,
+    "population": 12188788,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.035,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 77.3,
+     "u5mr": 102.1,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 66.1,
+     "u5mr": 91.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 76.5,
+    "pct_below_4_20": 88.0,
+    "pct_below_8_30": 97.6,
+    "year": 2016
+   },
+   "life_expectancy": {
+    "male": 54.757,
+    "female": 60.749,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "PRK",
+   "iso2": "KP",
+   "name_ko": "북한",
+   "name_en": "Korea, Dem. People's Rep.",
+   "region": "East Asia & Pacific",
+   "income_level": "Low income",
+   "births": 341650,
+   "births_basis": {
+    "crude_birth_rate": 12.858,
+    "cbr_year": 2024,
+    "population": 26571036,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.06,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 14.7,
+     "u5mr": 18.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 11.9,
+     "u5mr": 14.9,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 71.553,
+    "female": 75.88,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ESP",
+   "iso2": "ES",
+   "name_ko": "스페인",
+   "name_en": "Spain",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 320808,
+   "births_basis": {
+    "crude_birth_rate": 6.5,
+    "cbr_year": 2024,
+    "population": 49355143,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.065,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.8,
+     "u5mr": 3.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.4,
+     "u5mr": 2.9,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.8,
+    "pct_below_4_20": 1.0,
+    "pct_below_8_30": 2.3,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 81.4,
+    "female": 86.5,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "AUS",
+   "iso2": "AU",
+   "name_ko": "오스트레일리아",
+   "name_en": "Australia",
+   "region": "East Asia & Pacific",
+   "income_level": "High income",
+   "births": 295474,
+   "births_basis": {
+    "crude_birth_rate": 10.7,
+    "cbr_year": 2024,
+    "population": 27614411,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.056,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 3.3,
+     "u5mr": 3.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.8,
+     "u5mr": 3.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.9,
+    "pct_below_4_20": 1.1,
+    "pct_below_8_30": 1.5,
+    "year": 2020
+   },
+   "life_expectancy": {
+    "male": 81.1,
+    "female": 85.1,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "TGO",
+   "iso2": "TG",
+   "name_ko": "토고",
+   "name_en": "Togo",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 275456,
+   "births_basis": {
+    "crude_birth_rate": 32.061,
+    "cbr_year": 2024,
+    "population": 8591626,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.028,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 38.3,
+     "u5mr": 60.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 31.2,
+     "u5mr": 51.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 34.7,
+    "pct_below_4_20": 55.6,
+    "pct_below_8_30": 87.0,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 62.696,
+    "female": 63.151,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "TJK",
+   "iso2": "TJ",
+   "name_ko": "타지키스탄",
+   "name_en": "Tajikistan",
+   "region": "Europe & Central Asia",
+   "income_level": "Lower middle income",
+   "births": 273260,
+   "births_basis": {
+    "crude_birth_rate": 25.333,
+    "cbr_year": 2024,
+    "population": 10786734,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.063,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 26.4,
+     "u5mr": 31.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 20.4,
+     "u5mr": 24.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 6.1,
+    "pct_below_4_20": 16.9,
+    "pct_below_8_30": 55.4,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 69.682,
+    "female": 74.141,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ECU",
+   "iso2": "EC",
+   "name_ko": "에콰도르",
+   "name_en": "Ecuador",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 271056,
+   "births_basis": {
+    "crude_birth_rate": 14.82,
+    "cbr_year": 2024,
+    "population": 18289896,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.046,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 12.4,
+     "u5mr": 14.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 9.4,
+     "u5mr": 11.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 3.4,
+    "pct_below_4_20": 8.4,
+    "pct_below_8_30": 30.1,
+    "year": 2025
+   },
+   "life_expectancy": {
+    "male": 74.876,
+    "female": 80.305,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SLE",
+   "iso2": "SL",
+   "name_ko": "시에라리온",
+   "name_en": "Sierra Leone",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 265546,
+   "births_basis": {
+    "crude_birth_rate": 30.108,
+    "cbr_year": 2024,
+    "population": 8819794,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.034,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 59.5,
+     "u5mr": 96.1,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 49.3,
+     "u5mr": 84.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 41.5,
+    "pct_below_4_20": 65.0,
+    "pct_below_8_30": 91.5,
+    "year": 2018
+   },
+   "life_expectancy": {
+    "male": 60.23,
+    "female": 63.695,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BOL",
+   "iso2": "BO",
+   "name_ko": "볼리비아",
+   "name_en": "Bolivia",
+   "region": "Latin America & Caribbean",
+   "income_level": "Lower middle income",
+   "births": 264546,
+   "births_basis": {
+    "crude_birth_rate": 21.026,
+    "cbr_year": 2024,
+    "population": 12581843,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.042,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 15.6,
+     "u5mr": 17.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 12.8,
+     "u5mr": 14.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 2.1,
+    "pct_below_4_20": 4.9,
+    "pct_below_8_30": 17.4,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 66.267,
+    "female": 71.324,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "PNG",
+   "iso2": "PG",
+   "name_ko": "파푸아뉴기니",
+   "name_en": "Papua New Guinea",
+   "region": "East Asia & Pacific",
+   "income_level": "Lower middle income",
+   "births": 261440,
+   "births_basis": {
+    "crude_birth_rate": 24.291,
+    "cbr_year": 2024,
+    "population": 10762817,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.076,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 33.9,
+     "u5mr": 42.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 28.5,
+     "u5mr": 36.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 52.2,
+    "pct_below_4_20": 69.4,
+    "pct_below_8_30": 92.1,
+    "year": 2009
+   },
+   "life_expectancy": {
+    "male": 63.836,
+    "female": 69.211,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "HTI",
+   "iso2": "HT",
+   "name_ko": "아이티",
+   "name_en": "Haiti",
+   "region": "Latin America & Caribbean",
+   "income_level": "Lower middle income",
+   "births": 261267,
+   "births_basis": {
+    "crude_birth_rate": 21.944,
+    "cbr_year": 2024,
+    "population": 11906095,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.031,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 43.1,
+     "u5mr": 57.6,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 34.7,
+     "u5mr": 47.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 40.4,
+    "pct_below_4_20": 59.2,
+    "pct_below_8_30": 88.2,
+    "year": 2012
+   },
+   "life_expectancy": {
+    "male": 61.897,
+    "female": 68.487,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "CAF",
+   "iso2": "CF",
+   "name_ko": "중앙 아프리카 공화국",
+   "name_en": "Central African Republic",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 254675,
+   "births_basis": {
+    "crude_birth_rate": 46.193,
+    "cbr_year": 2024,
+    "population": 5513282,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.032,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 64.9,
+     "u5mr": 95.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 52.3,
+     "u5mr": 83.9,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 71.6,
+    "pct_below_4_20": 83.9,
+    "pct_below_8_30": 96.1,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 55.51,
+    "female": 59.562,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "POL",
+   "iso2": "PL",
+   "name_ko": "폴란드",
+   "name_en": "Poland",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 251407,
+   "births_basis": {
+    "crude_birth_rate": 6.9,
+    "cbr_year": 2024,
+    "population": 36435861,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.061,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 4.0,
+     "u5mr": 4.6,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 3.2,
+     "u5mr": 3.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.2,
+    "pct_below_4_20": 0.4,
+    "pct_below_8_30": 1.1,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 74.8,
+    "female": 82.2,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "KOR",
+   "iso2": "KR",
+   "name_ko": "대한민국",
+   "name_en": "Korea, Rep.",
+   "region": "East Asia & Pacific",
+   "income_level": "High income",
+   "births": 242917,
+   "births_basis": {
+    "crude_birth_rate": 4.7,
+    "cbr_year": 2024,
+    "population": 51684564,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.059,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.5,
+     "u5mr": 3.1,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.1,
+     "u5mr": 2.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.1,
+    "pct_below_4_20": 0.2,
+    "pct_below_8_30": 0.5,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 80.8,
+    "female": 86.6,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "HND",
+   "iso2": "HN",
+   "name_ko": "온두라스",
+   "name_en": "Honduras",
+   "region": "Latin America & Caribbean",
+   "income_level": "Lower middle income",
+   "births": 238266,
+   "births_basis": {
+    "crude_birth_rate": 21.649,
+    "cbr_year": 2024,
+    "population": 11005850,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.051,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 14.1,
+     "u5mr": 16.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 11.3,
+     "u5mr": 13.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 15.7,
+    "pct_below_4_20": 23.5,
+    "pct_below_8_30": 49.8,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 70.489,
+    "female": 75.67,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "JOR",
+   "iso2": "JO",
+   "name_ko": "요르단",
+   "name_en": "Jordan",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "Upper middle income",
+   "births": 235621,
+   "births_basis": {
+    "crude_birth_rate": 20.452,
+    "cbr_year": 2024,
+    "population": 11520684,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.049,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 13.1,
+     "u5mr": 14.1,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 10.8,
+     "u5mr": 11.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.1,
+    "pct_below_4_20": 0.9,
+    "pct_below_8_30": 15.3,
+    "year": 2010
+   },
+   "life_expectancy": {
+    "male": 75.892,
+    "female": 80.335,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "LKA",
+   "iso2": "LK",
+   "name_ko": "스리랑카",
+   "name_en": "Sri Lanka",
+   "region": "South Asia",
+   "income_level": "Upper middle income",
+   "births": 219736,
+   "births_basis": {
+    "crude_birth_rate": 10.1,
+    "cbr_year": 2024,
+    "population": 21756000,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.044,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 5.7,
+     "u5mr": 6.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 4.6,
+     "u5mr": 5.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 2.7,
+    "pct_below_4_20": 11.5,
+    "pct_below_8_30": 53.3,
+    "year": 2019
+   },
+   "life_expectancy": {
+    "male": 74.447,
+    "female": 80.746,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "UKR",
+   "iso2": "UA",
+   "name_ko": "우크라이나",
+   "name_en": "Ukraine",
+   "region": "Europe & Central Asia",
+   "income_level": "Upper middle income",
+   "births": 213067,
+   "births_basis": {
+    "crude_birth_rate": 5.466,
+    "cbr_year": 2024,
+    "population": 38980376,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.062,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 8.4,
+     "u5mr": 8.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 6.8,
+     "u5mr": 7.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.0,
+    "pct_below_4_20": 0.2,
+    "pct_below_8_30": 11.3,
+    "year": 2020
+   },
+   "life_expectancy": {
+    "male": 69.786,
+    "female": 79.393,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "DOM",
+   "iso2": "DO",
+   "name_ko": "도미니카 공화국",
+   "name_en": "Dominican Republic",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 202991,
+   "births_basis": {
+    "crude_birth_rate": 17.62,
+    "cbr_year": 2024,
+    "population": 11520487,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.044,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 30.1,
+     "u5mr": 33.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 25.2,
+     "u5mr": 27.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.8,
+    "pct_below_4_20": 2.0,
+    "pct_below_8_30": 14.0,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 70.663,
+    "female": 77.105,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "COG",
+   "iso2": "CG",
+   "name_ko": "콩고공화국",
+   "name_en": "Congo, Rep.",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 197283,
+   "births_basis": {
+    "crude_birth_rate": 30.424,
+    "cbr_year": 2024,
+    "population": 6484437,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.026,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 29.7,
+     "u5mr": 42.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 24.0,
+     "u5mr": 35.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 39.2,
+    "pct_below_4_20": 55.0,
+    "pct_below_8_30": 82.4,
+    "year": 2011
+   },
+   "life_expectancy": {
+    "male": 64.327,
+    "female": 67.715,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ISR",
+   "iso2": "IL",
+   "name_ko": "이스라엘",
+   "name_en": "Israel",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "High income",
+   "births": 188284,
+   "births_basis": {
+    "crude_birth_rate": 18.6,
+    "cbr_year": 2024,
+    "population": 10122800,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.055,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.9,
+     "u5mr": 3.6,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.4,
+     "u5mr": 3.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.4,
+    "pct_below_4_20": 0.9,
+    "pct_below_8_30": 4.4,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 81.1,
+    "female": 85.4,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MRT",
+   "iso2": "MR",
+   "name_ko": "모리타니",
+   "name_en": "Mauritania",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 180872,
+   "births_basis": {
+    "crude_birth_rate": 34.03,
+    "cbr_year": 2024,
+    "population": 5315065,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.033,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 33.4,
+     "u5mr": 40.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 26.8,
+     "u5mr": 33.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 10.2,
+    "pct_below_4_20": 26.0,
+    "pct_below_8_30": 71.2,
+    "year": 2019
+   },
+   "life_expectancy": {
+    "male": 66.703,
+    "female": 70.729,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "LBR",
+   "iso2": "LR",
+   "name_ko": "라이베리아",
+   "name_en": "Liberia",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 175243,
+   "births_basis": {
+    "crude_birth_rate": 30.577,
+    "cbr_year": 2024,
+    "population": 5731206,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.038,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 69.6,
+     "u5mr": 93.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 56.5,
+     "u5mr": 79.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 33.6,
+    "pct_below_4_20": 55.0,
+    "pct_below_8_30": 88.3,
+    "year": 2016
+   },
+   "life_expectancy": {
+    "male": 61.016,
+    "female": 63.629,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "CHL",
+   "iso2": "CL",
+   "name_ko": "칠레",
+   "name_en": "Chile",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 173238,
+   "births_basis": {
+    "crude_birth_rate": 8.723,
+    "cbr_year": 2024,
+    "population": 19859921,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.043,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 6.2,
+     "u5mr": 7.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 5.4,
+     "u5mr": 6.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.4,
+    "pct_below_4_20": 0.7,
+    "pct_below_8_30": 4.5,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 79.454,
+    "female": 83.228,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "NLD",
+   "iso2": "NL",
+   "name_ko": "네덜란드",
+   "name_en": "Netherlands",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 166406,
+   "births_basis": {
+    "crude_birth_rate": 9.2,
+    "cbr_year": 2024,
+    "population": 18087633,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.053,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 3.7,
+     "u5mr": 4.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 3.1,
+     "u5mr": 3.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.1,
+    "pct_below_4_20": 0.1,
+    "pct_below_8_30": 0.3,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 80.6,
+    "female": 83.4,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "TUN",
+   "iso2": "TN",
+   "name_ko": "튀니지",
+   "name_en": "Tunisia",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "Lower middle income",
+   "births": 165100,
+   "births_basis": {
+    "crude_birth_rate": 13.37,
+    "cbr_year": 2024,
+    "population": 12348573,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.05,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 10.4,
+     "u5mr": 12.8,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 9.1,
+     "u5mr": 11.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.7,
+    "pct_below_4_20": 2.4,
+    "pct_below_8_30": 20.7,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 74.132,
+    "female": 79.332,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "LAO",
+   "iso2": "LA",
+   "name_ko": "라오스",
+   "name_en": "Lao PDR",
+   "region": "East Asia & Pacific",
+   "income_level": "Lower middle income",
+   "births": 164806,
+   "births_basis": {
+    "crude_birth_rate": 20.933,
+    "cbr_year": 2024,
+    "population": 7873046,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.053,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 30.6,
+     "u5mr": 32.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 23.5,
+     "u5mr": 25.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 7.1,
+    "pct_below_4_20": 22.5,
+    "pct_below_8_30": 70.3,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 67.02,
+    "female": 71.53,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "TKM",
+   "iso2": "TM",
+   "name_ko": "투르크메니스탄",
+   "name_en": "Turkmenistan",
+   "region": "Europe & Central Asia",
+   "income_level": "Upper middle income",
+   "births": 159280,
+   "births_basis": {
+    "crude_birth_rate": 20.906,
+    "cbr_year": 2024,
+    "population": 7618847,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.067,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 34.9,
+     "u5mr": 44.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 25.9,
+     "u5mr": 33.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 35.1,
+    "pct_below_4_20": 55.6,
+    "pct_below_8_30": 84.6,
+    "year": 1998
+   },
+   "life_expectancy": {
+    "male": 66.999,
+    "female": 73.006,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "PSE",
+   "iso2": "PS",
+   "name_ko": "팔레스타인 지구",
+   "name_en": "West Bank and Gaza",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "Lower middle income",
+   "births": 143271,
+   "births_basis": {
+    "crude_birth_rate": 26.465,
+    "cbr_year": 2024,
+    "population": 5413596,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.051,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 17.9,
+     "u5mr": 39.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 16.0,
+     "u5mr": 36.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 2.1,
+    "pct_below_4_20": 6.1,
+    "pct_below_8_30": 28.6,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 65.223,
+    "female": 74.252,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ROU",
+   "iso2": "RO",
+   "name_ko": "루마니아",
+   "name_en": "Romania",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 142652,
+   "births_basis": {
+    "crude_birth_rate": 7.5,
+    "cbr_year": 2024,
+    "population": 19020271,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.056,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 6.5,
+     "u5mr": 7.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 5.5,
+     "u5mr": 6.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.7,
+    "pct_below_4_20": 1.3,
+    "pct_below_8_30": 5.1,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 72.8,
+    "female": 80.3,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "KGZ",
+   "iso2": "KG",
+   "name_ko": "키르기스스탄",
+   "name_en": "Kyrgyz Republic",
+   "region": "Europe & Central Asia",
+   "income_level": "Lower middle income",
+   "births": 142455,
+   "births_basis": {
+    "crude_birth_rate": 19.4,
+    "cbr_year": 2024,
+    "population": 7343064,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.056,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 16.5,
+     "u5mr": 18.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 13.0,
+     "u5mr": 14.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 2.2,
+    "pct_below_4_20": 12.5,
+    "pct_below_8_30": 65.2,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 68.4,
+    "female": 76.6,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "PRY",
+   "iso2": "PY",
+   "name_ko": "파라과이",
+   "name_en": "Paraguay",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 138354,
+   "births_basis": {
+    "crude_birth_rate": 19.728,
+    "cbr_year": 2024,
+    "population": 7013078,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.05,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 15.9,
+     "u5mr": 17.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 13.0,
+     "u5mr": 14.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 2.1,
+    "pct_below_4_20": 4.5,
+    "pct_below_8_30": 20.5,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 71.013,
+    "female": 77.09,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "NIC",
+   "iso2": "NI",
+   "name_ko": "니카라과",
+   "name_en": "Nicaragua",
+   "region": "Latin America & Caribbean",
+   "income_level": "Lower middle income",
+   "births": 134131,
+   "births_basis": {
+    "crude_birth_rate": 19.141,
+    "cbr_year": 2024,
+    "population": 7007502,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.035,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 10.4,
+     "u5mr": 12.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 8.4,
+     "u5mr": 10.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 6.6,
+    "pct_below_4_20": 15.7,
+    "pct_below_8_30": 46.5,
+    "year": 2014
+   },
+   "life_expectancy": {
+    "male": 72.463,
+    "female": 77.577,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "LBY",
+   "iso2": "LY",
+   "name_ko": "리비아",
+   "name_en": "Libya",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "Upper middle income",
+   "births": 123029,
+   "births_basis": {
+    "crude_birth_rate": 16.495,
+    "cbr_year": 2024,
+    "population": 7458555,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.057,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 8.6,
+     "u5mr": 10.6,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 7.1,
+     "u5mr": 8.9,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 69.625,
+    "female": 72.679,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ARE",
+   "iso2": "AE",
+   "name_ko": "아랍에미리트",
+   "name_en": "United Arab Emirates",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "High income",
+   "births": 113048,
+   "births_basis": {
+    "crude_birth_rate": 9.819,
+    "cbr_year": 2024,
+    "population": 11513149,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.045,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 4.1,
+     "u5mr": 5.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 3.4,
+     "u5mr": 4.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.0,
+    "pct_below_4_20": 0.0,
+    "pct_below_8_30": 0.6,
+    "year": 2018
+   },
+   "life_expectancy": {
+    "male": 82.168,
+    "female": 84.319,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BEL",
+   "iso2": "BE",
+   "name_ko": "벨기에",
+   "name_en": "Belgium",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 109864,
+   "births_basis": {
+    "crude_birth_rate": 9.2,
+    "cbr_year": 2024,
+    "population": 11941781,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.049,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 3.5,
+     "u5mr": 4.1,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.8,
+     "u5mr": 3.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.1,
+    "pct_below_4_20": 0.1,
+    "pct_below_8_30": 0.3,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 80.3,
+    "female": 84.4,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ERI",
+   "iso2": "ER",
+   "name_ko": "에리트리아",
+   "name_en": "Eritrea",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 103590,
+   "births_basis": {
+    "crude_birth_rate": 28.719,
+    "cbr_year": 2024,
+    "population": 3607003,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.032,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 28.0,
+     "u5mr": 38.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 21.3,
+     "u5mr": 30.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 66.759,
+    "female": 70.944,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "AZE",
+   "iso2": "AZ",
+   "name_ko": "아제르바이잔",
+   "name_en": "Azerbaijan",
+   "region": "Europe & Central Asia",
+   "income_level": "Upper middle income",
+   "births": 102470,
+   "births_basis": {
+    "crude_birth_rate": 10.0,
+    "cbr_year": 2024,
+    "population": 10246996,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.113,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 13.3,
+     "u5mr": 18.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 11.6,
+     "u5mr": 16.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.0,
+    "pct_below_4_20": 0.3,
+    "pct_below_8_30": 35.9,
+    "year": 2005
+   },
+   "life_expectancy": {
+    "male": 71.706,
+    "female": 77.285,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SLV",
+   "iso2": "SV",
+   "name_ko": "엘살바도르",
+   "name_en": "El Salvador",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 99283,
+   "births_basis": {
+    "crude_birth_rate": 15.597,
+    "cbr_year": 2024,
+    "population": 6365503,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.048,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 9.7,
+     "u5mr": 11.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 8.0,
+     "u5mr": 9.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 4.6,
+    "pct_below_4_20": 8.6,
+    "pct_below_8_30": 29.9,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 67.76,
+    "female": 76.488,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SWE",
+   "iso2": "SE",
+   "name_ko": "스웨덴",
+   "name_en": "Sweden",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 98549,
+   "births_basis": {
+    "crude_birth_rate": 9.3,
+    "cbr_year": 2024,
+    "population": 10596620,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.056,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.1,
+     "u5mr": 2.6,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 1.8,
+     "u5mr": 2.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.8,
+    "pct_below_4_20": 0.9,
+    "pct_below_8_30": 1.5,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 82.6,
+    "female": 85.6,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "CUB",
+   "iso2": "CU",
+   "name_ko": "쿠바",
+   "name_en": "Cuba",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 94279,
+   "births_basis": {
+    "crude_birth_rate": 8.62,
+    "cbr_year": 2024,
+    "population": 10937203,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.07,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 7.6,
+     "u5mr": 9.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 6.0,
+     "u5mr": 7.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 75.864,
+    "female": 80.682,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "LBN",
+   "iso2": "LB",
+   "name_ko": "레바논",
+   "name_en": "Lebanon",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "Lower middle income",
+   "births": 93345,
+   "births_basis": {
+    "crude_birth_rate": 15.958,
+    "cbr_year": 2024,
+    "population": 5849421,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.053,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 16.6,
+     "u5mr": 19.1,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 13.8,
+     "u5mr": 16.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 5.8,
+    "pct_below_4_20": 15.7,
+    "pct_below_8_30": 50.7,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 75.876,
+    "female": 79.857,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "OMN",
+   "iso2": "OM",
+   "name_ko": "오만",
+   "name_en": "Oman",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "High income",
+   "births": 92190,
+   "births_basis": {
+    "crude_birth_rate": 16.778,
+    "cbr_year": 2024,
+    "population": 5494691,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.044,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 9.1,
+     "u5mr": 11.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 7.5,
+     "u5mr": 9.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 78.719,
+    "female": 82.046,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "PRT",
+   "iso2": "PT",
+   "name_ko": "포르투갈",
+   "name_en": "Portugal",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 85358,
+   "births_basis": {
+    "crude_birth_rate": 7.9,
+    "cbr_year": 2024,
+    "population": 10804871,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.057,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.9,
+     "u5mr": 3.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.4,
+     "u5mr": 2.9,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.4,
+    "pct_below_4_20": 0.7,
+    "pct_below_8_30": 2.2,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 79.7,
+    "female": 85.2,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "GMB",
+   "iso2": "GM",
+   "name_ko": "감비아",
+   "name_en": "Gambia, The",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 84259,
+   "births_basis": {
+    "crude_birth_rate": 29.857,
+    "cbr_year": 2024,
+    "population": 2822093,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.032,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 36.7,
+     "u5mr": 46.8,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 28.5,
+     "u5mr": 37.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 22.0,
+    "pct_below_4_20": 40.2,
+    "pct_below_8_30": 78.2,
+    "year": 2020
+   },
+   "life_expectancy": {
+    "male": 64.35,
+    "female": 67.752,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "CZE",
+   "iso2": "CZ",
+   "name_ko": "체코",
+   "name_en": "Czechia",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 83829,
+   "births_basis": {
+    "crude_birth_rate": 7.7,
+    "cbr_year": 2024,
+    "population": 10886878,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.054,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.3,
+     "u5mr": 2.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 1.9,
+     "u5mr": 2.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.0,
+    "pct_below_4_20": 0.0,
+    "pct_below_8_30": 0.8,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 77.1,
+    "female": 83.0,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "NAM",
+   "iso2": "NA",
+   "name_ko": "나미비아",
+   "name_en": "Namibia",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 80076,
+   "births_basis": {
+    "crude_birth_rate": 25.891,
+    "cbr_year": 2024,
+    "population": 3092816,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.011,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 40.0,
+     "u5mr": 43.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 32.6,
+     "u5mr": 35.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 22.9,
+    "pct_below_4_20": 35.0,
+    "pct_below_8_30": 61.1,
+    "year": 2015
+   },
+   "life_expectancy": {
+    "male": 63.454,
+    "female": 71.477,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "CHE",
+   "iso2": "CH",
+   "name_ko": "스위스",
+   "name_en": "Switzerland",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 79104,
+   "births_basis": {
+    "crude_birth_rate": 8.7,
+    "cbr_year": 2024,
+    "population": 9092436,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.051,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 3.7,
+     "u5mr": 4.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 3.1,
+     "u5mr": 3.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.2,
+    "pct_below_4_20": 0.2,
+    "pct_below_8_30": 0.3,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 82.7,
+    "female": 86.2,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "HUN",
+   "iso2": "HU",
+   "name_ko": "헝가리",
+   "name_en": "Hungary",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 78017,
+   "births_basis": {
+    "crude_birth_rate": 8.2,
+    "cbr_year": 2024,
+    "population": 9514251,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.059,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 3.4,
+     "u5mr": 4.1,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.8,
+     "u5mr": 3.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.9,
+    "pct_below_4_20": 1.8,
+    "pct_below_8_30": 4.9,
+    "year": 2017
+   },
+   "life_expectancy": {
+    "male": 73.7,
+    "female": 79.9,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "AUT",
+   "iso2": "AT",
+   "name_ko": "오스트리아",
+   "name_en": "Austria",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 77349,
+   "births_basis": {
+    "crude_birth_rate": 8.4,
+    "cbr_year": 2024,
+    "population": 9208163,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.055,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 3.0,
+     "u5mr": 3.6,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.6,
+     "u5mr": 3.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.5,
+    "pct_below_4_20": 0.6,
+    "pct_below_8_30": 1.0,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 79.8,
+    "female": 84.3,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "PAN",
+   "iso2": "PA",
+   "name_ko": "파나마",
+   "name_en": "Panama",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 72531,
+   "births_basis": {
+    "crude_birth_rate": 15.867,
+    "cbr_year": 2024,
+    "population": 4571189,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.053,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 13.0,
+     "u5mr": 16.6,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 10.8,
+     "u5mr": 13.9,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 3.1,
+    "pct_below_4_20": 6.8,
+    "pct_below_8_30": 19.8,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 76.879,
+    "female": 82.707,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "GAB",
+   "iso2": "GA",
+   "name_ko": "가봉",
+   "name_en": "Gabon",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Upper middle income",
+   "births": 70344,
+   "births_basis": {
+    "crude_birth_rate": 27.127,
+    "cbr_year": 2024,
+    "population": 2593130,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.021,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 29.1,
+     "u5mr": 36.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 22.7,
+     "u5mr": 28.9,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 3.8,
+    "pct_below_4_20": 8.0,
+    "pct_below_8_30": 32.9,
+    "year": 2017
+   },
+   "life_expectancy": {
+    "male": 66.064,
+    "female": 71.243,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "GRC",
+   "iso2": "GR",
+   "name_ko": "그리스",
+   "name_en": "Greece",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 68732,
+   "births_basis": {
+    "crude_birth_rate": 6.6,
+    "cbr_year": 2024,
+    "population": 10413962,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.064,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 3.5,
+     "u5mr": 4.1,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 3.0,
+     "u5mr": 3.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.6,
+    "pct_below_4_20": 0.8,
+    "pct_below_8_30": 3.2,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 79.4,
+    "female": 84.4,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "GNB",
+   "iso2": "GW",
+   "name_ko": "기니비사우",
+   "name_en": "Guinea-Bissau",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Low income",
+   "births": 66496,
+   "births_basis": {
+    "crude_birth_rate": 29.56,
+    "cbr_year": 2024,
+    "population": 2249515,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.04,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 46.8,
+     "u5mr": 72.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 37.1,
+     "u5mr": 61.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 39.9,
+    "pct_below_4_20": 62.1,
+    "pct_below_8_30": 91.4,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 61.816,
+    "female": 66.546,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BLR",
+   "iso2": "BY",
+   "name_ko": "벨라루스",
+   "name_en": "Belarus",
+   "region": "Europe & Central Asia",
+   "income_level": "Upper middle income",
+   "births": 63884,
+   "births_basis": {
+    "crude_birth_rate": 7.031,
+    "cbr_year": 2024,
+    "population": 9085991,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.059,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.0,
+     "u5mr": 2.6,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 1.6,
+     "u5mr": 2.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.0,
+    "pct_below_4_20": 0.1,
+    "pct_below_8_30": 2.6,
+    "year": 2020
+   },
+   "life_expectancy": {
+    "male": 69.739,
+    "female": 79.223,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BWA",
+   "iso2": "BW",
+   "name_ko": "보츠와나",
+   "name_en": "Botswana",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Upper middle income",
+   "births": 62416,
+   "births_basis": {
+    "crude_birth_rate": 24.361,
+    "cbr_year": 2024,
+    "population": 2562122,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.032,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 35.5,
+     "u5mr": 36.8,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 28.5,
+     "u5mr": 29.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 21.4,
+    "pct_below_4_20": 35.8,
+    "pct_below_8_30": 63.2,
+    "year": 2015
+   },
+   "life_expectancy": {
+    "male": 66.783,
+    "female": 71.851,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MNG",
+   "iso2": "MN",
+   "name_ko": "몽골",
+   "name_en": "Mongolia",
+   "region": "East Asia & Pacific",
+   "income_level": "Upper middle income",
+   "births": 60316,
+   "births_basis": {
+    "crude_birth_rate": 16.9,
+    "cbr_year": 2024,
+    "population": 3568978,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.044,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 12.4,
+     "u5mr": 14.8,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 10.0,
+     "u5mr": 12.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.4,
+    "pct_below_4_20": 2.3,
+    "pct_below_8_30": 24.4,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 67.92,
+    "female": 77.1,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SRB",
+   "iso2": "RS",
+   "name_ko": "세르비아",
+   "name_en": "Serbia",
+   "region": "Europe & Central Asia",
+   "income_level": "Upper middle income",
+   "births": 60252,
+   "births_basis": {
+    "crude_birth_rate": 9.2,
+    "cbr_year": 2024,
+    "population": 6549143,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.069,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 5.1,
+     "u5mr": 6.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 4.1,
+     "u5mr": 4.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 1.1,
+    "pct_below_4_20": 2.1,
+    "pct_below_8_30": 9.0,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 73.7,
+    "female": 78.35,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "NZL",
+   "iso2": "NZ",
+   "name_ko": "뉴질랜드",
+   "name_en": "New Zealand",
+   "region": "East Asia & Pacific",
+   "income_level": "High income",
+   "births": 58731,
+   "births_basis": {
+    "crude_birth_rate": 11.03,
+    "cbr_year": 2024,
+    "population": 5324700,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.053,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 4.3,
+     "u5mr": 5.1,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 3.7,
+     "u5mr": 4.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 80.4,
+    "female": 83.7,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "GNQ",
+   "iso2": "GQ",
+   "name_ko": "적도 기니",
+   "name_en": "Equatorial Guinea",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Upper middle income",
+   "births": 58141,
+   "births_basis": {
+    "crude_birth_rate": 29.994,
+    "cbr_year": 2024,
+    "population": 1938431,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.032,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 52.4,
+     "u5mr": 73.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 42.6,
+     "u5mr": 62.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 8.8,
+    "pct_below_4_20": 21.5,
+    "pct_below_8_30": 58.1,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 62.221,
+    "female": 65.885,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "DNK",
+   "iso2": "DK",
+   "name_ko": "덴마크",
+   "name_en": "Denmark",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 57087,
+   "births_basis": {
+    "crude_birth_rate": 9.5,
+    "cbr_year": 2024,
+    "population": 6009169,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.056,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 3.8,
+     "u5mr": 4.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 3.2,
+     "u5mr": 3.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.4,
+    "pct_below_4_20": 0.4,
+    "pct_below_8_30": 0.6,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 80.4,
+    "female": 84.2,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "LSO",
+   "iso2": "LS",
+   "name_ko": "레소토",
+   "name_en": "Lesotho",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 56157,
+   "births_basis": {
+    "crude_birth_rate": 23.762,
+    "cbr_year": 2024,
+    "population": 2363325,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.028,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 62.1,
+     "u5mr": 66.1,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 50.3,
+     "u5mr": 53.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 41.9,
+    "pct_below_4_20": 56.8,
+    "pct_below_8_30": 83.8,
+    "year": 2017
+   },
+   "life_expectancy": {
+    "male": 55.032,
+    "female": 60.438,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "IRL",
+   "iso2": "IE",
+   "name_ko": "아일랜드",
+   "name_en": "Ireland",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 54844,
+   "births_basis": {
+    "crude_birth_rate": 10.0,
+    "cbr_year": 2024,
+    "population": 5484367,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.056,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 3.7,
+     "u5mr": 4.1,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 3.2,
+     "u5mr": 3.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.1,
+    "pct_below_4_20": 0.1,
+    "pct_below_8_30": 0.3,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 81.4,
+    "female": 84.7,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "NOR",
+   "iso2": "NO",
+   "name_ko": "노르웨이",
+   "name_en": "Norway",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 54425,
+   "births_basis": {
+    "crude_birth_rate": 9.7,
+    "cbr_year": 2024,
+    "population": 5610870,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.061,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.3,
+     "u5mr": 2.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 1.8,
+     "u5mr": 2.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.2,
+    "pct_below_4_20": 0.2,
+    "pct_below_8_30": 0.4,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 81.6,
+    "female": 84.8,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BGR",
+   "iso2": "BG",
+   "name_ko": "불가리아",
+   "name_en": "Bulgaria",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 53396,
+   "births_basis": {
+    "crude_birth_rate": 8.3,
+    "cbr_year": 2024,
+    "population": 6433302,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.06,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 5.0,
+     "u5mr": 6.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 4.2,
+     "u5mr": 5.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 1.0,
+    "pct_below_4_20": 1.6,
+    "pct_below_8_30": 4.4,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 72.2,
+    "female": 79.5,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "CRI",
+   "iso2": "CR",
+   "name_ko": "코스타리카",
+   "name_en": "Costa Rica",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 51483,
+   "births_basis": {
+    "crude_birth_rate": 9.991,
+    "cbr_year": 2024,
+    "population": 5152950,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.046,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 9.8,
+     "u5mr": 11.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 8.3,
+     "u5mr": 9.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.8,
+    "pct_below_4_20": 1.7,
+    "pct_below_8_30": 9.7,
+    "year": 2025
+   },
+   "life_expectancy": {
+    "male": 78.368,
+    "female": 83.575,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "KWT",
+   "iso2": "KW",
+   "name_ko": "쿠웨이트",
+   "name_en": "Kuwait",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "High income",
+   "births": 48750,
+   "births_basis": {
+    "crude_birth_rate": 10.02,
+    "cbr_year": 2024,
+    "population": 4865298,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.047,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 7.5,
+     "u5mr": 8.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 6.5,
+     "u5mr": 7.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 83.8,
+    "female": 85.4,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SVK",
+   "iso2": "SK",
+   "name_ko": "슬로바키아",
+   "name_en": "Slovak Republic",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 46017,
+   "births_basis": {
+    "crude_birth_rate": 8.5,
+    "cbr_year": 2024,
+    "population": 5413813,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.055,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 5.9,
+     "u5mr": 6.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 4.7,
+     "u5mr": 5.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.5,
+    "pct_below_4_20": 0.8,
+    "pct_below_8_30": 4.1,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 75.2,
+    "female": 81.7,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SGP",
+   "iso2": "SG",
+   "name_ko": "싱가포르",
+   "name_en": "Singapore",
+   "region": "East Asia & Pacific",
+   "income_level": "High income",
+   "births": 45223,
+   "births_basis": {
+    "crude_birth_rate": 7.4,
+    "cbr_year": 2024,
+    "population": 6111175,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.06,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.3,
+     "u5mr": 2.8,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.1,
+     "u5mr": 2.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 81.2,
+    "female": 85.6,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "GEO",
+   "iso2": "GE",
+   "name_ko": "조지아",
+   "name_en": "Georgia",
+   "region": "Europe & Central Asia",
+   "income_level": "Upper middle income",
+   "births": 44431,
+   "births_basis": {
+    "crude_birth_rate": 11.289,
+    "cbr_year": 2024,
+    "population": 3935766,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.066,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 8.1,
+     "u5mr": 9.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 6.8,
+     "u5mr": 7.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 4.2,
+    "pct_below_4_20": 11.0,
+    "pct_below_8_30": 45.6,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 69.747,
+    "female": 79.233,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "FIN",
+   "iso2": "FI",
+   "name_ko": "핀란드",
+   "name_en": "Finland",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 44042,
+   "births_basis": {
+    "crude_birth_rate": 7.8,
+    "cbr_year": 2024,
+    "population": 5646436,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.052,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.0,
+     "u5mr": 2.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 1.7,
+     "u5mr": 2.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.2,
+    "pct_below_4_20": 0.2,
+    "pct_below_8_30": 0.4,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 79.8,
+    "female": 85.0,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "HKG",
+   "iso2": "HK",
+   "name_ko": "홍콩(중국 특별행정구)",
+   "name_en": "Hong Kong SAR, China",
+   "region": "East Asia & Pacific",
+   "income_level": "High income",
+   "births": 36745,
+   "births_basis": {
+    "crude_birth_rate": 4.9,
+    "cbr_year": 2024,
+    "population": 7498900,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.077,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 82.7,
+    "female": 88.22,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ARM",
+   "iso2": "AM",
+   "name_ko": "아르메니아",
+   "name_en": "Armenia",
+   "region": "Europe & Central Asia",
+   "income_level": "Upper middle income",
+   "births": 34262,
+   "births_basis": {
+    "crude_birth_rate": 11.1,
+    "cbr_year": 2024,
+    "population": 3086700,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.083,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 9.3,
+     "u5mr": 10.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 7.7,
+     "u5mr": 8.7,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.8,
+    "pct_below_4_20": 5.7,
+    "pct_below_8_30": 47.4,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 75.1,
+    "female": 81.7,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "URY",
+   "iso2": "UY",
+   "name_ko": "우루과이",
+   "name_en": "Uruguay",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 33177,
+   "births_basis": {
+    "crude_birth_rate": 9.802,
+    "cbr_year": 2024,
+    "population": 3384688,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.055,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 6.9,
+     "u5mr": 8.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 5.4,
+     "u5mr": 6.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.2,
+    "pct_below_4_20": 0.5,
+    "pct_below_8_30": 5.9,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 74.384,
+    "female": 82.043,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "JAM",
+   "iso2": "JM",
+   "name_ko": "자메이카",
+   "name_en": "Jamaica",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 32485,
+   "births_basis": {
+    "crude_birth_rate": 11.45,
+    "cbr_year": 2024,
+    "population": 2837077,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.039,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 18.4,
+     "u5mr": 19.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 14.3,
+     "u5mr": 15.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 1.4,
+    "pct_below_4_20": 5.1,
+    "pct_below_8_30": 22.9,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 69.076,
+    "female": 74.146,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "HRV",
+   "iso2": "HR",
+   "name_ko": "크로아티아",
+   "name_en": "Croatia",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 32172,
+   "births_basis": {
+    "crude_birth_rate": 8.3,
+    "cbr_year": 2024,
+    "population": 3876200,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.06,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 4.5,
+     "u5mr": 6.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 3.8,
+     "u5mr": 5.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.3,
+    "pct_below_4_20": 0.6,
+    "pct_below_8_30": 2.0,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 76.1,
+    "female": 81.9,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "TLS",
+   "iso2": "TL",
+   "name_ko": "동티모르",
+   "name_en": "Timor-Leste",
+   "region": "East Asia & Pacific",
+   "income_level": "Lower middle income",
+   "births": 30878,
+   "births_basis": {
+    "crude_birth_rate": 21.768,
+    "cbr_year": 2024,
+    "population": 1418517,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.071,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 38.2,
+     "u5mr": 51.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 30.9,
+     "u5mr": 43.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 44.0,
+    "pct_below_4_20": 71.4,
+    "pct_below_8_30": 96.0,
+    "year": 2014
+   },
+   "life_expectancy": {
+    "male": 66.265,
+    "female": 69.672,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SWZ",
+   "iso2": "SZ",
+   "name_ko": "에스와티니",
+   "name_en": "Eswatini",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 29706,
+   "births_basis": {
+    "crude_birth_rate": 23.648,
+    "cbr_year": 2024,
+    "population": 1256174,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.029,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 46.6,
+     "u5mr": 49.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 37.5,
+     "u5mr": 40.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 44.5,
+    "pct_below_4_20": 58.3,
+    "pct_below_8_30": 79.3,
+    "year": 2016
+   },
+   "life_expectancy": {
+    "male": 61.319,
+    "female": 67.106,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "QAT",
+   "iso2": "QA",
+   "name_ko": "카타르",
+   "name_en": "Qatar",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "High income",
+   "births": 28307,
+   "births_basis": {
+    "crude_birth_rate": 9.524,
+    "cbr_year": 2024,
+    "population": 2972215,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.041,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 5.1,
+     "u5mr": 6.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 4.6,
+     "u5mr": 5.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.0,
+    "pct_below_4_20": 0.0,
+    "pct_below_8_30": 0.0,
+    "year": 2017
+   },
+   "life_expectancy": {
+    "male": 81.778,
+    "female": 83.479,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MDA",
+   "iso2": "MD",
+   "name_ko": "몰도바",
+   "name_en": "Moldova",
+   "region": "Europe & Central Asia",
+   "income_level": "Upper middle income",
+   "births": 24998,
+   "births_basis": {
+    "crude_birth_rate": 10.59,
+    "cbr_year": 2024,
+    "population": 2360527,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.062,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 16.8,
+     "u5mr": 18.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 13.4,
+     "u5mr": 14.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.1,
+    "pct_below_4_20": 0.8,
+    "pct_below_8_30": 20.4,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 66.699,
+    "female": 75.672,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "COM",
+   "iso2": "KM",
+   "name_ko": "코모로",
+   "name_en": "Comoros",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 24925,
+   "births_basis": {
+    "crude_birth_rate": 28.232,
+    "cbr_year": 2024,
+    "population": 882847,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.032,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 38.0,
+     "u5mr": 42.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 31.8,
+     "u5mr": 35.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 5.1,
+    "pct_below_4_20": 18.0,
+    "pct_below_8_30": 68.2,
+    "year": 2024
+   },
+   "life_expectancy": {
+    "male": 65.015,
+    "female": 69.199,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "DJI",
+   "iso2": "DJ",
+   "name_ko": "지부티",
+   "name_en": "Djibouti",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "Lower middle income",
+   "births": 24784,
+   "births_basis": {
+    "crude_birth_rate": 20.931,
+    "cbr_year": 2024,
+    "population": 1184076,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.037,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 46.9,
+     "u5mr": 53.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 38.9,
+     "u5mr": 44.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 25.4,
+    "pct_below_4_20": 43.7,
+    "pct_below_8_30": 80.8,
+    "year": 2017
+   },
+   "life_expectancy": {
+    "male": 63.726,
+    "female": 68.741,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BIH",
+   "iso2": "BA",
+   "name_ko": "보스니아 헤르체고비나",
+   "name_en": "Bosnia and Herzegovina",
+   "region": "Europe & Central Asia",
+   "income_level": "Upper middle income",
+   "births": 24242,
+   "births_basis": {
+    "crude_birth_rate": 7.72,
+    "cbr_year": 2024,
+    "population": 3140095,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.067,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 5.9,
+     "u5mr": 7.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 5.0,
+     "u5mr": 6.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.3,
+    "pct_below_4_20": 1.0,
+    "pct_below_8_30": 11.7,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 74.649,
+    "female": 81.068,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ALB",
+   "iso2": "AL",
+   "name_ko": "알바니아",
+   "name_en": "Albania",
+   "region": "Europe & Central Asia",
+   "income_level": "Upper middle income",
+   "births": 23804,
+   "births_basis": {
+    "crude_birth_rate": 10.131,
+    "cbr_year": 2024,
+    "population": 2349580,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.068,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 9.1,
+     "u5mr": 10.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 7.4,
+     "u5mr": 8.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.3,
+    "pct_below_4_20": 2.1,
+    "pct_below_8_30": 19.9,
+    "year": 2020
+   },
+   "life_expectancy": {
+    "male": 77.924,
+    "female": 81.593,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SLB",
+   "iso2": "SB",
+   "name_ko": "솔로몬 제도",
+   "name_en": "Solomon Islands",
+   "region": "East Asia & Pacific",
+   "income_level": "Lower middle income",
+   "births": 22398,
+   "births_basis": {
+    "crude_birth_rate": 26.707,
+    "cbr_year": 2024,
+    "population": 838645,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.07,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 17.8,
+     "u5mr": 21.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 14.9,
+     "u5mr": 18.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 40.3,
+    "pct_below_4_20": 62.9,
+    "pct_below_8_30": 90.7,
+    "year": 2012
+   },
+   "life_expectancy": {
+    "male": 69.356,
+    "female": 72.176,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BHR",
+   "iso2": "BH",
+   "name_ko": "바레인",
+   "name_en": "Bahrain",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "High income",
+   "births": 19257,
+   "births_basis": {
+    "crude_birth_rate": 12.033,
+    "cbr_year": 2024,
+    "population": 1600366,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.038,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 7.5,
+     "u5mr": 9.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 7.1,
+     "u5mr": 8.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 80.855,
+    "female": 82.127,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "LTU",
+   "iso2": "LT",
+   "name_ko": "리투아니아",
+   "name_en": "Lithuania",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 19066,
+   "births_basis": {
+    "crude_birth_rate": 6.6,
+    "cbr_year": 2024,
+    "population": 2888774,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.052,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 3.1,
+     "u5mr": 3.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.6,
+     "u5mr": 3.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 1.1,
+    "pct_below_4_20": 1.2,
+    "pct_below_8_30": 3.2,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 73.0,
+    "female": 81.6,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "XKX",
+   "iso2": "XK",
+   "name_ko": "코소보",
+   "name_en": "Kosovo",
+   "region": "Europe & Central Asia",
+   "income_level": "Upper middle income",
+   "births": 18689,
+   "births_basis": {
+    "crude_birth_rate": 11.852,
+    "cbr_year": 2024,
+    "population": 1576876,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.069,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 8.7,
+     "u5mr": 9.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 7.2,
+     "u5mr": 7.9,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 10.0,
+    "pct_below_4_20": 14.9,
+    "pct_below_8_30": 38.2,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 76.008,
+    "female": 80.281,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "PRI",
+   "iso2": "PR",
+   "name_ko": "푸에르토리코",
+   "name_en": "Puerto Rico (US)",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 18154,
+   "births_basis": {
+    "crude_birth_rate": 5.7,
+    "cbr_year": 2024,
+    "population": 3184835,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.052,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 78.279,
+    "female": 85.376,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SVN",
+   "iso2": "SI",
+   "name_ko": "슬로베니아",
+   "name_en": "Slovenia",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 16835,
+   "births_basis": {
+    "crude_birth_rate": 7.9,
+    "cbr_year": 2024,
+    "population": 2130986,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.063,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.0,
+     "u5mr": 2.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 1.7,
+     "u5mr": 2.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.0,
+    "pct_below_4_20": 0.0,
+    "pct_below_8_30": 0.1,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 79.7,
+    "female": 85.0,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "FJI",
+   "iso2": "FJ",
+   "name_ko": "피지",
+   "name_en": "Fiji",
+   "region": "East Asia & Pacific",
+   "income_level": "Upper middle income",
+   "births": 16670,
+   "births_basis": {
+    "crude_birth_rate": 17.864,
+    "cbr_year": 2024,
+    "population": 933154,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.071,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 25.8,
+     "u5mr": 31.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 21.1,
+     "u5mr": 26.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 4.7,
+    "pct_below_4_20": 15.1,
+    "pct_below_8_30": 61.3,
+    "year": 2019
+   },
+   "life_expectancy": {
+    "male": 65.474,
+    "female": 69.541,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "GUY",
+   "iso2": "GY",
+   "name_ko": "가이아나",
+   "name_en": "Guyana",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 16622,
+   "births_basis": {
+    "crude_birth_rate": 19.883,
+    "cbr_year": 2024,
+    "population": 835986,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.037,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 26.1,
+     "u5mr": 28.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 20.2,
+     "u5mr": 21.9,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 13.0,
+    "pct_below_4_20": 21.5,
+    "pct_below_8_30": 54.2,
+    "year": 1998
+   },
+   "life_expectancy": {
+    "male": 66.624,
+    "female": 74.091,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MKD",
+   "iso2": "MK",
+   "name_ko": "북마케도니아",
+   "name_en": "North Macedonia",
+   "region": "Europe & Central Asia",
+   "income_level": "Upper middle income",
+   "births": 16024,
+   "births_basis": {
+    "crude_birth_rate": 8.8,
+    "cbr_year": 2024,
+    "population": 1820909,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.076,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.6,
+     "u5mr": 3.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.3,
+     "u5mr": 2.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 3.9,
+    "pct_below_4_20": 7.4,
+    "pct_below_8_30": 20.5,
+    "year": 2019
+   },
+   "life_expectancy": {
+    "male": 74.48,
+    "female": 78.86,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "TTO",
+   "iso2": "TT",
+   "name_ko": "트리니다드 토바고",
+   "name_en": "Trinidad and Tobago",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 14420,
+   "births_basis": {
+    "crude_birth_rate": 10.543,
+    "cbr_year": 2024,
+    "population": 1367764,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.04,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 18.6,
+     "u5mr": 20.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 15.3,
+     "u5mr": 17.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 3.2,
+    "pct_below_4_20": 9.0,
+    "pct_below_8_30": 30.5,
+    "year": 1992
+   },
+   "life_expectancy": {
+    "male": 70.508,
+    "female": 76.825,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "CYP",
+   "iso2": "CY",
+   "name_ko": "키프로스",
+   "name_en": "Cyprus",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 14416,
+   "births_basis": {
+    "crude_birth_rate": 10.517,
+    "cbr_year": 2024,
+    "population": 1370754,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.065,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 4.4,
+     "u5mr": 5.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 3.8,
+     "u5mr": 4.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.0,
+    "pct_below_4_20": 0.0,
+    "pct_below_8_30": 0.1,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 79.841,
+    "female": 83.8,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MUS",
+   "iso2": "MU",
+   "name_ko": "모리셔스",
+   "name_en": "Mauritius",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Upper middle income",
+   "births": 12811,
+   "births_basis": {
+    "crude_birth_rate": 10.3,
+    "cbr_year": 2024,
+    "population": 1243741,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.035,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 15.3,
+     "u5mr": 16.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 12.3,
+     "u5mr": 13.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.5,
+    "pct_below_4_20": 2.3,
+    "pct_below_8_30": 19.1,
+    "year": 2017
+   },
+   "life_expectancy": {
+    "male": 70.35,
+    "female": 77.4,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "LVA",
+   "iso2": "LV",
+   "name_ko": "라트비아",
+   "name_en": "Latvia",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 12750,
+   "births_basis": {
+    "crude_birth_rate": 6.9,
+    "cbr_year": 2024,
+    "population": 1847785,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.063,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.3,
+     "u5mr": 2.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.0,
+     "u5mr": 2.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.4,
+    "pct_below_4_20": 0.7,
+    "pct_below_8_30": 2.8,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 71.6,
+    "female": 81.5,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SUR",
+   "iso2": "SR",
+   "name_ko": "수리남",
+   "name_en": "Suriname",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 10975,
+   "births_basis": {
+    "crude_birth_rate": 17.152,
+    "cbr_year": 2024,
+    "population": 639850,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.04,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 16.5,
+     "u5mr": 17.6,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 12.9,
+     "u5mr": 13.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 2.2,
+    "pct_below_4_20": 4.6,
+    "pct_below_8_30": 20.9,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 70.595,
+    "female": 76.979,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BTN",
+   "iso2": "BT",
+   "name_ko": "부탄",
+   "name_en": "Bhutan",
+   "region": "South Asia",
+   "income_level": "Lower middle income",
+   "births": 9978,
+   "births_basis": {
+    "crude_birth_rate": 12.525,
+    "cbr_year": 2024,
+    "population": 796682,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.048,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 15.2,
+     "u5mr": 18.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 12.1,
+     "u5mr": 15.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.0,
+    "pct_below_4_20": 0.4,
+    "pct_below_8_30": 9.0,
+    "year": 2022
+   },
+   "life_expectancy": {
+    "male": 71.571,
+    "female": 75.27,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "EST",
+   "iso2": "EE",
+   "name_ko": "에스토니아",
+   "name_en": "Estonia",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 9702,
+   "births_basis": {
+    "crude_birth_rate": 7.1,
+    "cbr_year": 2024,
+    "population": 1366475,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.061,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 1.7,
+     "u5mr": 2.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 1.4,
+     "u5mr": 1.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.3,
+    "pct_below_4_20": 0.6,
+    "pct_below_8_30": 1.3,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 75.1,
+    "female": 83.7,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "VUT",
+   "iso2": "VU",
+   "name_ko": "바누아투",
+   "name_en": "Vanuatu",
+   "region": "East Asia & Pacific",
+   "income_level": "Lower middle income",
+   "births": 9268,
+   "births_basis": {
+    "crude_birth_rate": 27.651,
+    "cbr_year": 2024,
+    "population": 335169,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.07,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 15.4,
+     "u5mr": 18.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 13.4,
+     "u5mr": 15.9,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 19.5,
+    "pct_below_4_20": 36.9,
+    "pct_below_8_30": 81.3,
+    "year": 2019
+   },
+   "life_expectancy": {
+    "male": 69.585,
+    "female": 74.113,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BLZ",
+   "iso2": "BZ",
+   "name_ko": "벨리즈",
+   "name_en": "Belize",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 7634,
+   "births_basis": {
+    "crude_birth_rate": 18.051,
+    "cbr_year": 2024,
+    "population": 422924,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.051,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 11.9,
+     "u5mr": 13.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 9.7,
+     "u5mr": 11.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 1.0,
+    "pct_below_4_20": 4.0,
+    "pct_below_8_30": 19.7,
+    "year": 2018
+   },
+   "life_expectancy": {
+    "male": 71.079,
+    "female": 76.663,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MNE",
+   "iso2": "ME",
+   "name_ko": "몬테네그로",
+   "name_en": "Montenegro",
+   "region": "Europe & Central Asia",
+   "income_level": "Upper middle income",
+   "births": 6979,
+   "births_basis": {
+    "crude_birth_rate": 11.2,
+    "cbr_year": 2024,
+    "population": 623129,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.067,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.0,
+     "u5mr": 2.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 1.8,
+     "u5mr": 2.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 2.5,
+    "pct_below_4_20": 4.0,
+    "pct_below_8_30": 14.5,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 75.5,
+    "female": 80.4,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "STP",
+   "iso2": "ST",
+   "name_ko": "상투메 프린시페",
+   "name_en": "Sao Tome and Principe",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Lower middle income",
+   "births": 6750,
+   "births_basis": {
+    "crude_birth_rate": 28.094,
+    "cbr_year": 2024,
+    "population": 240254,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.027,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 10.1,
+     "u5mr": 14.8,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 8.2,
+     "u5mr": 12.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 13.0,
+    "pct_below_4_20": 30.5,
+    "pct_below_8_30": 70.0,
+    "year": 2017
+   },
+   "life_expectancy": {
+    "male": 66.409,
+    "female": 73.909,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "LUX",
+   "iso2": "LU",
+   "name_ko": "룩셈부르크",
+   "name_en": "Luxembourg",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 6526,
+   "births_basis": {
+    "crude_birth_rate": 9.5,
+    "cbr_year": 2024,
+    "population": 686970,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.053,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.0,
+     "u5mr": 2.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 1.7,
+     "u5mr": 2.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.1,
+    "pct_below_4_20": 0.1,
+    "pct_below_8_30": 0.2,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 81.0,
+    "female": 85.5,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "CPV",
+   "iso2": "CV",
+   "name_ko": "카보베르데",
+   "name_en": "Cabo Verde",
+   "region": "Sub-Saharan Africa",
+   "income_level": "Upper middle income",
+   "births": 6445,
+   "births_basis": {
+    "crude_birth_rate": 12.222,
+    "cbr_year": 2024,
+    "population": 527326,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.033,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 11.6,
+     "u5mr": 12.1,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 9.6,
+     "u5mr": 10.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 14.6,
+    "pct_below_4_20": 29.7,
+    "pct_below_8_30": 65.0,
+    "year": 2015
+   },
+   "life_expectancy": {
+    "male": 73.05,
+    "female": 79.367,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BRN",
+   "iso2": "BN",
+   "name_ko": "브루나이",
+   "name_en": "Brunei Darussalam",
+   "region": "East Asia & Pacific",
+   "income_level": "High income",
+   "births": 6215,
+   "births_basis": {
+    "crude_birth_rate": 13.328,
+    "cbr_year": 2024,
+    "population": 466330,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.076,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 9.2,
+     "u5mr": 10.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 8.0,
+     "u5mr": 9.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 73.491,
+    "female": 77.733,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MDV",
+   "iso2": "MV",
+   "name_ko": "몰디브",
+   "name_en": "Maldives",
+   "region": "South Asia",
+   "income_level": "Upper middle income",
+   "births": 5608,
+   "births_basis": {
+    "crude_birth_rate": 10.587,
+    "cbr_year": 2024,
+    "population": 529676,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.051,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 5.1,
+     "u5mr": 5.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 4.3,
+     "u5mr": 5.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.0,
+    "pct_below_4_20": 0.0,
+    "pct_below_8_30": 11.2,
+    "year": 2019
+   },
+   "life_expectancy": {
+    "male": 79.948,
+    "female": 83.0,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "WSM",
+   "iso2": "WS",
+   "name_ko": "사모아",
+   "name_en": "Samoa",
+   "region": "East Asia & Pacific",
+   "income_level": "Upper middle income",
+   "births": 5476,
+   "births_basis": {
+    "crude_birth_rate": 24.969,
+    "cbr_year": 2024,
+    "population": 219306,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.076,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 13.6,
+     "u5mr": 16.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 10.9,
+     "u5mr": 13.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 4.5,
+    "pct_below_4_20": 11.5,
+    "pct_below_8_30": 49.4,
+    "year": 2013
+   },
+   "life_expectancy": {
+    "male": 69.96,
+    "female": 73.822,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MLT",
+   "iso2": "MT",
+   "name_ko": "몰타",
+   "name_en": "Malta",
+   "region": "Middle East, North Africa, Afghanistan & Pakistan",
+   "income_level": "High income",
+   "births": 4464,
+   "births_basis": {
+    "crude_birth_rate": 7.7,
+    "cbr_year": 2024,
+    "population": 579704,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.068,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 5.0,
+     "u5mr": 5.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 4.4,
+     "u5mr": 4.9,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.4,
+    "pct_below_4_20": 0.9,
+    "pct_below_8_30": 1.1,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 81.2,
+    "female": 84.8,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ISL",
+   "iso2": "IS",
+   "name_ko": "아이슬란드",
+   "name_en": "Iceland",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 4395,
+   "births_basis": {
+    "crude_birth_rate": 11.2,
+    "cbr_year": 2024,
+    "population": 392404,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.059,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.3,
+     "u5mr": 3.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 1.9,
+     "u5mr": 2.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.1,
+    "pct_below_4_20": 0.1,
+    "pct_below_8_30": 0.4,
+    "year": 2019
+   },
+   "life_expectancy": {
+    "male": 81.2,
+    "female": 84.5,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BHS",
+   "iso2": "BS",
+   "name_ko": "바하마",
+   "name_en": "Bahamas, The",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 4360,
+   "births_basis": {
+    "crude_birth_rate": 10.817,
+    "cbr_year": 2024,
+    "population": 403033,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.028,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 11.9,
+     "u5mr": 13.3,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 10.2,
+     "u5mr": 11.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 71.055,
+    "female": 78.327,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "NCL",
+   "iso2": "NC",
+   "name_ko": "뉴칼레도니아",
+   "name_en": "New Caledonia",
+   "region": "East Asia & Pacific",
+   "income_level": "High income",
+   "births": 4144,
+   "births_basis": {
+    "crude_birth_rate": 14.03,
+    "cbr_year": 2024,
+    "population": 295333,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.059,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 76.457,
+    "female": 81.409,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MAC",
+   "iso2": "MO",
+   "name_ko": "마카오(중국 특별행정구)",
+   "name_en": "Macao SAR, China",
+   "region": "East Asia & Pacific",
+   "income_level": "High income",
+   "births": 3635,
+   "births_basis": {
+    "crude_birth_rate": 5.3,
+    "cbr_year": 2024,
+    "population": 685900,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.079,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 80.6,
+    "female": 86.2,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "KIR",
+   "iso2": "KI",
+   "name_ko": "키리바시",
+   "name_en": "Kiribati",
+   "region": "East Asia & Pacific",
+   "income_level": "Lower middle income",
+   "births": 3454,
+   "births_basis": {
+    "crude_birth_rate": 25.309,
+    "cbr_year": 2024,
+    "population": 136488,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.071,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 42.9,
+     "u5mr": 57.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 34.5,
+     "u5mr": 48.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.9,
+    "pct_below_4_20": 5.7,
+    "pct_below_8_30": 52.0,
+    "year": 2023
+   },
+   "life_expectancy": {
+    "male": 64.687,
+    "female": 68.324,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BRB",
+   "iso2": "BB",
+   "name_ko": "바베이도스",
+   "name_en": "Barbados",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 3142,
+   "births_basis": {
+    "crude_birth_rate": 11.117,
+    "cbr_year": 2024,
+    "population": 282623,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.035,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 9.7,
+     "u5mr": 10.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 8.3,
+     "u5mr": 9.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 1.7,
+    "pct_below_4_20": 3.2,
+    "pct_below_8_30": 15.8,
+    "year": 2016
+   },
+   "life_expectancy": {
+    "male": 73.752,
+    "female": 78.763,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "PYF",
+   "iso2": "PF",
+   "name_ko": "프랑스령 폴리네시아",
+   "name_en": "French Polynesia",
+   "region": "East Asia & Pacific",
+   "income_level": "High income",
+   "births": 3019,
+   "births_basis": {
+    "crude_birth_rate": 10.688,
+    "cbr_year": 2024,
+    "population": 282465,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.059,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 81.902,
+    "female": 86.624,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "GUM",
+   "iso2": "GU",
+   "name_ko": "괌",
+   "name_en": "Guam",
+   "region": "East Asia & Pacific",
+   "income_level": "High income",
+   "births": 2931,
+   "births_basis": {
+    "crude_birth_rate": 17.342,
+    "cbr_year": 2024,
+    "population": 168999,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.07,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 73.655,
+    "female": 81.589,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "FSM",
+   "iso2": "FM",
+   "name_ko": "미크로네시아",
+   "name_en": "Micronesia, Fed. Sts.",
+   "region": "East Asia & Pacific",
+   "income_level": "Upper middle income",
+   "births": 2537,
+   "births_basis": {
+    "crude_birth_rate": 22.318,
+    "cbr_year": 2024,
+    "population": 113683,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.07,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 22.9,
+     "u5mr": 25.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 17.6,
+     "u5mr": 19.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 26.1,
+    "pct_below_4_20": 43.8,
+    "pct_below_8_30": 78.1,
+    "year": 2013
+   },
+   "life_expectancy": {
+    "male": 63.631,
+    "female": 71.277,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "TON",
+   "iso2": "TO",
+   "name_ko": "통가",
+   "name_en": "Tonga",
+   "region": "East Asia & Pacific",
+   "income_level": "Upper middle income",
+   "births": 2390,
+   "births_basis": {
+    "crude_birth_rate": 23.04,
+    "cbr_year": 2024,
+    "population": 103742,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.081,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 8.6,
+     "u5mr": 10.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 6.9,
+     "u5mr": 8.5,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.4,
+    "pct_below_4_20": 1.8,
+    "pct_below_8_30": 26.7,
+    "year": 2021
+   },
+   "life_expectancy": {
+    "male": 69.503,
+    "female": 76.543,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "LCA",
+   "iso2": "LC",
+   "name_ko": "세인트루시아",
+   "name_en": "St. Lucia",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 2019,
+   "births_basis": {
+    "crude_birth_rate": 11.209,
+    "cbr_year": 2024,
+    "population": 180149,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.031,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 17.2,
+     "u5mr": 18.8,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 14.3,
+     "u5mr": 15.6,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.1,
+    "pct_below_4_20": 0.3,
+    "pct_below_8_30": 7.8,
+    "year": 2015
+   },
+   "life_expectancy": {
+    "male": 69.452,
+    "female": 76.45,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "CHI",
+   "iso2": "JG",
+   "name_ko": "채널 제도",
+   "name_en": "Channel Islands",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 1381,
+   "births_basis": {
+    "crude_birth_rate": 8.2,
+    "cbr_year": 2024,
+    "population": 168466,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.054,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 79.1,
+    "female": 83.3,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SYC",
+   "iso2": "SC",
+   "name_ko": "세이셸",
+   "name_en": "Seychelles",
+   "region": "Sub-Saharan Africa",
+   "income_level": "High income",
+   "births": 1350,
+   "births_basis": {
+    "crude_birth_rate": 11.0,
+    "cbr_year": 2024,
+    "population": 122730,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.036,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 13.8,
+     "u5mr": 15.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 11.9,
+     "u5mr": 12.9,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.7,
+    "pct_below_4_20": 1.4,
+    "pct_below_8_30": 8.4,
+    "year": 2018
+   },
+   "life_expectancy": {
+    "male": 72.1,
+    "female": 80.7,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "GRD",
+   "iso2": "GD",
+   "name_ko": "그레나다",
+   "name_en": "Grenada",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 1346,
+   "births_basis": {
+    "crude_birth_rate": 11.477,
+    "cbr_year": 2024,
+    "population": 117303,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.039,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 17.8,
+     "u5mr": 19.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 15.0,
+     "u5mr": 16.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 0.8,
+    "pct_below_4_20": 2.9,
+    "pct_below_8_30": 19.6,
+    "year": 2018
+   },
+   "life_expectancy": {
+    "male": 72.52,
+    "female": 78.504,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "VCT",
+   "iso2": "VC",
+   "name_ko": "세인트빈센트그레나딘",
+   "name_en": "St. Vincent and the Grenadines",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 1195,
+   "births_basis": {
+    "crude_birth_rate": 11.955,
+    "cbr_year": 2024,
+    "population": 99924,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.033,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 11.1,
+     "u5mr": 12.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 9.3,
+     "u5mr": 10.3,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 68.782,
+    "female": 74.476,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "VIR",
+   "iso2": "VI",
+   "name_ko": "미국령 버진아일랜드",
+   "name_en": "Virgin Islands (U.S.)",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 1152,
+   "births_basis": {
+    "crude_birth_rate": 11.1,
+    "cbr_year": 2024,
+    "population": 103792,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.039,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 77.6,
+    "female": 84.1,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "CUW",
+   "iso2": "CW",
+   "name_ko": "퀴라소",
+   "name_en": "Curacao",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 1125,
+   "births_basis": {
+    "crude_birth_rate": 7.2,
+    "cbr_year": 2024,
+    "population": 156263,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.047,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 72.662,
+    "female": 80.962,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ATG",
+   "iso2": "AG",
+   "name_ko": "앤티가 바부다",
+   "name_en": "Antigua and Barbuda",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 1107,
+   "births_basis": {
+    "crude_birth_rate": 11.747,
+    "cbr_year": 2024,
+    "population": 94209,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.032,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 7.6,
+     "u5mr": 9.8,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 6.4,
+     "u5mr": 8.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 74.742,
+    "female": 80.446,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "CYM",
+   "iso2": "KY",
+   "name_ko": "케이맨 제도",
+   "name_en": "Cayman Islands",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 877,
+   "births_basis": {
+    "crude_birth_rate": 11.56,
+    "cbr_year": 2024,
+    "population": 75844,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.036,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 78.196,
+    "female": 83.004,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ABW",
+   "iso2": "AW",
+   "name_ko": "아루바",
+   "name_en": "Aruba",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 826,
+   "births_basis": {
+    "crude_birth_rate": 7.593,
+    "cbr_year": 2024,
+    "population": 108785,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.043,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 73.845,
+    "female": 78.918,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MHL",
+   "iso2": "MH",
+   "name_ko": "마셜 제도",
+   "name_en": "Marshall Islands",
+   "region": "East Asia & Pacific",
+   "income_level": "Upper middle income",
+   "births": 729,
+   "births_basis": {
+    "crude_birth_rate": 20.087,
+    "cbr_year": 2024,
+    "population": 36282,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.07,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 25.1,
+     "u5mr": 29.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 20.1,
+     "u5mr": 23.8,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 2.1,
+    "pct_below_4_20": 6.7,
+    "pct_below_8_30": 36.5,
+    "year": 2019
+   },
+   "life_expectancy": {
+    "male": 65.026,
+    "female": 69.476,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "DMA",
+   "iso2": "DM",
+   "name_ko": "도미니카",
+   "name_en": "Dominica",
+   "region": "Latin America & Caribbean",
+   "income_level": "Upper middle income",
+   "births": 723,
+   "births_basis": {
+    "crude_birth_rate": 10.98,
+    "cbr_year": 2024,
+    "population": 65871,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.035,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 35.5,
+     "u5mr": 38.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 31.1,
+     "u5mr": 33.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 68.352,
+    "female": 74.718,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "IMN",
+   "iso2": "IM",
+   "name_ko": "맨섬",
+   "name_en": "Isle of Man",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 696,
+   "births_basis": {
+    "crude_birth_rate": 8.277,
+    "cbr_year": 2024,
+    "population": 84118,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.05,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 79.04,
+    "female": 83.202,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "ASM",
+   "iso2": "AS",
+   "name_ko": "아메리칸 사모아",
+   "name_en": "American Samoa",
+   "region": "East Asia & Pacific",
+   "income_level": "High income",
+   "births": 690,
+   "births_basis": {
+    "crude_birth_rate": 14.994,
+    "cbr_year": 2024,
+    "population": 46029,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.06,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 70.323,
+    "female": 75.994,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "GRL",
+   "iso2": "GL",
+   "name_ko": "그린란드",
+   "name_en": "Greenland",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 682,
+   "births_basis": {
+    "crude_birth_rate": 12.0,
+    "cbr_year": 2024,
+    "population": 56831,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.05,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 68.41,
+    "female": 72.23,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "FRO",
+   "iso2": "FO",
+   "name_ko": "페로 제도",
+   "name_en": "Faroe Islands",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 593,
+   "births_basis": {
+    "crude_birth_rate": 10.8,
+    "cbr_year": 2024,
+    "population": 54900,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.067,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 81.3391,
+    "female": 84.9146,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "AND",
+   "iso2": "AD",
+   "name_ko": "안도라",
+   "name_en": "Andorra",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 568,
+   "births_basis": {
+    "crude_birth_rate": 6.852,
+    "cbr_year": 2024,
+    "population": 82904,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.063,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.7,
+     "u5mr": 2.8,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.1,
+     "u5mr": 2.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 82.258,
+    "female": 86.24,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "KNA",
+   "iso2": "KN",
+   "name_ko": "세인트키츠 네비스",
+   "name_en": "St. Kitts and Nevis",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 551,
+   "births_basis": {
+    "crude_birth_rate": 11.741,
+    "cbr_year": 2024,
+    "population": 46922,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.037,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 15.4,
+     "u5mr": 17.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 12.5,
+     "u5mr": 14.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 68.689,
+    "female": 76.156,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MNP",
+   "iso2": "MP",
+   "name_ko": "북마리아나제도",
+   "name_en": "Northern Mariana Islands",
+   "region": "East Asia & Pacific",
+   "income_level": "High income",
+   "births": 527,
+   "births_basis": {
+    "crude_birth_rate": 12.107,
+    "cbr_year": 2024,
+    "population": 43541,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.151,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 77.278,
+    "female": 80.867,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "BMU",
+   "iso2": "BM",
+   "name_ko": "버뮤다",
+   "name_en": "Bermuda",
+   "region": "North America",
+   "income_level": "High income",
+   "births": 511,
+   "births_basis": {
+    "crude_birth_rate": 7.92,
+    "cbr_year": 2024,
+    "population": 64555,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.04,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 79.064,
+    "female": 85.871,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "TCA",
+   "iso2": "TC",
+   "name_ko": "터크스 케이커스 제도",
+   "name_en": "Turks and Caicos Islands",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 494,
+   "births_basis": {
+    "crude_birth_rate": 10.539,
+    "cbr_year": 2024,
+    "population": 46855,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.049,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 3.2,
+     "u5mr": 5.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.9,
+     "u5mr": 4.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 76.007,
+    "female": 80.449,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "GIB",
+   "iso2": "GI",
+   "name_ko": "지브롤터",
+   "name_en": "Gibraltar",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 490,
+   "births_basis": {
+    "crude_birth_rate": 12.205,
+    "cbr_year": 2024,
+    "population": 40126,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.065,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 81.028,
+    "female": 86.192,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SXM",
+   "iso2": "SX",
+   "name_ko": "신트마르턴",
+   "name_en": "Sint Maarten (Dutch part)",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 399,
+   "births_basis": {
+    "crude_birth_rate": 9.085,
+    "cbr_year": 2024,
+    "population": 43923,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.039,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 73.849,
+    "female": 79.656,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MAF",
+   "iso2": "MF",
+   "name_ko": "생마르탱",
+   "name_en": "St. Martin (French part)",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 375,
+   "births_basis": {
+    "crude_birth_rate": 15.045,
+    "cbr_year": 2024,
+    "population": 24941,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.04,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 76.987,
+    "female": 83.963,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "MCO",
+   "iso2": "MC",
+   "name_ko": "모나코",
+   "name_en": "Monaco",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 366,
+   "births_basis": {
+    "crude_birth_rate": 9.558,
+    "cbr_year": 2024,
+    "population": 38341,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.049,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 2.4,
+     "u5mr": 2.9,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 2.0,
+     "u5mr": 2.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 84.56,
+    "female": 88.626,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "LIE",
+   "iso2": "LI",
+   "name_ko": "리히텐슈타인",
+   "name_en": "Liechtenstein",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 345,
+   "births_basis": {
+    "crude_birth_rate": 8.4,
+    "cbr_year": 2024,
+    "population": 41024,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.163,
+    "year": 2024
+   },
+   "survival": {
+    "male": null,
+    "female": null
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 82.2,
+    "female": 86.3,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "VGB",
+   "iso2": "VG",
+   "name_ko": "영국령 버진아일랜드",
+   "name_en": "British Virgin Islands",
+   "region": "Latin America & Caribbean",
+   "income_level": "High income",
+   "births": 327,
+   "births_basis": {
+    "crude_birth_rate": 8.218,
+    "cbr_year": 2024,
+    "population": 39732,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.053,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 11.3,
+     "u5mr": 12.5,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 11.5,
+     "u5mr": 12.2,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 74.701,
+    "female": 80.186,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "NRU",
+   "iso2": "NR",
+   "name_ko": "나우루",
+   "name_en": "Naoero",
+   "region": "East Asia & Pacific",
+   "income_level": "High income",
+   "births": 295,
+   "births_basis": {
+    "crude_birth_rate": 24.562,
+    "cbr_year": 2024,
+    "population": 12025,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.072,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 8.4,
+     "u5mr": 9.0,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 6.9,
+     "u5mr": 7.4,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 9.7,
+    "pct_below_4_20": 21.7,
+    "pct_below_8_30": 68.5,
+    "year": 2012
+   },
+   "life_expectancy": {
+    "male": 60.414,
+    "female": 64.187,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "TUV",
+   "iso2": "TV",
+   "name_ko": "투발루",
+   "name_en": "Tuvalu",
+   "region": "East Asia & Pacific",
+   "income_level": "Upper middle income",
+   "births": 209,
+   "births_basis": {
+    "crude_birth_rate": 21.969,
+    "cbr_year": 2024,
+    "population": 9492,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.07,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 18.4,
+     "u5mr": 21.2,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 14.5,
+     "u5mr": 17.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": {
+    "pct_below_3_00": 9.0,
+    "pct_below_4_20": 21.2,
+    "pct_below_8_30": 60.6,
+    "year": 2010
+   },
+   "life_expectancy": {
+    "male": 63.911,
+    "female": 70.86,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "PLW",
+   "iso2": "PW",
+   "name_ko": "팔라우",
+   "name_en": "Palau",
+   "region": "East Asia & Pacific",
+   "income_level": "High income",
+   "births": 189,
+   "births_basis": {
+    "crude_birth_rate": 10.687,
+    "cbr_year": 2024,
+    "population": 17663,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.077,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 20.6,
+     "u5mr": 23.7,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 16.4,
+     "u5mr": 19.0,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 67.251,
+    "female": 71.943,
+    "year": 2024
+   }
+  },
+  {
+   "iso3": "SMR",
+   "iso2": "SM",
+   "name_ko": "산마리노",
+   "name_en": "San Marino",
+   "region": "Europe & Central Asia",
+   "income_level": "High income",
+   "births": 143,
+   "births_basis": {
+    "crude_birth_rate": 4.2,
+    "cbr_year": 2024,
+    "population": 34109,
+    "population_year": 2025
+   },
+   "sex_ratio": {
+    "value": 1.065,
+    "year": 2024
+   },
+   "survival": {
+    "male": {
+     "imr": 1.3,
+     "u5mr": 1.4,
+     "year": 2024,
+     "assumed_from_total": false
+    },
+    "female": {
+     "imr": 1.1,
+     "u5mr": 1.1,
+     "year": 2024,
+     "assumed_from_total": false
+    }
+   },
+   "economy": null,
+   "life_expectancy": {
+    "male": 84.32,
+    "female": 87.215,
+    "year": 2024
+   }
+  }
+ ]
+}

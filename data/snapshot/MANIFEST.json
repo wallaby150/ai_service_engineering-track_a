@@ -1,0 +1,50 @@
+{
+ "fetched_at": "2026-10-05T14:30:30+00:00",
+ "base_url": "https://api.worldbank.org/v2",
+ "indicators": {
+  "SP.DYN.CBRT.IN": "crude_birth_rate",
+  "SP.POP.TOTL": "population",
+  "SP.POP.BRTH.MF": "sex_ratio_at_birth",
+  "SP.DYN.IMRT.IN": "imr_total",
+  "SP.DYN.IMRT.MA.IN": "imr_male",
+  "SP.DYN.IMRT.FE.IN": "imr_female",
+  "SH.DYN.MORT": "u5mr_total",
+  "SH.DYN.MORT.MA": "u5mr_male",
+  "SH.DYN.MORT.FE": "u5mr_female",
+  "SP.DYN.LE00.MA.IN": "life_exp_male",
+  "SP.DYN.LE00.FE.IN": "life_exp_female",
+  "SI.POV.DDAY": "poverty_3_00",
+  "SI.POV.LMIC": "poverty_4_20",
+  "SI.POV.UMIC": "poverty_8_30"
+ },
+ "raw_sha256": {
+  "SH.DYN.MORT.FE.json": "bd90fd19dfbdd7014657b48e446378ecc2f80c229d41afd9b48869caa1c74a49",
+  "SH.DYN.MORT.MA.json": "f349ae24a90607dfa3fb7da61bc7c828241443d627ef4f084b2ac3af43165608",
+  "SH.DYN.MORT.json": "6f090427899549e63ab7dee568223c2259e40448933a1aacdcae397ae5e53476",
+  "SI.POV.DDAY.json": "4a3eb7f4e09fd753f38b7ef1e7a05908fdcdcbf2d7ed1e302b5f097b0379df5c",
+  "SI.POV.LMIC.json": "a3b825be7db5671791202e49523e7bd5e50b81a81b79c1fe07d41b906c093b88",
+  "SI.POV.UMIC.json": "0b26e220ca7721e65625cc690e25b934312809d6f815d05a4f6a2c022e5d8217",
+  "SP.DYN.CBRT.IN.json": "51716f5326c7033db7c74cb3a5049fb81c84db4e17e34c146e9340171f9fd166",
+  "SP.DYN.IMRT.FE.IN.json": "23bed0ea602eb2644a200b007f293a2e789d97068941c9008be9a38bd64bb963",
+  "SP.DYN.IMRT.IN.json": "768b6d61ddbe710d4f1979212894bfbe23de0d15ccb012fa38c7e98e01ebe4ed",
+  "SP.DYN.IMRT.MA.IN.json": "052d556688767ff16575e079f275a9dc513f6fb1a322220e09c6650a06ade630",
+  "SP.DYN.LE00.FE.IN.json": "3659636813f47bdecc21d30c77f9a435b89b0b36149ccde956862fdbad13f85e",
+  "SP.DYN.LE00.MA.IN.json": "5f0edb4c42201fb97c9e0c6a6caf8d53580b944afb844e8de3110dad1d9f0b76",
+  "SP.POP.BRTH.MF.json": "5ba9a24b876b623f782570cf95ef204ad62b2170c09c6da7d3ffe7dc314bee4b",
+  "SP.POP.TOTL.json": "f568e736d46e36ac71f9e393c1c3a58346fdee3873a933863664043d2e0b0baa",
+  "countries.json": "c172dd3606983b2f1ddeaecf13dd330ada25d418380a503befb21935d5e9ce6f"
+ },
+ "snapshot_sha256": "dc4078a3acd9a7f9e207eba46f67d6f4bfc2a950310f9075c7fbf570d0de5e4d",
+ "counts": {
+  "economies": 217,
+  "kept": 217,
+  "excluded": 0,
+  "aggregates_skipped": 78
+ },
+ "birth_coverage": {
+  "sex_ratio": 1.0,
+  "survival": 0.9994,
+  "economy": 0.9675
+ },
+ "license": "World Bank data: CC BY 4.0"
+}

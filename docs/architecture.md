@@ -31,5 +31,20 @@ graph LR
 
 ## AI가 들어갈 자리
 
-**미정.** 후보는 "뽑힌 사실로 그 사람의 삶 이야기를 쓰는 자리" 하나다. 어떤 시그니처로 둘지는
-v0.2에서 각본 대역과 함께 정한다. AI가 없어도 뽑기·역확률은 전부 동작해야 한다.
+**자리는 하나: 뽑힌 사실로 그 사람의 이야기를 쓴다.**
+
+```python
+# core/narrator.py
+class Narrator(Protocol):
+    name: str
+    def narrate(self, life: Life) -> Narrative: ...
+```
+
+| 구현 | 언제 | 무엇을 하나 |
+|---|---|---|
+| `ScriptedNarrator` (`core/narrator_scripted.py`) | v0.2~, 키가 없거나 LLM이 실패할 때 | 사실 목록을 정해진 문장에 끼워 넣는다. 화면에 "템플릿 서사"로 표시 |
+| LLM 구현 | v0.5 | ReWOO로 맥락을 조회해 이야기를 쓴다. 같은 시그니처 |
+
+- 서사가 기댈 수 있는 사실은 `core/facts.py`의 `facts_of(life)`가 전부다. `Narrative.facts_used`는 그 키 목록이다.
+- v0.5에서 LLM 서사에 나온 숫자를 이 사실 목록과 코드로 대조한다. 목록에 없는 숫자는 지어낸 것이다.
+- AI가 없어도 뽑기·역확률은 전부 동작한다.
