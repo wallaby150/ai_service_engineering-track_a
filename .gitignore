@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+*.egg-info/
+
+# Secrets — never commit
+.env
+
+# Raw data stays outside git; scripts/ know how to fetch it
+data/raw/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
