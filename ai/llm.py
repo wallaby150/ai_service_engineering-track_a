@@ -25,6 +25,10 @@ class LlmError(Exception):
     """모델 쪽이 실패했다(제공자 장애, 형식을 끝내 못 맞춤)."""
 
 
+class RateLimited(LlmError):
+    """제공자의 요청 한도(429). 재시도까지 다 썼다. 잠시 뒤에는 될 수 있다."""
+
+
 class BudgetExceeded(LlmError):
     """누적 비용이 상한에 닿았다. 더 부르지 않는다."""
 
@@ -157,7 +161,9 @@ class LlmClient:
             )
         except Exception as e:
             ms = int((time.perf_counter() - start) * 1000)
-            log.warning("LLM CALL FAILED role=%s model=%s error=%s", role, self.model, type(e).__name__)
+            log.warning("LLM CALL FAILED role=%s model=%s error=%s: %s ms=%d", role, self.model, type(e).__name__, str(e)[:200], ms)
+            if "RateLimit" in type(e).__name__ or "429" in str(e)[:300]:
+                raise RateLimited(f"{role}: 요청 한도 초과") from e
             raise LlmError(f"{role}: 모델 호출 실패 ({type(e).__name__})") from e
 
         ms = int((time.perf_counter() - start) * 1000)

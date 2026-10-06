@@ -18,7 +18,7 @@ from typing import Dict, List, Literal, Optional
 
 from pydantic import BaseModel, Field
 
-from ai.llm import BudgetExceeded, LlmCall, LlmClient, LlmError
+from ai.llm import BudgetExceeded, LlmCall, LlmClient, LlmError, RateLimited
 from core.context import METRICS, TOOLS, run_tool
 from core.engine import Life
 from core.facts import facts_of
@@ -98,6 +98,8 @@ class LlmNarrator:
             return self._write(life, facts, evidence, report)
         except BudgetExceeded:
             return self._fall_back(life, report, "AI 서사 예산을 다 써서 템플릿 서사로 보여 드립니다.")
+        except RateLimited:
+            return self._fall_back(life, report, "AI 요청 한도에 걸려 템플릿 서사로 보여 드립니다. 잠시 후 다시 눌러 보세요.")
         except LlmError as e:
             log.warning("NARRATOR FALLBACK %s", e)
             return self._fall_back(life, report, "AI가 이야기를 쓰지 못해 템플릿 서사로 보여 드립니다.")

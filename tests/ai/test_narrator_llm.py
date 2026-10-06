@@ -103,3 +103,12 @@ def test_death_story_must_say_how_many_children_share_it(engine):
     assert report.narrative.narrator == "llm" and report.attempts == 2
     assert report.violations[0] == [imr]
     assert "아이들의 수가 빠졌다" in llm.calls[2]["messages"][0]["content"]
+
+
+def test_rate_limit_says_try_again_later(engine, life):
+    class RateLimitError(Exception):
+        pass
+
+    narrator, _ = make(engine, [RateLimitError("429 quota")])
+    n = narrator.story(life).narrative
+    assert n.narrator == "scripted" and "잠시 후" in n.note
