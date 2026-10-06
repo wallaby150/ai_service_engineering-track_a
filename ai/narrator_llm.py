@@ -111,9 +111,11 @@ class LlmNarrator:
         )
         report.calls += calls
         unique: List[PlanStep] = []
-        for s in plan.steps:  # 중복 조회는 코드가 걸러 낸다
+        for s in plan.steps:  # 중복 조회와 쓸모없는 인자는 코드가 걸러 낸다
             if s.tool == "world_comparison" and s.metric is None:
                 continue
+            if s.tool != "world_comparison":
+                s = s.model_copy(update={"metric": None})
             if all((u.tool, u.metric) != (s.tool, s.metric) for u in unique):
                 unique.append(s)
         report.plan = [{"id": f"E{i + 1}", "tool": s.tool, "metric": s.metric, "why": s.why} for i, s in enumerate(unique)]

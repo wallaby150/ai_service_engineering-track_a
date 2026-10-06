@@ -8,10 +8,10 @@ from core.facts import facts_of
 from core.narrator_scripted import ScriptedNarrator
 from tests.ai.fakes import ScriptedLLM, response
 
-PLAN = {"steps": [
-    {"tool": "country_profile", "why": "기본 통계"},
+PLAN = {"steps": [  # 계획 상한은 3단계
     {"tool": "world_comparison", "metric": "u5mr", "why": "세계와 비교"},
     {"tool": "world_comparison", "metric": "u5mr", "why": "중복"},
+    {"tool": "region_peers", "metric": "life_expectancy", "why": "이웃 나라 — metric은 쓸모없다"},
 ]}
 
 
@@ -38,7 +38,8 @@ def test_rewoo_plans_once_executes_in_code_and_writes_once(engine, life):
     report = narrator.story(life)
     assert report.narrative.narrator == "llm"
     assert len(llm.calls) == 2                           # 계획 1 + 작성 1
-    assert [s["tool"] for s in report.plan] == ["country_profile", "world_comparison"]  # 중복은 코드가 뺐다
+    assert [(s["tool"], s["metric"]) for s in report.plan] == [
+        ("world_comparison", "u5mr"), ("region_peers", None)]  # 중복·쓸모없는 인자는 코드가 뺐다
     assert report.narrative.facts_used == ("country", "country_share_pct")             # 없는 키는 버린다
     assert llm.calls[1]["tool_choice"]["function"]["name"] == "emit_story"
     assert "<<<TOOL_RESULT E1>>>" in llm.calls[1]["messages"][0]["content"]             # 경계 마커
