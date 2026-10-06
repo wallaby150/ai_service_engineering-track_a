@@ -4,6 +4,7 @@
 - 실행: `docker compose up --build` (개발: `docker compose -f docker-compose.yml -f docker-compose.dev.yml up`)
 - 테스트: `pytest`
 - 데이터 재생성: `python scripts/fetch_worldbank.py && python scripts/prepare_data.py`
+- 한국 상세 재생성: `python scripts/fetch_kosis.py && python scripts/prepare_korea.py` (KOSIS_API_KEY 필요)
 - 서사 평가(실제 모델 호출, `.env` 키 필요): `python scripts/eval_stories.py --n 10`
 
 ## 커밋 전 검증
