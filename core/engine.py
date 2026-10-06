@@ -46,6 +46,8 @@ class Step:
     value: Optional[str]
     p: Optional[float]
     assumed: bool = False
+    label: Optional[str] = None  # 한국 칸(시도·직업)의 이름 — 스냅샷 없이도 서사가 쓸 수 있게
+    year: Optional[str] = None  # 한국 칸이 기댄 통계의 기준 시점(예: "2025년 하반기")
 
 
 @dataclass(frozen=True)
@@ -177,6 +179,9 @@ class Engine:
         self._occ = {(p.code, s): occupation_dist(p, s) for p in k.provinces for s in SEXES} if k else {}
         self._province_codes = [p.code for p in k.provinces] if k else []
         self._occupation_codes = sorted(k.occupation_labels) if k else []
+        self._province_names = {p.code: p.name for p in k.provinces} if k else {}
+        self._occupation_names = dict(k.occupation_labels) if k else {}
+        self._years = dict(k.years) if k else {}
 
     # ── 검증 ──────────────────────────────────────────────
     def check_country(self, iso3: Optional[str]) -> Optional[str]:
@@ -232,22 +237,24 @@ class Engine:
         return tuple(steps)
 
     def _draw_korea(self, sex: str, survival: Optional[str], u_prov: float, u_emp: float, u_occ: float) -> List[Step]:
+        y = self._years
         code, p = _pick(self._prov[sex], u_prov)
-        steps = [Step("province", code, p)]
+        steps = [Step("province", code, p, label=self._province_names.get(code), year=y.get("births"))]
         if survival != "survived_5":
             return steps  # 어른이 되지 못한 삶에는 고용·직업 칸이 없다
         ed = self._emp[(code, sex)]
         if ed is None:
             return steps + [Step("employment", None, None)]
         employment, p = _pick(ed, u_emp)
-        steps.append(Step("employment", employment, p))
+        steps.append(Step("employment", employment, p, year=y.get("employment")))
         if employment != "employed":
             return steps
         od = self._occ[(code, sex)]
         if od is None:
             return steps + [Step("occupation", None, None)]
         occupation, p = _pick(od, u_occ)
-        return steps + [Step("occupation", occupation, p)]
+        return steps + [Step("occupation", occupation, p, label=self._occupation_names.get(occupation),
+                             year=y.get("occupation"))]
 
     def sample(self, seed: int, country: Optional[str] = None) -> Life:
         fixed = self.check_country(country)

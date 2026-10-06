@@ -39,6 +39,12 @@ class ScriptedNarrator:
             f"{f['country']}에서 {child}로 태어났습니다. {_share_sentence(float(f['country_share_pct'] or 0))}"
             f"(한 해 약 {_num(f['births_per_year'], 0)}명)."
         ]
+        if f.get("province"):
+            used += ["province", "province_share_pct"]
+            paragraphs[0] += (
+                f" 태어난 곳은 {f['province']}입니다. 대한민국에서 태어나는 {child} 100명 중 "
+                f"약 {_num(f['province_share_pct'])}명이 이 지역에서 태어납니다."
+            )
 
         outcome = life.value("survival")
         if outcome is None:
@@ -66,6 +72,12 @@ class ScriptedNarrator:
                 "이 삶은 첫돌은 넘겼지만 다섯 살을 맞지 못한 아이들 가운데 하나였습니다."
             )
 
+        adult_text = self._adult(f)
+        if adult_text:
+            used += [k for k in ("employment", "employment_rate_pct", "not_employed_pct", "occupation",
+                                 "occupation_share_pct") if f.get(k) is not None]
+            paragraphs.append(adult_text)
+
         if f["economy"] is None:
             paragraphs.append("이 나라의 가구 소비(빈곤율) 통계는 없어, 태어난 가정의 경제 수준은 알 수 없습니다.")
         else:
@@ -81,15 +93,34 @@ class ScriptedNarrator:
         closing = []
         if life.complete and f["joint_one_in"]:
             used.append("joint_one_in")
-            closing.append(f"이 조합 그대로 태어날 확률은 약 {_num(f['joint_one_in'], 0)}분의 1입니다.")
+            closing.append(f"이 조합이 그대로 나올 확률은 약 {_num(f['joint_one_in'], 0)}분의 1입니다.")
         if outcome in ("infant_death", "child_death"):
             closing.append("통계 속 숫자 하나하나가 한 사람의 삶입니다.")
         if closing:
             paragraphs.append(" ".join(closing))
 
+        title_place = f"{f['country']} {f['province']}" if f.get("province") else f["country"]
         return Narrative(
-            title=f"{f['country']}의 {child}",
+            title=f"{title_place}의 {child}",
             paragraphs=tuple(paragraphs),
             facts_used=tuple(used),
             narrator=self.name,
+        )
+
+    @staticmethod
+    def _adult(f: dict) -> str:
+        """어른이 된 뒤의 이야기(대한민국 · 다섯 살까지 살아남은 삶에만)."""
+        if f.get("employment_rate_pct") is None:
+            return ""
+        adult = ADULT.get(str(f["sex"]), "사람")
+        where = f"{f['province']}에 사는 {adult}"
+        if f.get("occupation"):
+            return (
+                f"어른이 된 당신은 일하고 있습니다. {where} 100명 중 약 {_num(f['employment_rate_pct'])}명이 "
+                f"일합니다({f['employment_period']}). 직업은 {f['occupation']}입니다. 이 지역에서 일하는 {adult} "
+                f"100명 중 약 {_num(f['occupation_share_pct'])}명이 같은 직업을 가집니다({f['occupation_period']} 인구총조사)."
+            )
+        return (
+            f"어른이 된 당신은 일하지 않고 있습니다. {where} 100명 중 약 {_num(f['not_employed_pct'])}명이 "
+            f"그렇습니다({f['employment_period']}). 학업, 돌봄, 은퇴, 구직처럼 그 이유는 통계에 없습니다."
         )
