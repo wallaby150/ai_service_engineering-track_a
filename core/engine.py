@@ -1,7 +1,11 @@
 """뽑기 · 역확률 · 목표 달성까지의 횟수. 전부 결정적 코드다.
 
-같은 시드는 같은 인생을 낸다. 난수는 노드 순서(국가 → 성별 → 생존 → 경제)대로
-항상 네 번 쓴다 — 데이터가 없는 노드도 자리는 소비해서, 시드와 결과의 대응이 흔들리지 않게 한다.
+같은 시드는 같은 인생을 낸다. 난수는 노드 순서대로 항상 일곱 번 뽑는다:
+국가 → 성별 → 생존 → 경제 → 시도 → 고용 → 직업. 데이터가 없거나 해당 없는 칸도 자리는 소비해서
+시드와 결과의 대응이 흔들리지 않는다. 앞의 네 개는 v0.2와 같아서, 예전 공유 링크도 같은 인생을 낸다.
+
+한국 칸(시도·고용·직업)은 대한민국에서 태어났을 때만 열리고, 고용은 다섯 살까지 살아남았을 때만,
+직업은 일하고 있을 때만 열린다. 열리지 않은 칸은 '통계 없음'이 아니라 아예 없는 칸이다.
 """
 
 from __future__ import annotations
@@ -15,17 +19,23 @@ from typing import Dict, List, Optional, Sequence, Tuple
 from core.errors import UnknownValue
 from core.model import (
     ECONOMIES,
+    EMPLOYMENTS,
+    KOREA_ISO3,
     SEXES,
     SURVIVALS,
     Dist,
     country_dist,
     economy_dist,
+    employment_dist,
+    occupation_dist,
+    province_dist,
     sex_dist,
     survival_dist,
 )
 from core.stats import Country, Snapshot
 
 MAX_SEED = 2**31 - 1
+DRAWS = 7
 
 
 @dataclass(frozen=True)
@@ -52,7 +62,7 @@ class Life:
 
     @property
     def joint_p(self) -> float:
-        """이 조합 그대로 태어날 확률. 통계가 없는 칸은 곱에서 빠진다(complete로 알린다)."""
+        """이 조합 그대로 나올 확률. 통계가 없는 칸은 곱에서 빠진다(complete로 알린다)."""
         p = 1.0
         for s in self.steps:
             if s.p is not None:
@@ -76,12 +86,24 @@ class Target:
     sex: Optional[str] = None
     survival: Optional[str] = None
     economy: Optional[str] = None
+    province: Optional[str] = None
+    employment: Optional[str] = None
+    occupation: Optional[str] = None
 
     def fields(self) -> Dict[str, str]:
         return {k: v for k, v in self.__dict__.items() if v is not None}
 
     def matches(self, values: Dict[str, Optional[str]]) -> bool:
         return all(values.get(k) == v for k, v in self.fields().items())
+
+    @property
+    def korean(self) -> bool:
+        return any((self.province, self.employment, self.occupation))
+
+    @property
+    def adult(self) -> bool:
+        """어른이 된 뒤의 칸을 묻는가 — 그러려면 다섯 살까지 살아남아야 한다."""
+        return bool(self.employment or self.occupation)
 
 
 @dataclass(frozen=True)
@@ -148,6 +170,14 @@ class Engine:
         self._surv = {(c.iso3, s): survival_dist(c, s) for c in self._countries for s in SEXES}
         self._eco = {c.iso3: economy_dist(c) for c in self._countries}
 
+        k = snapshot.korea
+        self._korea_on = k is not None and KOREA_ISO3 in self._by_iso3
+        self._prov = {s: province_dist(k, s) for s in SEXES} if k else {}
+        self._emp = {(p.code, s): employment_dist(p, s) for p in k.provinces for s in SEXES} if k else {}
+        self._occ = {(p.code, s): occupation_dist(p, s) for p in k.provinces for s in SEXES} if k else {}
+        self._province_codes = [p.code for p in k.provinces] if k else []
+        self._occupation_codes = sorted(k.occupation_labels) if k else []
+
     # ── 검증 ──────────────────────────────────────────────
     def check_country(self, iso3: Optional[str]) -> Optional[str]:
         if iso3 is None:
@@ -158,40 +188,66 @@ class Engine:
         return code
 
     def check_target(self, target: Target) -> Target:
-        for field, allowed in (("sex", SEXES), ("survival", SURVIVALS), ("economy", ECONOMIES)):
+        checks = [("sex", SEXES), ("survival", SURVIVALS), ("economy", ECONOMIES), ("employment", EMPLOYMENTS)]
+        if self._korea_on:  # 한국 데이터가 없으면 값 검사 대신 probability()가 '통계 없음'으로 답한다
+            checks += [("province", self._province_codes), ("occupation", self._occupation_codes)]
+        for field, allowed in checks:
             v = getattr(target, field)
             if v is not None and v not in allowed:
                 raise UnknownValue(field, v, allowed)
-        return Target(self.check_country(target.country), target.sex, target.survival, target.economy)
+        return Target(self.check_country(target.country), target.sex, target.survival, target.economy,
+                      target.province, target.employment, target.occupation)
 
     # ── 뽑기 ──────────────────────────────────────────────
     def _draw(self, rng: random.Random, fixed_country: Optional[str]) -> Tuple[Step, ...]:
-        u_country, u_sex, u_surv, u_eco = rng.random(), rng.random(), rng.random(), rng.random()
+        u = [rng.random() for _ in range(DRAWS)]
         if fixed_country:
             iso3 = fixed_country
         else:
-            i = min(bisect.bisect_right(self._cum, u_country * self._cum[-1]), len(self._cum) - 1)
+            i = min(bisect.bisect_right(self._cum, u[0] * self._cum[-1]), len(self._cum) - 1)
             iso3 = self._countries[i].iso3
         steps = [Step("country", iso3, self._country_p[iso3])]
 
         sd = self._sex[iso3]
-        sex, p_sex = _pick(sd, u_sex)
+        sex, p_sex = _pick(sd, u[1])
         steps.append(Step("sex", sex, p_sex, sd.assumed))
 
+        survival: Optional[str] = None
         vd = self._surv[(iso3, sex)]
         if vd is None:
             steps.append(Step("survival", None, None))
         else:
-            v, p = _pick(vd, u_surv)
-            steps.append(Step("survival", v, p, vd.assumed))
+            survival, p = _pick(vd, u[2])
+            steps.append(Step("survival", survival, p, vd.assumed))
 
         ed = self._eco[iso3]
         if ed is None:
             steps.append(Step("economy", None, None))
         else:
-            v, p = _pick(ed, u_eco)
+            v, p = _pick(ed, u[3])
             steps.append(Step("economy", v, p, ed.assumed))
+
+        if iso3 == KOREA_ISO3 and self._korea_on:
+            steps.extend(self._draw_korea(sex, survival, u[4], u[5], u[6]))
         return tuple(steps)
+
+    def _draw_korea(self, sex: str, survival: Optional[str], u_prov: float, u_emp: float, u_occ: float) -> List[Step]:
+        code, p = _pick(self._prov[sex], u_prov)
+        steps = [Step("province", code, p)]
+        if survival != "survived_5":
+            return steps  # 어른이 되지 못한 삶에는 고용·직업 칸이 없다
+        ed = self._emp[(code, sex)]
+        if ed is None:
+            return steps + [Step("employment", None, None)]
+        employment, p = _pick(ed, u_emp)
+        steps.append(Step("employment", employment, p))
+        if employment != "employed":
+            return steps
+        od = self._occ[(code, sex)]
+        if od is None:
+            return steps + [Step("occupation", None, None)]
+        occupation, p = _pick(od, u_occ)
+        return steps + [Step("occupation", occupation, p)]
 
     def sample(self, seed: int, country: Optional[str] = None) -> Life:
         fixed = self.check_country(country)
@@ -211,19 +267,46 @@ class Engine:
 
     # ── 역확률 ────────────────────────────────────────────
     def _covered(self, c: Country, target: Target, sexes: Sequence[str]) -> bool:
-        if target.survival and any(self._surv[(c.iso3, s)] is None for s in sexes):
+        if (target.survival or target.adult) and any(self._surv[(c.iso3, s)] is None for s in sexes):
             return False
         if target.economy and self._eco[c.iso3] is None:
             return False
         return True
 
+    def _survival_factor(self, iso3: str, sex: str, target: Target) -> float:
+        surv = self._surv[(iso3, sex)]
+        if target.adult:  # 어른의 칸을 물으면 다섯 살까지 살아남아야 한다
+            if target.survival not in (None, "survived_5"):
+                return 0.0
+            return surv.p("survived_5")  # type: ignore[union-attr]
+        if target.survival:
+            return surv.p(target.survival)  # type: ignore[union-attr]
+        return 1.0
+
+    def _korea_factor(self, sex: str, target: Target) -> float:
+        """P(시도·고용·직업 조건 | 대한민국, 성별, 다섯 살까지 생존)"""
+        codes = [target.province] if target.province else self._province_codes
+        total = 0.0
+        for code in codes:
+            p = self._prov[sex].p(code or "")
+            if target.occupation:
+                if target.employment == "not_employed":
+                    return 0.0
+                emp, occ = self._emp[(code, sex)], self._occ[(code, sex)]
+                p *= (emp.p("employed") if emp else 0.0) * (occ.p(target.occupation) if occ else 0.0)
+            elif target.employment:
+                emp = self._emp[(code, sex)]
+                p *= emp.p(target.employment) if emp else 0.0
+            total += p
+        return total
+
     def _f(self, c: Country, target: Target, sexes: Sequence[str]) -> float:
-        """P(성별·생존·경제 조건 | 국가 c)"""
+        """P(국가 아래 칸들의 조건 | 국가 c)"""
         total = 0.0
         for s in sexes:
-            p = self._sex[c.iso3].p(s)
-            if target.survival:
-                p *= self._surv[(c.iso3, s)].p(target.survival)  # type: ignore[union-attr]
+            p = self._sex[c.iso3].p(s) * self._survival_factor(c.iso3, s, target)
+            if target.korean:
+                p *= self._korea_factor(s, target)
             total += p
         if target.economy:
             total *= self._eco[c.iso3].p(target.economy)  # type: ignore[union-attr]
@@ -233,6 +316,14 @@ class Engine:
         """조건의 정확한 확률. 통계가 있는 국가의 출생아만을 모집단으로 삼고, 그 비율을 coverage로 알린다."""
         target = self.check_target(target)
         sexes = (target.sex,) if target.sex else SEXES
+
+        if target.korean:
+            if not self._korea_on:
+                return Odds(target, None, 0.0, reason="한국 상세 통계가 없다")
+            if target.country not in (None, KOREA_ISO3):
+                return Odds(target, 0.0, 1.0, reason="시도·고용·직업은 대한민국에서 태어났을 때만 있다")
+            target = Target(KOREA_ISO3, target.sex, target.survival, target.economy,
+                            target.province, target.employment, target.occupation)
 
         covered_mass, numerator = 0.0, 0.0
         for c in self._countries:
@@ -246,7 +337,7 @@ class Engine:
 
         if target.country and not self._covered(self._by_iso3[target.country], target, sexes):
             missing = [n for n in ("survival", "economy") if getattr(target, n)]
-            return Odds(target, None, covered_mass, reason=f"이 나라에는 {', '.join(missing)} 통계가 없다")
+            return Odds(target, None, covered_mass, reason=f"이 나라에는 {', '.join(missing) or 'survival'} 통계가 없다")
         if covered_mass == 0:
             return Odds(target, None, 0.0, reason="조건에 맞는 통계가 있는 나라가 없다")
 
@@ -254,17 +345,33 @@ class Engine:
         return Odds(target, numerator / covered_mass, covered_mass, steps)
 
     def _explain(self, target: Target, sexes: Sequence[str], covered_mass: float) -> Tuple[Step, ...]:
-        """국가가 정해졌을 때 확률을 칸별 조건부 확률의 곱으로 풀어 쓴다."""
+        """국가가 정해졌을 때 확률을 칸별 조건부 확률의 곱으로 풀어 쓴다.
+        한국 칸은 성별과(고용·직업이면) 시도까지 정해졌을 때만 칸별로 풀 수 있다 — 아니면 풀이 없이 확률만."""
         c = self._by_iso3[target.country or ""]
+        if target.korean and (not target.sex or (target.adult and not target.province)):
+            return ()
         steps = [Step("country", c.iso3, self._country_p[c.iso3] / covered_mass)]
         if target.sex:
             steps.append(Step("sex", target.sex, self._sex[c.iso3].p(target.sex), self._sex[c.iso3].assumed))
-        if target.survival:
-            p = sum(
-                self._sex[c.iso3].p(s) * self._surv[(c.iso3, s)].p(target.survival)  # type: ignore[union-attr]
-                for s in sexes
-            ) / sum(self._sex[c.iso3].p(s) for s in sexes)
-            steps.append(Step("survival", target.survival, p))
+        if target.survival or target.adult:
+            value = "survived_5" if target.adult else target.survival
+            p = sum(self._sex[c.iso3].p(s) * self._survival_factor(c.iso3, s, target) for s in sexes) / sum(
+                self._sex[c.iso3].p(s) for s in sexes
+            )
+            steps.append(Step("survival", value, p))
         if target.economy:
             steps.append(Step("economy", target.economy, self._eco[c.iso3].p(target.economy)))  # type: ignore[union-attr]
+        if target.korean:
+            sex = target.sex or ""
+            if target.province:
+                steps.append(Step("province", target.province, self._prov[sex].p(target.province)))
+            if target.adult:
+                emp = self._emp[(target.province, sex)]
+                value = "employed" if target.occupation else target.employment
+                steps.append(Step("employment", value, emp.p(value or "") if emp else 0.0))
+            if target.occupation:
+                occ = self._occ[(target.province, sex)]
+                steps.append(Step("occupation", target.occupation, occ.p(target.occupation) if occ else 0.0))
+            elif not target.adult and not target.province:
+                return ()
         return tuple(steps)

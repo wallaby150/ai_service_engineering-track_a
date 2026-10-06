@@ -52,3 +52,40 @@ def snapshot():
 @pytest.fixture
 def engine(snapshot):
     return Engine(snapshot)
+
+
+FAKE_WITH_KOREA = {
+    "sources": {"births": "test"},
+    "countries": [
+        FAKE["countries"][0],  # AAA, 출생아 600
+        {   # 대한민국 — 한국 칸이 열린다
+            "iso3": "KOR", "name_ko": "대한민국", "births": 400,
+            "sex_ratio": {"value": 1.0, "year": 2024},
+            "survival": {
+                "male": {"imr": 100.0, "u5mr": 200.0, "year": 2024},
+                "female": {"imr": 50.0, "u5mr": 100.0, "year": 2024},
+            },
+            "economy": {"pct_below_3_00": 0.0, "pct_below_4_20": 0.0, "pct_below_8_30": 10.0, "year": 2021},
+            "life_expectancy": {"male": 80.0, "female": 86.0, "year": 2024},
+        },
+    ],
+}
+
+FAKE_KOREA = {
+    "sources": {"region": "test", "employment": "test", "occupation": "test"},
+    "years": {"births": "2025년", "employment": "2025년 하반기", "occupation": "2020년"},
+    "occupation_labels": {"01": "관리자", "02": "전문가"},
+    "regions": [
+        {"code": "11", "name": "서울특별시", "births": {"male": 300, "female": 100},
+         "employment_rate_pct": {"male": 80.0, "female": 50.0},
+         "occupations": {"male": {"01": 1, "02": 3}, "female": {"01": 1, "02": 1}}},
+        {"code": "39", "name": "제주특별자치도", "births": {"male": 100, "female": 300},
+         "employment_rate_pct": {"male": 60.0, "female": 40.0},
+         "occupations": {"male": {"01": 1, "02": 1}, "female": {"01": 1, "02": 4}}},
+    ],
+}
+
+
+@pytest.fixture
+def korea_engine():
+    return Engine(snapshot_from_dict(FAKE_WITH_KOREA, FAKE_KOREA))
