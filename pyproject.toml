@@ -1,6 +1,6 @@
 [project]
 name = "reborn-simulator"
-version = "0.2.0"
+version = "0.5.0"
 description = "Public-statistics life simulator: who would you be if you were born again?"
 requires-python = ">=3.9"
 license = { text = "MIT" }
