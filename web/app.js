@@ -38,9 +38,12 @@ function setStatus(id, text, isError = false) {
 }
 
 // ── 초기화 ───────────────────────────────────────────
+let live = false; // 서버에 AI 서사가 붙어 있는가 (/api/config)
+
 async function init() {
   try {
     const [config, meta] = await Promise.all([api("/config"), api("/meta")]);
+    live = config.mode === "live";
     $("banner").textContent = config.mode === "offline"
       ? `v${config.version} · AI 없이 동작 중 — 확률은 코드가 계산하고, 이야기는 템플릿이 씁니다.`
       : `v${config.version} · AI 서사 사용 중 (${config.narrator})`;
@@ -66,20 +69,50 @@ function renderLife(life, fixedCountry) {
         <span class="v">${esc(s.value_label ?? "통계 없음")}</span>
         <span class="p">${pct(s.p)}</span>
         <span class="src">${esc(s.source)}${s.assumed ? " · 가정값 사용" : ""}</span></li>`).join("");
-  const n = life.narrative;
-  const tag = n.narrator === "scripted" ? "템플릿 서사" : "AI 서사";
   const share = `${location.origin}${location.pathname}?seed=${life.seed}${fixedCountry ? `&country=${life.country.iso3}` : ""}`;
   return `
     <div class="big">${esc(life.country.name_ko)}에서 ${esc(life.steps[1].value_label)}아이로 태어났습니다</div>
     <ul class="chain">${steps}</ul>
     <p>이 조합으로 태어날 확률은 <b>${oneIn(life.one_in)}</b>입니다${life.complete ? "" : " (통계가 없는 칸은 빼고 계산)"}.</p>
-    <div class="story">
-      <h3>${esc(n.title)} <span class="tag">${tag}</span></h3>
-      ${n.paragraphs.map((p) => `<p>${esc(p)}</p>`).join("")}
-      ${n.note ? `<p class="note">${esc(n.note)}</p>` : ""}
+    <div class="story" data-seed="${life.seed}" data-country="${fixedCountry ? life.country.iso3 : ""}">
+      ${renderStory(life.narrative)}
     </div>
     <p class="share">같은 인생 다시 보기: <a href="${esc(share)}">${esc(share)}</a></p>`;
 }
+
+function renderStory(n, extra = "") {
+  const tag = n.narrator === "scripted" ? "템플릿 서사" : "AI 서사";
+  const button = live && n.narrator === "scripted" && !n.note
+    ? `<p><button class="secondary story-ai">AI로 이야기 쓰기</button></p>` : "";
+  return `
+    <h3>${esc(n.title)} <span class="tag">${tag}</span></h3>
+    ${n.paragraphs.map((p) => `<p>${esc(p)}</p>`).join("")}
+    ${n.note ? `<p class="note">${esc(n.note)}</p>` : ""}
+    ${extra}${button}`;
+}
+
+// AI 서사는 버튼을 눌렀을 때만 부른다 — 비용과 지연은 원할 때만
+async function writeStory(box) {
+  const btn = box.querySelector(".story-ai");
+  btn.disabled = true;
+  btn.textContent = "AI가 통계를 조회하고 쓰는 중… (몇 초)";
+  try {
+    const r = await api("/story", { seed: Number(box.dataset.seed), country: box.dataset.country || null });
+    const calls = r.llm_calls.length
+      ? `<p class="share">조회 ${r.plan.map((p) => esc(p.tool + (p.metric ? `(${p.metric})` : ""))).join(", ")} · 작성 ${r.attempts}회`
+        + ` · 모델 호출 ${r.llm_calls.length}번 · $${r.cost_usd.toFixed(4)}</p>` : "";
+    box.innerHTML = renderStory(r.narrative, calls);
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = "AI로 이야기 쓰기";
+    box.insertAdjacentHTML("beforeend", `<p class="note">${esc(e.message)}</p>`);
+  }
+}
+
+document.addEventListener("click", (ev) => {
+  const btn = ev.target.closest(".story-ai");
+  if (btn) writeStory(btn.closest(".story"));
+});
 
 async function reborn() {
   const btn = $("reborn-go");

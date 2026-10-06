@@ -120,3 +120,34 @@ class ConfigOut(BaseModel):
     version: str
     mode: str = Field(description="offline: AI 없이 동작 | live: 모델 사용")
     narrator: str
+
+
+class StoryRequest(BaseModel):
+    seed: int = Field(ge=0, le=MAX_SEED, description="/api/simulate가 돌려준 시드")
+    country: CountryCode = Field(default=None, min_length=3, max_length=3, description="그 뽑기에서 국가를 고정했다면 같은 값")
+
+
+class LlmCallOut(BaseModel):
+    role: str
+    model: str
+    prompt_tokens: int
+    completion_tokens: int
+    cost_usd: Optional[float]
+    ms: int
+
+
+class PlanStepOut(BaseModel):
+    id: str
+    tool: str
+    metric: Optional[str]
+    why: str
+
+
+class StoryOut(BaseModel):
+    seed: int
+    narrative: NarrativeOut
+    plan: List[PlanStepOut] = Field(description="ReWOO 계획자가 고른 조회")
+    attempts: int = Field(description="작성자가 쓴 횟수(검증에 걸리면 다시 쓴다)")
+    violations: List[List[float]] = Field(description="시도마다 근거에 없거나 빠진 숫자")
+    llm_calls: List[LlmCallOut]
+    cost_usd: float

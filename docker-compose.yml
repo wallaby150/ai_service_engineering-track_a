@@ -1,6 +1,9 @@
 services:
   app:
     build: .
+    env_file:              # 키는 이미지에 굽지 않고 실행할 때만 넘긴다. 없어도 뜬다(템플릿 서사)
+      - path: .env
+        required: false
     ports:
       - "8000:8000"
     healthcheck:

@@ -9,7 +9,8 @@ from core.engine import MAX_SEED, Target
 
 @pytest.fixture
 def client(engine):
-    return TestClient(create_app(engine=engine))
+    # story_narrator=None: 개발자의 .env에 키가 있어도 테스트는 모델을 부르지 않는다
+    return TestClient(create_app(engine=engine, story_narrator=None))
 
 
 def test_health_and_config(client):
@@ -79,6 +80,12 @@ def test_until_finds_and_life_matches(client):
 def test_until_does_not_loop_on_impossible_target(client):
     r = client.post("/api/until", json={"target": {"country": "CCC", "economy": "below_3_00"}}).json()
     assert r["found"] is False and r["tries"] == 0
+
+
+def test_story_without_key_returns_template_with_note(client):
+    r = client.post("/api/story", json={"seed": 5}).json()
+    assert r["narrative"]["narrator"] == "scripted" and "키" in r["narrative"]["note"]
+    assert r["llm_calls"] == [] and r["cost_usd"] == 0
 
 
 def test_until_seed_wraps_inside_range(engine):
