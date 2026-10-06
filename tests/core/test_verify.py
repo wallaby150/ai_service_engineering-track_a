@@ -20,3 +20,10 @@ def test_invented_number_is_caught():
 
 def test_rounding_is_tolerated():
     assert unsupported_numbers("기대수명은 약 87세입니다", allowed_numbers({"le": 86.6})) == []
+
+
+def test_missing_required_number():
+    from core.verify import missing_required
+
+    assert missing_required("1,000명 중 23명이 첫돌을 맞지 못합니다", [23.3]) == []
+    assert missing_required("첫돌을 맞지 못했습니다", [23.3]) == [23.3]

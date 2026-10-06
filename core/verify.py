@@ -47,3 +47,9 @@ def allowed_numbers(*sources: object) -> Set[float]:
 
 def unsupported_numbers(text: str, allowed: Set[float]) -> List[float]:
     return [n for n in numbers_in(text) if n not in allowed and round(n, 1) not in allowed]
+
+
+def missing_required(text: str, required: Iterable[float]) -> List[float]:
+    """반드시 들어가야 하는 숫자 중 본문에 없는 것. 반올림한 표기도 인정한다."""
+    found = set(numbers_in(text))
+    return [r for r in required if not ({r, round(r), round(r, 1)} & found)]
