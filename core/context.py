@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from typing import Callable, Dict, List, Optional, Tuple
 
+from core.model import INCOME_LABELS, REGION_LABELS
 from core.stats import Country, Snapshot
 
 METRICS = ("u5mr", "life_expectancy", "poverty_3_00")
@@ -45,8 +46,8 @@ def country_profile(snapshot: Snapshot, iso3: str) -> Dict[str, object]:
     m, f = c.survival.get("male"), c.survival.get("female")
     return {
         "country": c.name_ko,
-        "region": c.region,
-        "income_level": c.income_level,
+        "region": REGION_LABELS.get(c.region, c.region),
+        "income_level": INCOME_LABELS.get(c.income_level, c.income_level),
         "births_per_year": c.births,
         "share_of_world_births_pct": _r(100 * c.births / snapshot.total_births, 2),
         "life_expectancy_male": _r(c.life_expectancy.get("male")),
@@ -91,7 +92,7 @@ def region_peers(snapshot: Snapshot, iso3: str, limit: int = 5) -> Dict[str, obj
         raise KeyError(iso3)
     peers = sorted((x for x in snapshot.countries if x.region == c.region), key=lambda x: -x.births)[:limit]
     return {
-        "region": c.region,
+        "region": REGION_LABELS.get(c.region, c.region),
         "peers": [
             {
                 "country": x.name_ko,
