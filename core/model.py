@@ -34,7 +34,7 @@ LABELS: Dict[str, Dict[str, str]] = {
         "below_8_30": "하루 $4.20~$8.30",
         "above_8_30": "하루 $8.30 이상",
     },
-    "employment": {"employed": "어른이 되어 일하고 있다", "not_employed": "어른이 되어 일하지 않고 있다"},
+    "employment": {"employed": "일하고 있다", "not_employed": "일하지 않고 있다"},
 }
 NODE_LABELS = {
     "country": "국가", "sex": "성별", "survival": "다섯 살까지", "economy": "가정의 경제 수준",
