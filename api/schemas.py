@@ -12,6 +12,7 @@ from core.engine import MAX_SEED
 Sex = Literal["male", "female"]
 SurvivalValue = Literal["infant_death", "child_death", "survived_5"]
 EconomyValue = Literal["below_3_00", "below_4_20", "below_8_30", "above_8_30"]
+EmploymentValue = Literal["employed", "not_employed"]
 CountryCode = Optional[str]
 
 
@@ -26,6 +27,9 @@ class TargetIn(BaseModel):
     sex: Optional[Sex] = None
     survival: Optional[SurvivalValue] = None
     economy: Optional[EconomyValue] = None
+    province: Optional[str] = Field(default=None, min_length=2, max_length=2, description="KOSIS 시도 코드(예: 11 서울). 대한민국 전용")
+    employment: Optional[EmploymentValue] = Field(default=None, description="어른이 되어 일하는가. 대한민국 전용")
+    occupation: Optional[str] = Field(default=None, min_length=2, max_length=2, description="직업 대분류 코드. 대한민국 전용")
 
 
 class UntilRequest(BaseModel):
@@ -110,7 +114,7 @@ class CountryMeta(BaseModel):
 
 
 class MetaOut(BaseModel):
-    nodes: Dict[str, NodeMeta]
+    nodes: Dict[str, NodeMeta] = Field(description="성별·생존·경제, 그리고 한국 상세가 있으면 시도·고용·직업")
     countries: List[CountryMeta]
     sources: Dict[str, str]
     snapshot: Dict[str, object]
