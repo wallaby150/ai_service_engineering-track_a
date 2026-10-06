@@ -27,3 +27,13 @@ def test_missing_required_number():
 
     assert missing_required("1,000명 중 23명이 첫돌을 맞지 못합니다", [23.3]) == []
     assert missing_required("첫돌을 맞지 못했습니다", [23.3]) == [23.3]
+
+
+def test_year_used_as_a_count_is_caught():
+    from core.verify import allowed_years
+
+    facts = {"province_births_year": 2025, "employment_period": "2025년 하반기", "births_per_year": 242917}
+    allowed, years = allowed_numbers(facts), allowed_years(facts)
+    assert unsupported_numbers("전북에서는 2,025명이 태어났다", allowed, years) == [2025.0]
+    assert unsupported_numbers("2025년 하반기 기준, 한 해 242,917명", allowed, years) == []
+    assert unsupported_numbers("2019년에는", allowed, years) == [2019.0]
