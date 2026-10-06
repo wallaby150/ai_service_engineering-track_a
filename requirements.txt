@@ -1,3 +1,5 @@
 fastapi>=0.110,<1
 uvicorn>=0.29
 pydantic>=2.6,<3
+litellm>=1.70
+tenacity>=8.2  # litellm의 num_retries가 재시도할 때 쓴다. 없으면 재시도 대신 실패한다

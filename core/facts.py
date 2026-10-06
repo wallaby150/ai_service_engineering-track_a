@@ -9,7 +9,7 @@ from __future__ import annotations
 from typing import Dict, Optional, Union
 
 from core.engine import Life
-from core.model import LABELS
+from core.model import INCOME_LABELS, LABELS, REGION_LABELS
 
 Fact = Union[str, float, int, None]
 
@@ -28,8 +28,8 @@ def facts_of(life: Life) -> Dict[str, Fact]:
 
     facts: Dict[str, Fact] = {
         "country": c.name_ko,
-        "region": c.region,
-        "income_level": c.income_level,
+        "region": REGION_LABELS.get(c.region, c.region),
+        "income_level": INCOME_LABELS.get(c.income_level, c.income_level),
         "sex": LABELS["sex"].get(sex),
         "survival": LABELS["survival"].get(life.value("survival") or ""),
         "economy": LABELS["economy"].get(economy or ""),

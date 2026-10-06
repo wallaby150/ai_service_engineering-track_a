@@ -4,6 +4,7 @@
 - 실행: `docker compose up --build` (개발: `docker compose -f docker-compose.yml -f docker-compose.dev.yml up`)
 - 테스트: `pytest`
 - 데이터 재생성: `python scripts/fetch_worldbank.py && python scripts/prepare_data.py`
+- 서사 평가(실제 모델 호출, `.env` 키 필요): `python scripts/eval_stories.py --n 10`
 
 ## 커밋 전 검증
 - `pytest`가 키 없이 통과해야 한다
@@ -19,7 +20,9 @@
 
 ## 설계 규칙
 - 확률·숫자는 `core/`의 순수 함수가 낸다. LLM이 숫자를 만들게 하지 않는다
-- `core/`는 FastAPI·LiteLLM을 import하지 않는다
+- `core/`는 FastAPI·LiteLLM을 import하지 않는다. LLM 호출은 `ai/llm.py`의 `LlmClient`만 한다
+- 프롬프트는 `prompts/`에 둔다. `string.Template`이라 달러 기호는 `$$`로 쓴다
+- 테스트는 실제 모델을 부르지 않는다. `tests/ai/fakes.py`의 각본 LLM을 쓴다
 - 통계가 없으면 0이 아니라 None(데이터 없음)이다
 - AI 자리는 `core/narrator.py`의 `Narrator` 하나. 시그니처를 바꿔야 하면 먼저 말한다
 - Python 3.9에서도 돌아야 한다 (`Optional[...]`, `from __future__ import annotations`)

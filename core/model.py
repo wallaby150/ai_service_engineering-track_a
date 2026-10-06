@@ -79,3 +79,20 @@ def economy_dist(country: Country) -> Optional[Dist]:
         return None
     a, b, c = e.pct_below_3_00 / 100, e.pct_below_4_20 / 100, e.pct_below_8_30 / 100
     return Dist((("below_3_00", a), ("below_4_20", b - a), ("below_8_30", c - b), ("above_8_30", 1 - c)))
+
+# World Bank 분류의 한국어 이름. 서사와 화면이 영어 원문을 그대로 쓰지 않게 한다
+REGION_LABELS = {
+    "East Asia & Pacific": "동아시아·태평양",
+    "Europe & Central Asia": "유럽·중앙아시아",
+    "Latin America & Caribbean": "라틴아메리카·카리브",
+    "Middle East, North Africa, Afghanistan & Pakistan": "중동·북아프리카·아프가니스탄·파키스탄",
+    "North America": "북아메리카",
+    "South Asia": "남아시아",
+    "Sub-Saharan Africa": "사하라 이남 아프리카",
+}
+INCOME_LABELS = {
+    "High income": "고소득국",
+    "Upper middle income": "중상위 소득국",
+    "Lower middle income": "중하위 소득국",
+    "Low income": "저소득국",
+}
