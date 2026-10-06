@@ -19,20 +19,25 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from api import __version__
-from api.presenters import life_out, odds_out
+from api.presenters import life_out, narrative_out, odds_out
 from api.schemas import (
     ConfigOut,
     CountryMeta,
     LifeOut,
+    LlmCallOut,
     MetaOut,
     NodeMeta,
     OddsOut,
+    PlanStepOut,
     SimulateRequest,
+    StoryOut,
+    StoryRequest,
     TargetIn,
     UntilOut,
     UntilRequest,
     ValueMeta,
 )
+from api.settings import build_story_narrator, load_dotenv, story_model
 from core.engine import Engine, Target, new_seed
 from core.errors import UnknownValue
 from core.model import LABELS, NODE_LABELS
@@ -48,10 +53,19 @@ def _target(t: TargetIn) -> Target:
     return Target(country=t.country, sex=t.sex, survival=t.survival, economy=t.economy)
 
 
-def create_app(engine: Optional[Engine] = None, narrator: Optional[Narrator] = None) -> FastAPI:
+_FROM_ENV = object()
+
+
+def create_app(
+    engine: Optional[Engine] = None, narrator: Optional[Narrator] = None, story_narrator: object = _FROM_ENV
+) -> FastAPI:
+    """narrator: 뽑기와 함께 바로 돌려줄 서사(빠른 템플릿).
+    story_narrator: /api/story에서 쓸 AI 서사. 기본은 환경변수로 조립하고, 키가 없으면 None."""
     engine = engine or Engine(load_snapshot())
     narrator = narrator or ScriptedNarrator()
     snapshot = engine.snapshot
+    if story_narrator is _FROM_ENV:
+        story_narrator = build_story_narrator(snapshot, narrator)
     manifest = load_manifest()
 
     app = FastAPI(
@@ -89,8 +103,9 @@ def create_app(engine: Optional[Engine] = None, narrator: Optional[Narrator] = N
 
     @app.get("/api/config", response_model=ConfigOut)
     def config() -> ConfigOut:
-        mode = "offline" if narrator.name == "scripted" else "live"
-        return ConfigOut(version=__version__, mode=mode, narrator=narrator.name)
+        if story_narrator is None:
+            return ConfigOut(version=__version__, mode="offline", narrator=narrator.name)
+        return ConfigOut(version=__version__, mode="live", narrator=story_model() or getattr(story_narrator, "name", "llm"))
 
     @app.get("/api/meta", response_model=MetaOut)
     def meta() -> MetaOut:
@@ -135,10 +150,36 @@ def create_app(engine: Optional[Engine] = None, narrator: Optional[Narrator] = N
         life = life_out(r.life, narrator.narrate(r.life), snapshot) if r.life else None
         return UntilOut(found=r.found, tries=r.tries, max_tries=r.max_tries, odds=odds_out(o, snapshot), life=life)
 
+    @app.post("/api/story", response_model=StoryOut)
+    def story(req: StoryRequest) -> StoryOut:
+        """같은 시드로 같은 인생을 다시 뽑고, AI가 이야기를 쓴다. 키가 없으면 템플릿 서사를 돌려준다."""
+        life = engine.sample(req.seed, country=req.country)
+        if story_narrator is None:
+            n = narrator.narrate(life)
+            return StoryOut(
+                seed=life.seed, narrative=narrative_out(n).model_copy(update={"note": "AI 키가 설정되지 않아 템플릿 서사입니다."}),
+                plan=[], attempts=0, violations=[], llm_calls=[], cost_usd=0.0,
+            )
+        report = story_narrator.story(life)  # type: ignore[attr-defined]
+        return StoryOut(
+            seed=life.seed,
+            narrative=narrative_out(report.narrative),
+            plan=[PlanStepOut(id=str(p["id"]), tool=str(p["tool"]), metric=p["metric"], why=str(p["why"])) for p in report.plan],
+            attempts=report.attempts,
+            violations=report.violations,
+            llm_calls=[
+                LlmCallOut(role=c.role, model=c.model, prompt_tokens=c.prompt_tokens,
+                           completion_tokens=c.completion_tokens, cost_usd=c.cost_usd, ms=c.ms)
+                for c in report.calls
+            ],
+            cost_usd=report.cost_usd,
+        )
+
     if WEB_DIR.exists():
         app.mount("/", StaticFiles(directory=WEB_DIR, html=True), name="web")
     return app
 
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+load_dotenv()
 app = create_app()
