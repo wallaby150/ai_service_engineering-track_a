@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Dict, Optional, Tuple
 
 DEFAULT_SNAPSHOT = Path(__file__).resolve().parents[1] / "data" / "snapshot" / "countries.json"
+DEFAULT_KOREA = DEFAULT_SNAPSHOT.with_name("korea.json")
 
 
 @dataclass(frozen=True)
@@ -49,9 +50,34 @@ class Country:
 
 
 @dataclass(frozen=True)
+class Province:
+    """시도 하나. 출생아 수(성별), 고용률(성별, %), 취업자의 직업 대분류별 인원(성별)."""
+
+    code: str
+    name: str
+    births: Dict[str, int]
+    employment_rate_pct: Dict[str, Optional[float]]
+    occupations: Dict[str, Optional[Dict[str, int]]]
+
+
+@dataclass(frozen=True)
+class Korea:
+    """대한민국에서 태어났을 때만 열리는 한국 상세(v0.3)."""
+
+    provinces: Tuple[Province, ...]
+    occupation_labels: Dict[str, str]
+    sources: Dict[str, str]
+    years: Dict[str, str]
+
+    def province(self, code: str) -> Optional[Province]:
+        return next((p for p in self.provinces if p.code == code), None)
+
+
+@dataclass(frozen=True)
 class Snapshot:
     countries: Tuple[Country, ...]
     sources: Dict[str, str]
+    korea: Optional[Korea] = None
 
     @property
     def total_births(self) -> int:
@@ -95,13 +121,35 @@ def _country(raw: dict) -> Country:
     )
 
 
-def snapshot_from_dict(data: dict) -> Snapshot:
+def korea_from_dict(data: dict) -> Korea:
+    provinces = tuple(
+        Province(
+            code=r["code"],
+            name=r["name"],
+            births={s: int(v) for s, v in r["births"].items()},
+            employment_rate_pct=dict(r["employment_rate_pct"]),
+            occupations=dict(r["occupations"]),
+        )
+        for r in data["regions"]
+    )
+    return Korea(provinces, dict(data["occupation_labels"]), dict(data.get("sources", {})), dict(data.get("years", {})))
+
+
+def snapshot_from_dict(data: dict, korea: Optional[dict] = None) -> Snapshot:
     countries = tuple(_country(c) for c in data["countries"] if int(c["births"]) > 0)
-    return Snapshot(countries=countries, sources=dict(data.get("sources", {})))
+    return Snapshot(
+        countries=countries,
+        sources=dict(data.get("sources", {})),
+        korea=korea_from_dict(korea) if korea else None,
+    )
 
 
-def load_snapshot(path: Optional[Path] = None) -> Snapshot:
-    return snapshot_from_dict(json.loads((path or DEFAULT_SNAPSHOT).read_text(encoding="utf-8")))
+def load_snapshot(path: Optional[Path] = None, korea_path: Optional[Path] = None) -> Snapshot:
+    """세계 스냅샷과, 있으면 한국 상세 스냅샷을 함께 읽는다."""
+    data = json.loads((path or DEFAULT_SNAPSHOT).read_text(encoding="utf-8"))
+    kp = korea_path or DEFAULT_KOREA
+    korea = json.loads(kp.read_text(encoding="utf-8")) if kp.exists() else None
+    return snapshot_from_dict(data, korea)
 
 
 def load_manifest(path: Optional[Path] = None) -> dict:

@@ -6,6 +6,7 @@
 
 from __future__ import annotations
 
+import re
 from typing import Dict, Optional, Union
 
 from core.engine import Life
@@ -16,6 +17,44 @@ Fact = Union[str, float, int, None]
 
 def _pct(x: Optional[float]) -> Optional[float]:
     return None if x is None else round(x * 100, 2)
+
+
+def _year(text: Optional[str]) -> Optional[int]:
+    """'2025년 하반기' → 2025. 서사가 연도를 쓰면 검증이 숫자로 대조할 수 있게."""
+    m = re.search(r"\d{4}", text or "")
+    return int(m.group()) if m else None
+
+
+def _korea_facts(steps: dict) -> Dict[str, Fact]:
+    """대한민국에서 태어났을 때만 붙는 사실. 열리지 않은 칸의 키는 아예 넣지 않는다."""
+    out: Dict[str, Fact] = {}
+    prov = steps.get("province")
+    if prov is None:
+        return out
+    out.update({
+        "province": prov.label,
+        "province_share_pct": _pct(prov.p),  # 대한민국의 같은 성별 출생아 중 이 시도의 비중
+        "province_births_year": _year(prov.year),
+    })
+    emp = steps.get("employment")
+    if emp is not None and emp.p is not None:
+        rate = emp.p if emp.value == "employed" else 1 - emp.p
+        out.update({
+            "employment": LABELS["employment"].get(emp.value or ""),
+            "employment_rate_pct": _pct(rate),  # 이 시도·성별 15세 이상 중 일하는 사람의 비율
+            "not_employed_pct": _pct(1 - rate),
+            "employment_year": _year(emp.year),
+            "employment_period": emp.year,
+        })
+    occ = steps.get("occupation")
+    if occ is not None and occ.p is not None:
+        out.update({
+            "occupation": occ.label,
+            "occupation_share_pct": _pct(occ.p),  # 이 시도·성별 취업자 중 이 직업의 비중
+            "occupation_year": _year(occ.year),
+            "occupation_period": occ.year,
+        })
+    return out
 
 
 def facts_of(life: Life) -> Dict[str, Fact]:
@@ -43,4 +82,5 @@ def facts_of(life: Life) -> Dict[str, Fact]:
         "life_expectancy": life.life_expectancy,
         "joint_one_in": round(1 / life.joint_p) if life.joint_p > 0 else None,
     }
+    facts.update(_korea_facts(steps))
     return facts

@@ -6,19 +6,22 @@ from typing import Optional
 
 from api.schemas import CountryOut, LifeOut, NarrativeOut, OddsOut, StepOut, TargetIn
 from core.engine import Life, Odds, Step
-from core.model import LABELS, NODE_LABELS
+from core.model import NODE_LABELS, label_of
 from core.narrator import Narrative
 from core.stats import Snapshot
 
 NODE_SOURCE = {"country": "births", "sex": "sex_ratio", "survival": "survival", "economy": "economy"}
+KOREA_SOURCE = {"province": "region", "employment": "employment", "occupation": "occupation"}
+
+
+def source_of(node: str, snapshot: Snapshot) -> str:
+    if node in KOREA_SOURCE:
+        return snapshot.korea.sources.get(KOREA_SOURCE[node], "") if snapshot.korea else ""
+    return snapshot.sources.get(NODE_SOURCE[node], "")
 
 
 def step_out(step: Step, snapshot: Snapshot) -> StepOut:
-    if step.node == "country":
-        country = snapshot.get(step.value or "")
-        value_label: Optional[str] = country.name_ko if country else None
-    else:
-        value_label = LABELS[step.node].get(step.value or "")
+    value_label: Optional[str] = step.label or label_of(snapshot, step.node, step.value)
     return StepOut(
         node=step.node,
         node_label=NODE_LABELS[step.node],
@@ -26,7 +29,7 @@ def step_out(step: Step, snapshot: Snapshot) -> StepOut:
         value_label=value_label,
         p=step.p,
         assumed=step.assumed,
-        source=snapshot.sources.get(NODE_SOURCE[step.node], ""),
+        source=source_of(step.node, snapshot),
     )
 
 
@@ -55,7 +58,8 @@ def life_out(life: Life, narrative: Narrative, snapshot: Snapshot) -> LifeOut:
 def odds_out(odds: Odds, snapshot: Snapshot) -> OddsOut:
     t = odds.target
     return OddsOut(
-        target=TargetIn(country=t.country, sex=t.sex, survival=t.survival, economy=t.economy),
+        target=TargetIn(country=t.country, sex=t.sex, survival=t.survival, economy=t.economy,
+                        province=t.province, employment=t.employment, occupation=t.occupation),
         p=odds.p,
         one_in=(1 / odds.p) if odds.p else None,
         coverage=odds.coverage,

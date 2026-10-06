@@ -50,3 +50,23 @@ def test_deaths_are_told_with_care(engine, narrator):
             assert "한 사람의 삶" in narrator.narrate(life).paragraphs[-1]
             found += 1
     assert found > 0
+
+
+def test_korean_life_gets_province_and_adult_paragraphs(korea_engine, narrator):
+    seen_job = seen_idle = False
+    for seed in range(400):
+        life = korea_engine.sample(seed, country="KOR")
+        n = narrator.narrate(life)
+        facts = facts_of(life)
+        assert n.title.startswith("대한민국 ")
+        assert all(facts.get(k) is not None for k in n.facts_used)
+        text = " ".join(n.paragraphs)
+        if life.value("occupation"):
+            seen_job = True
+            assert facts["occupation"] in text
+        elif life.value("employment") == "not_employed":
+            seen_idle = True
+            assert "일하지 않고" in text
+        if life.value("survival") != "survived_5":
+            assert "어른이 된" not in text
+    assert seen_job and seen_idle

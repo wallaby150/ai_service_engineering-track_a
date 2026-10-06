@@ -38,3 +38,16 @@ def test_engine_runs_on_real_data(real):
     assert engine.probability(Target()).p == pytest.approx(1)
     korea = engine.probability(Target(country="KOR"))
     assert 0.001 < korea.p < 0.003
+
+
+def test_korea_snapshot_is_loaded_and_consistent(real):
+    k = real.korea
+    assert k is not None and len(k.provinces) == 17
+    assert k.province("11").name == "서울특별시"
+    engine = Engine(real)
+    survived = engine.probability(Target(country="KOR", survival="survived_5")).p
+    employed = engine.probability(Target(employment="employed")).p
+    not_employed = engine.probability(Target(employment="not_employed")).p
+    assert employed + not_employed == pytest.approx(survived)
+    by_province = sum(engine.probability(Target(province=p.code)).p for p in k.provinces)
+    assert by_province == pytest.approx(engine.probability(Target(country="KOR")).p)
