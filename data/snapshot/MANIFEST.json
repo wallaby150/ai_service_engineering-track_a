@@ -46,5 +46,41 @@
   "survival": 0.9994,
   "economy": 0.9675
  },
- "license": "World Bank data: CC BY 4.0"
+ "license": "World Bank data: CC BY 4.0",
+ "korea": {
+  "fetched_at": "2026-10-06T13:42:29+00:00",
+  "tables": {
+   "births": {
+    "tbl_id": "INH_1B81A01",
+    "description": "인구동향조사 시도·성별 출생아 수",
+    "period": [
+     "2025"
+    ],
+    "rows": 564
+   },
+   "employment": {
+    "tbl_id": "DT_1ES3B01J",
+    "description": "지역별고용조사 시도·성별 고용률(%)",
+    "period": [
+     "202502"
+    ],
+    "rows": 54
+   },
+   "occupation": {
+    "tbl_id": "DT_1PC2021",
+    "description": "인구총조사 시도·성·직업(대분류)별 취업인구(15세 이상)",
+    "period": [
+     "2020"
+    ],
+    "rows": 2072
+   }
+  },
+  "raw_sha256": {
+   "births.json": "a09c915e49def5d10fb3e78c0f7a77d4a234f38b3a254f921399255c9d0e26f2",
+   "employment.json": "a48b97bf79f732f612763500a685199a37388b29382ff9bd880dce6d52cf2337",
+   "occupation.json": "8e7d1d5b92ea6ed305ca934fded2087175c7a16d01d1023858211a0167176b88"
+  },
+  "snapshot_sha256": "5852cb9a772bd0062d369d1132968efdde2c36344bb34465f3eea0f2e7ccf44c",
+  "license": "KOSIS 공공데이터 (출처 표시)"
+ }
 }
