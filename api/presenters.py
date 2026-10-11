@@ -6,7 +6,7 @@ from typing import Optional
 
 from api.schemas import CountryOut, LifeOut, NarrativeOut, OddsOut, StepOut, TargetIn
 from core.engine import Life, Odds, Step
-from core.model import NODE_LABELS, label_of
+from core.model import NODE_ASSUMPTIONS, NODE_LABELS, label_of
 from core.narrator import Narrative
 from core.stats import Snapshot
 
@@ -30,6 +30,8 @@ def step_out(step: Step, snapshot: Snapshot) -> StepOut:
         p=step.p,
         assumed=step.assumed,
         source=source_of(step.node, snapshot),
+        year=step.year,
+        assumption=NODE_ASSUMPTIONS.get(step.node, ""),
     )
 
 

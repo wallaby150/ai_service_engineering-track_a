@@ -203,6 +203,22 @@ class Engine:
         return Target(self.check_country(target.country), target.sex, target.survival, target.economy,
                       target.province, target.employment, target.occupation)
 
+    # ── 기준 연도 ──────────────────────────────────────────
+    @staticmethod
+    def _year_of(node: str, c: Country, sex: Optional[str]) -> Optional[str]:
+        """세계 칸이 기댄 통계의 기준 연도. 나라마다 '가장 최근 값'의 연도가 다르다."""
+        year: Optional[int] = None
+        if node == "country":
+            year = c.years.get("births")
+        elif node == "sex":
+            year = c.years.get("sex_ratio")
+        elif node == "survival":
+            surv = c.survival.get(sex or "")
+            year = surv.year if surv else None
+        elif node == "economy":
+            year = c.economy.year if c.economy else None
+        return f"{year}년" if year else None
+
     # ── 뽑기 ──────────────────────────────────────────────
     def _draw(self, rng: random.Random, fixed_country: Optional[str]) -> Tuple[Step, ...]:
         u = [rng.random() for _ in range(DRAWS)]
@@ -211,11 +227,12 @@ class Engine:
         else:
             i = min(bisect.bisect_right(self._cum, u[0] * self._cum[-1]), len(self._cum) - 1)
             iso3 = self._countries[i].iso3
-        steps = [Step("country", iso3, self._country_p[iso3])]
+        c = self._by_iso3[iso3]
+        steps = [Step("country", iso3, self._country_p[iso3], year=self._year_of("country", c, None))]
 
         sd = self._sex[iso3]
         sex, p_sex = _pick(sd, u[1])
-        steps.append(Step("sex", sex, p_sex, sd.assumed))
+        steps.append(Step("sex", sex, p_sex, sd.assumed, year=self._year_of("sex", c, sex)))
 
         survival: Optional[str] = None
         vd = self._surv[(iso3, sex)]
@@ -223,14 +240,14 @@ class Engine:
             steps.append(Step("survival", None, None))
         else:
             survival, p = _pick(vd, u[2])
-            steps.append(Step("survival", survival, p, vd.assumed))
+            steps.append(Step("survival", survival, p, vd.assumed, year=self._year_of("survival", c, sex)))
 
         ed = self._eco[iso3]
         if ed is None:
             steps.append(Step("economy", None, None))
         else:
             v, p = _pick(ed, u[3])
-            steps.append(Step("economy", v, p, ed.assumed))
+            steps.append(Step("economy", v, p, ed.assumed, year=self._year_of("economy", c, None)))
 
         if iso3 == KOREA_ISO3 and self._korea_on:
             steps.extend(self._draw_korea(sex, survival, u[4], u[5], u[6]))
@@ -357,17 +374,19 @@ class Engine:
         c = self._by_iso3[target.country or ""]
         if target.korean and (not target.sex or (target.adult and not target.province)):
             return ()
-        steps = [Step("country", c.iso3, self._country_p[c.iso3] / covered_mass)]
+        steps = [Step("country", c.iso3, self._country_p[c.iso3] / covered_mass, year=self._year_of("country", c, None))]
         if target.sex:
-            steps.append(Step("sex", target.sex, self._sex[c.iso3].p(target.sex), self._sex[c.iso3].assumed))
+            steps.append(Step("sex", target.sex, self._sex[c.iso3].p(target.sex), self._sex[c.iso3].assumed,
+                              year=self._year_of("sex", c, target.sex)))
         if target.survival or target.adult:
             value = "survived_5" if target.adult else target.survival
             p = sum(self._sex[c.iso3].p(s) * self._survival_factor(c.iso3, s, target) for s in sexes) / sum(
                 self._sex[c.iso3].p(s) for s in sexes
             )
-            steps.append(Step("survival", value, p))
+            steps.append(Step("survival", value, p, year=self._year_of("survival", c, target.sex or sexes[0])))
         if target.economy:
-            steps.append(Step("economy", target.economy, self._eco[c.iso3].p(target.economy)))  # type: ignore[union-attr]
+            steps.append(Step("economy", target.economy, self._eco[c.iso3].p(target.economy),  # type: ignore[union-attr]
+                              year=self._year_of("economy", c, None)))
         if target.korean:
             sex = target.sex or ""
             if target.province:

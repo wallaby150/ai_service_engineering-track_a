@@ -45,8 +45,10 @@ class StepOut(BaseModel):
     value: Optional[str] = Field(description="None이면 그 나라에 통계가 없다")
     value_label: Optional[str]
     p: Optional[float] = Field(description="앞 칸이 정해졌을 때 이 값이 나올 조건부 확률")
-    assumed: bool
+    assumed: bool = Field(description="통계가 없어 정해 둔 값(예: 성비 1.05)을 썼는가 — 화면의 '추정' 표시")
     source: str
+    year: Optional[str] = Field(default=None, description="이 칸이 기댄 통계의 기준 시점. 통계가 없으면 None")
+    assumption: str = Field(default="", description="이 칸의 가정 한 문장 — 화면의 툴팁")
 
 
 class CountryOut(BaseModel):
@@ -105,6 +107,7 @@ class NodeMeta(BaseModel):
     label: str
     values: List[ValueMeta]
     source: str
+    assumption: str = ""
 
 
 class CountryMeta(BaseModel):

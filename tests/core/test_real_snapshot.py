@@ -51,3 +51,8 @@ def test_korea_snapshot_is_loaded_and_consistent(real):
     assert employed + not_employed == pytest.approx(survived)
     by_province = sum(engine.probability(Target(province=p.code)).p for p in k.provinces)
     assert by_province == pytest.approx(engine.probability(Target(country="KOR")).p)
+
+
+def test_real_steps_have_years(real):
+    life = Engine(real).sample(5, country="KOR")
+    assert all(s.year for s in life.steps), [(s.node, s.year) for s in life.steps]

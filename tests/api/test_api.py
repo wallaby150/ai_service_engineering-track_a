@@ -91,3 +91,28 @@ def test_story_without_key_returns_template_with_note(client):
 def test_until_seed_wraps_inside_range(engine):
     r = engine.sample_until(Target(sex="female"), seed=MAX_SEED, max_tries=50)
     assert 0 <= r.life.seed <= MAX_SEED
+
+
+def test_steps_expose_year_and_assumption(client):
+    life = client.post("/api/simulate", json={"seed": 1, "country": "AAA"}).json()
+    by = {s["node"]: s for s in life["steps"]}
+    assert by["economy"]["year"] == "2022년"
+    assert "낮게" in by["economy"]["assumption"]
+
+
+def test_missing_statistic_has_no_year_over_http(client):
+    life = client.post("/api/simulate", json={"seed": 1, "country": "BBB"}).json()
+    eco = next(s for s in life["steps"] if s["node"] == "economy")
+    assert eco["value"] is None and eco["year"] is None and eco["assumption"]
+
+
+def test_meta_nodes_carry_assumptions(client):
+    meta = client.get("/api/meta").json()
+    assert all(n["assumption"] for n in meta["nodes"].values())
+
+
+def test_odds_explanation_has_sources_and_years(client):
+    r = client.post("/api/odds", json={"country": "AAA", "economy": "below_3_00"}).json()
+    assert r["steps"][0]["source"] == "test"  # 가짜 스냅샷은 출생아 출처만 정의한다
+    assert all("source" in s and "assumption" in s for s in r["steps"])
+    assert next(s for s in r["steps"] if s["node"] == "economy")["year"] == "2022년"
