@@ -145,6 +145,21 @@ def tries_needed(p: float, q: float) -> Optional[int]:
     return max(1, math.ceil(math.log1p(-q) / math.log1p(-p)))
 
 
+def same_moment_seeds(seed: int, n: int = 4) -> List[int]:
+    """같은 순간 세계 어딘가에서 태어난 다른 n명의 시드.
+
+    본 인생의 난수(random.Random(seed))와 따로 뽑는다 — 본 인생은 그대로다. 문자열 시드는 sha512로
+    정수가 되므로 실행·플랫폼·PYTHONHASHSEED와 무관하게 같은 값을 낸다.
+    """
+    rng = random.Random(f"{seed}:same-moment")
+    out: List[int] = []
+    while len(out) < n:
+        s = rng.randint(0, MAX_SEED)
+        if s != seed and s not in out:
+            out.append(s)
+    return out
+
+
 def new_seed() -> int:
     return random.SystemRandom().randint(0, MAX_SEED)
 
@@ -279,6 +294,10 @@ class Engine:
         fixed = self.check_country(country)
         steps = self._draw(random.Random(seed), fixed)
         return Life(seed=seed, country=self._by_iso3[steps[0].value or ""], steps=steps, headline=self._headline(steps))
+
+    def same_moment(self, seed: int, n: int = 4) -> List[Life]:
+        """같은 순간 태어난 다른 n명. 국가를 고정하지 않고 세계에서 뽑는다."""
+        return [self.sample(s) for s in same_moment_seeds(seed, n)]
 
     def sample_until(self, target: Target, seed: int, max_tries: int) -> UntilResult:
         """조건이 나올 때까지 시드를 하나씩 올려 가며 뽑는다. 상한을 넘으면 멈춘다."""
