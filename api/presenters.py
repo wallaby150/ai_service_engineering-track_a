@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from api.schemas import CountryOut, LifeOut, NarrativeOut, OddsOut, StepOut, TargetIn
+from api.schemas import CountryOut, HeadlineOut, LifeOut, NarrativeOut, OddsOut, ShareOut, StepOut, TargetIn
 from core.engine import Life, Odds, Step
 from core.model import NODE_ASSUMPTIONS, NODE_LABELS, label_of
 from core.narrator import Narrative
@@ -37,6 +37,19 @@ def step_out(step: Step, snapshot: Snapshot) -> StepOut:
     )
 
 
+def headline_out(life: Life, snapshot: Snapshot) -> Optional[HeadlineOut]:
+    h = life.headline
+    if h is None:
+        return None
+
+    def share(x):  # type: ignore[no-untyped-def]
+        return ShareOut(below=x.below, same=x.same, above=x.above) if x else None
+
+    return HeadlineOut(node=h.node, node_label=NODE_LABELS[h.node], value=h.value,
+                       value_label=label_of(snapshot, h.node, h.value), year=h.year,
+                       country=share(h.country), world=share(h.world), world_coverage=h.world_coverage)
+
+
 def narrative_out(n: Narrative) -> NarrativeOut:
     return NarrativeOut(
         title=n.title, paragraphs=list(n.paragraphs), narrator=n.narrator, facts_used=list(n.facts_used), note=n.note
@@ -57,6 +70,7 @@ def life_out(life: Life, narrative: Narrative, snapshot: Snapshot) -> LifeOut:
         one_in=round(1 / life.joint_p) if life.joint_p > 0 else None,
         complete=life.complete,
         life_expectancy=life.life_expectancy,
+        headline=headline_out(life, snapshot),
         narrative=narrative_out(narrative),
     )
 
