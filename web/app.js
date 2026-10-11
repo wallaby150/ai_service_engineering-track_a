@@ -180,32 +180,39 @@ function place(life) {
   return p && p.value_label ? ` ${esc(p.value_label)}` : "";
 }
 
-function renderStory(n, extra = "") {
-  const tag = n.narrator === "scripted" ? "템플릿 서사" : "AI 서사";
+function renderStory(n) {
   const button = live && n.narrator === "scripted" && !n.note
-    ? `<p><button class="secondary story-ai">AI로 이야기 쓰기</button></p>` : "";
+    ? `<p class="ai-slot"><button class="secondary story-ai">AI 해석 보기</button></p>` : "";
   return `
-    <h3>${esc(n.title)} <span class="tag">${tag}</span></h3>
+    <h3>${esc(n.title)} <span class="tag">템플릿 서사</span></h3>
     ${n.paragraphs.map((p) => `<p>${esc(p)}</p>`).join("")}
     ${n.note ? `<p class="note">${esc(n.note)}</p>` : ""}
-    ${extra}${button}`;
+    ${button}`;
 }
 
-// AI 서사는 버튼을 눌렀을 때만 부른다 — 비용과 지연은 원할 때만
+// AI 해석은 버튼을 눌렀을 때만 부른다 — 비용과 지연은 원할 때만. 템플릿 글은 그대로 두고 아래에 덧붙인다
 async function writeStory(box) {
-  const btn = box.querySelector(".story-ai");
+  const slot = box.querySelector(".ai-slot");
+  const btn = slot.querySelector(".story-ai");
   btn.disabled = true;
-  btn.textContent = "AI가 통계를 조회하고 쓰는 중… (몇 초)";
+  btn.textContent = "AI가 통계를 조회하고 해석하는 중… (몇 초)";
   try {
     const r = await api("/story", { seed: Number(box.dataset.seed), country: box.dataset.country || null });
-    const calls = r.llm_calls.length
-      ? `<p class="share">조회 ${r.plan.map((p) => esc(p.tool + (p.metric ? `(${p.metric})` : ""))).join(", ")} · 작성 ${r.attempts}회`
-        + ` · 모델 호출 ${r.llm_calls.length}번 · $${r.cost_usd.toFixed(4)}</p>` : "";
-    box.innerHTML = renderStory(r.narrative, calls);
+    const n = r.narrative;
+    if (n.narrator !== "llm") {  // 해석을 못 만들었다 — 템플릿은 그대로, 사유만 알린다
+      slot.outerHTML = `<p class="note">${esc(n.note || "AI 해석을 만들지 못했습니다.")}</p>`;
+      return;
+    }
+    const calls = `<p class="share">조회 ${r.plan.map((p) => esc(p.tool + (p.metric ? `(${p.metric})` : ""))).join(", ")}`
+      + ` · 작성 ${r.attempts}회 · 모델 호출 ${r.llm_calls.length}번 · $${r.cost_usd.toFixed(4)}</p>`;
+    slot.outerHTML = `<div class="ai-note">
+      <h3>${esc(n.title)} <span class="tag">AI 해석</span></h3>
+      ${n.paragraphs.map((p) => `<p>${esc(p)}</p>`).join("")}
+      <p class="share">화면에 없는 비교만 덧붙였습니다. 숫자는 코드가 근거와 대조했습니다.</p>${calls}</div>`;
   } catch (e) {
     btn.disabled = false;
-    btn.textContent = "AI로 이야기 쓰기";
-    box.insertAdjacentHTML("beforeend", `<p class="note">${esc(e.message)}</p>`);
+    btn.textContent = "AI 해석 보기";
+    slot.insertAdjacentHTML("beforeend", `<span class="note"> ${esc(e.message)}</span>`);
   }
 }
 
