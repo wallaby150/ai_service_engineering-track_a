@@ -37,3 +37,16 @@ def test_economy_bands_are_differences_of_cumulative_rates(snapshot):
 
 def test_missing_economy_is_none(snapshot):
     assert economy_dist(snapshot.get("BBB")) is None
+
+
+def test_every_node_states_its_assumption():
+    from core.model import NODE_ASSUMPTIONS, NODES
+
+    assert set(NODE_ASSUMPTIONS) == set(NODES)
+    assert all(text.strip() for text in NODE_ASSUMPTIONS.values())
+
+
+def test_poverty_assumption_says_which_way_it_errs():
+    from core.model import NODE_ASSUMPTIONS
+
+    assert "낮게" in NODE_ASSUMPTIONS["economy"]

@@ -108,6 +108,11 @@ P(직업 = o | r, s, 일한다) = 취업자(r, s, o) / Σ_o 취업자(r, s, o)
 - 기대수명(국가·성별): World Bank `SP.DYN.LE00.MA.IN`, `SP.DYN.LE00.FE.IN`. 개인의 수명을 뽑으려면
   생명표가 필요하므로, 여기서는 "이 나라 같은 성별의 기대수명"으로만 보여 준다.
 
+## 화면에 보이는 가정
+
+각 칸의 가정은 `core/model.py`의 `NODE_ASSUMPTIONS`에 한 문장씩 있고, API(`StepOut.assumption`, `/api/meta`)를
+거쳐 화면의 툴팁으로 보인다. 이 문서의 가정을 고치면 `NODE_ASSUMPTIONS`도 같은 커밋에서 고친다.
+
 ## 기준 연도
 
 World Bank 값은 나라마다 "가장 최근의 비어 있지 않은 값"이라 연도가 다르다. 그래서 뽑힌 칸마다
