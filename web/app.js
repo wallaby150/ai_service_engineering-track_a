@@ -48,12 +48,21 @@ function pace(c) {
 function position(h) {
   if (!h) return "";
   const p = (x) => `${(x * 100).toFixed(1)}%`;
-  const what = h.node === "economy" ? "소비 구간" : "결과";
-  const who = h.node === "economy" ? "이 나라에서 태어나는 아이" : "이 나라에서 태어나는 같은 성별 아이";
+  const year = h.year ? ` <span class="badge">${esc(h.year)}</span>` : "";
+  const cover = (x) => `통계가 있는 나라의 출생아 ${p(x)}`;
+  if (h.node === "survival") {
+    // 생존은 '유리·불리'로 나누지 않는다. 같은 일을 겪는 아이의 비율, 살아남았다면 맞지 못한 아이의 비율만
+    const died = h.value !== "survived_5";
+    const c = died ? h.country.same : h.country.below;
+    const w = h.world ? (died ? h.world.same : h.world.below) : null;
+    const what = died ? "같은 일을 겪는 아이" : "다섯 살을 맞지 못하는 아이";
+    return `<p class="position"><b>${esc(h.node_label)} — ${esc(h.value_label)}</b>${year}<br>
+      이 나라에서 태어나는 같은 성별 아이 중 ${what}: ${p(c)}${w !== null ? `<br>세계(${cover(h.world_coverage)}): ${p(w)}` : ""}</p>`;
+  }
   const world = h.world
-    ? `<br>세계(통계가 있는 나라의 출생아 ${p(h.world_coverage)}): 불리한 쪽 ${p(h.world.below)} · 같음 ${p(h.world.same)} · 유리한 쪽 ${p(h.world.above)}` : "";
-  return `<p class="position"><b>${esc(h.node_label)} — ${esc(h.value_label)}</b>${h.year ? ` <span class="badge">${esc(h.year)}</span>` : ""}<br>
-    ${who} 중 ${what}이 나보다 불리한 쪽 ${p(h.country.below)} · 같음 ${p(h.country.same)} · 유리한 쪽 ${p(h.country.above)}${world}</p>`;
+    ? `<br>세계(${cover(h.world_coverage)}): 더 낮은 구간 ${p(h.world.below)} · 같은 구간 ${p(h.world.same)} · 더 높은 구간 ${p(h.world.above)}` : "";
+  return `<p class="position"><b>${esc(h.node_label)} — ${esc(h.value_label)}</b>${year}<br>
+    이 나라에서 태어나는 아이 중 더 낮은 구간 ${p(h.country.below)} · 같은 구간 ${p(h.country.same)} · 더 높은 구간 ${p(h.country.above)}${world}</p>`;
 }
 
 const times = (n) => (n == null ? "—" : `${n.toLocaleString("ko-KR")}번`);
