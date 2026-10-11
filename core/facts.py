@@ -62,6 +62,23 @@ def _korea_facts(steps: dict) -> Dict[str, Fact]:
     return out
 
 
+def _headline_facts(life: Life) -> Dict[str, Fact]:
+    """위치 한 줄. 문장이 그대로 쓸 수 있게 경제는 100명당, 생존은 1,000명당으로 미리 바꿔 둔다."""
+    h = life.headline
+    if h is None:
+        return {}
+    scale, unit = (100, "per_100") if h.node == "economy" else (1000, "per_1000")
+    out: Dict[str, Fact] = {"headline": h.node, "headline_year": _year(h.year), "headline_period": h.year}
+    for scope, share in (("country", h.country), ("world", h.world)):
+        if share is None:
+            continue
+        for part in ("below", "same", "above"):
+            out[f"headline_{scope}_{part}_{unit}"] = round(getattr(share, part) * scale, 1)
+    if h.world is not None:
+        out["headline_world_coverage_pct"] = _pct(h.world_coverage)
+    return out
+
+
 def facts_of(life: Life) -> Dict[str, Fact]:
     c = life.country
     sex = life.value("sex") or ""
@@ -91,4 +108,5 @@ def facts_of(life: Life) -> Dict[str, Fact]:
         "joint_one_in": round(1 / life.joint_p) if life.joint_p > 0 else None,
     }
     facts.update(_korea_facts(steps))
+    facts.update(_headline_facts(life))
     return facts
