@@ -46,6 +46,16 @@
   .chain .v { font-weight: 600; }
   .chain .p { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; }
   .chain .src { grid-column: 2 / 4; font-size: 12px; color: var(--muted); }
+  .chain.compact li { grid-template-columns: 110px 1fr; padding: 6px 10px; }
+  .chain.compact .src { grid-column: 2; }
+  .badge { display: inline-block; font-size: 11px; padding: 0 6px; margin-right: 4px; border-radius: 4px;
+           border: 1px solid var(--line); color: var(--muted); }
+  .badge.est { border-color: var(--warn); color: var(--warn); }
+  .badge.none { border-style: dashed; }
+  .why { display: inline-block; margin-left: 6px; vertical-align: baseline; }
+  .why summary { cursor: pointer; list-style: none; text-decoration: underline dotted; }
+  .why summary::-webkit-details-marker { display: none; }
+  .why[open] { display: block; margin: 4px 0 0; }
   .big { font-size: 22px; font-weight: 700; margin: 14px 0 4px; }
   .story { margin-top: 16px; padding: 14px; background: var(--bg); border-radius: 8px; }
   .story h3 { margin: 0 0 6px; font-size: 15px; }
@@ -114,6 +124,6 @@
     데이터: World Bank WDI · UN IGME · World Bank PIP. 통계는 집단의 분포일 뿐, 한 사람의 삶을 규정하지 않습니다.
   </footer>
 </main>
-<script src="app.js?v=2026-10-06"></script><!-- 바꾸면 날짜도 바꾼다: 브라우저가 예전 파일을 쓰지 않게 -->
+<script src="app.js?v=2026-10-11"></script><!-- 바꾸면 날짜도 바꾼다: 브라우저가 예전 파일을 쓰지 않게 -->
 </body>
 </html>

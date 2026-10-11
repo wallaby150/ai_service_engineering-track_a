@@ -65,12 +65,27 @@ async function init() {
 }
 
 // ── 다시 태어나기 ─────────────────────────────────────
+// 칸마다 근거 한 줄: 출처 · 기준 연도 배지 · 추정 배지 · 통계 없음 배지 · 가정(접어 둔 설명)
+function badges(s) {
+  const out = [];
+  if (s.value === null) out.push(`<span class="badge none">통계 없음</span>`);
+  else if (s.year) out.push(`<span class="badge">${esc(s.year)}</span>`);
+  if (s.assumed) out.push(`<span class="badge est" title="통계가 없어 정해 둔 값을 썼습니다">추정</span>`);
+  return out.join("");
+}
+
+function evidence(s) {
+  const why = s.assumption
+    ? `<details class="why"><summary>가정</summary>${esc(s.assumption)}</details>` : "";
+  return `<span class="src">${badges(s)} ${esc(s.source)}${why}</span>`;
+}
+
 function renderLife(life, fixedCountry) {
   const steps = life.steps.map((s) => `
     <li><span class="k">${esc(s.node_label)}</span>
         <span class="v">${esc(s.value_label ?? "통계 없음")}</span>
         <span class="p">${pct(s.p)}</span>
-        <span class="src">${esc(s.source)}${s.assumed ? " · 가정값 사용" : ""}</span></li>`).join("");
+        ${evidence(s)}</li>`).join("");
   const share = `${location.origin}${location.pathname}?seed=${life.seed}${fixedCountry ? `&country=${life.country.iso3}` : ""}`;
   return `
     <div class="big">${esc(life.country.name_ko)}${place(life)}에서 ${esc(life.steps[1].value_label)}아이로 태어났습니다</div>
@@ -153,7 +168,9 @@ function renderOdds(o) {
   if (o.p === null) return `<p class="note">${esc(o.reason || "계산할 수 없습니다")}</p>`;
   const cover = o.coverage < 0.999 ? `<p class="share">통계가 있는 나라의 출생아(${pct(o.coverage)})만으로 계산했습니다.</p>` : "";
   const steps = o.steps.length
-    ? `<p class="share">${o.steps.map((s) => `${esc(s.node_label)} ${esc(s.value_label)} ${pct(s.p)}`).join(" × ")}</p>` : "";
+    ? `<p class="share">${o.steps.map((s) => `${esc(s.node_label)} ${esc(s.value_label)} ${pct(s.p)}`).join(" × ")}</p>
+       <ul class="chain compact">${o.steps.map((s) => `<li><span class="k">${esc(s.node_label)}</span>${evidence(s)}</li>`).join("")}</ul>`
+    : "";
   return `
     <div class="big">${oneIn(o.one_in)}</div>
     <div class="stats">
