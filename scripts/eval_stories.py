@@ -54,6 +54,8 @@ def main() -> None:
             "attempts": report.attempts,
             "violations": sum(len(v) for v in report.violations),
             "first_pass": report.attempts == 1 and n.narrator == "llm",
+            "overlap": report.overlap[-1] if report.overlap else None,
+            "new_evidence": len(report.new_evidence[-1]) if report.new_evidence else 0,
             "cost": report.cost_usd,
             "seconds": seconds,
             "note": n.note or "",
@@ -61,8 +63,8 @@ def main() -> None:
         t = template.narrate(life)
         sections.append(
             f"### 시드 {seed} — {rows[-1]['who']}\n\n"
-            f"**v0.2 템플릿**\n\n" + "\n\n".join(t.paragraphs) + "\n\n"
-            f"**v0.5 {'AI' if n.narrator == 'llm' else '템플릿(폴백)'}** — {n.title}"
+            f"**템플릿 서사 (화면에 늘 보임)**\n\n" + "\n\n".join(t.paragraphs) + "\n\n"
+            f"**AI 해석{'' if n.narrator == 'llm' else ' — 만들지 못함'}** — {n.title}"
             f"{' · ' + n.note if n.note else ''}\n\n" + "\n\n".join(n.paragraphs) + "\n"
         )
         print(f"[{seed}] {n.narrator:<8} 작성 {report.attempts}회 · 위반 {rows[-1]['violations']} · "
@@ -78,12 +80,17 @@ def main() -> None:
         f"| AI 서사로 나간 비율 | {len(llm_rows)}/{k} |",
         f"| 첫 원고에 검증 통과 | {sum(r['first_pass'] for r in rows)}/{k} |",
         f"| 템플릿으로 떨어진 건 | {k - len(llm_rows)} |",
-        f"| 잡아낸 근거 없는·빠진 숫자 (전체 원고) | {sum(r['violations'] for r in rows)} |",
+        f"| 잡아낸 근거 없는 숫자 (전체 원고) | {sum(r['violations'] for r in rows)} |",
+        f"| 화면(템플릿) 글과 겹친 비율 (AI 해석, 평균) | "
+        + (f"{sum(r['overlap'] for r in llm_rows) / len(llm_rows):.0%} |" if llm_rows else "— |"),
+        f"| 화면에 없던 근거 (AI 해석, 평균 개수) | "
+        + (f"{sum(r['new_evidence'] for r in llm_rows) / len(llm_rows):.1f} |" if llm_rows else "— |"),
         f"| 건당 평균 비용 | ${sum(r['cost'] for r in rows) / k:.4f} |",
         f"| 건당 평균 지연 | {sum(r['seconds'] for r in rows) / k:.1f}초 |",
         "",
-        "검증은 코드가 한다: 화면에 나간 AI 서사의 숫자는 전부 사실 목록·조회 결과에 있는 값이다.",
-        "품질(읽히는가, 맥락을 더했는가)은 아래 나란히 놓인 원문을 사람이 읽고 판정한다.",
+        "AI는 템플릿을 다시 쓰지 않고 그 아래 '해석'을 덧붙인다. 코드가 세 가지를 검증한다:",
+        "숫자는 근거에 있는가, 화면 글과 35% 넘게 겹치지 않는가, 화면에 없는 근거를 둘 이상 썼는가.",
+        "읽히는가·뜻이 맞는가는 아래 원문을 사람이 읽고 판정한다.",
         "",
         "## 나란히 읽기",
         "",
