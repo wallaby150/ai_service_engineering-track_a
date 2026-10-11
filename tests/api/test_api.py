@@ -116,3 +116,10 @@ def test_odds_explanation_has_sources_and_years(client):
     assert r["steps"][0]["source"] == "test"  # 가짜 스냅샷은 출생아 출처만 정의한다
     assert all("source" in s and "assumption" in s for s in r["steps"])
     assert next(s for s in r["steps"] if s["node"] == "economy")["year"] == "2022년"
+
+
+def test_life_has_one_in_n_and_birth_pace(client):
+    life = client.post("/api/simulate", json={"seed": 1, "country": "AAA"}).json()
+    assert life["steps"][0]["one_in"] == 2
+    assert life["country"]["births_per_year"] == 600
+    assert life["country"]["minutes_per_birth"] == pytest.approx(525960 / 600)

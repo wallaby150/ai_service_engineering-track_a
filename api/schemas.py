@@ -48,6 +48,7 @@ class StepOut(BaseModel):
     assumed: bool = Field(description="통계가 없어 정해 둔 값(예: 성비 1.05)을 썼는가 — 화면의 '추정' 표시")
     source: str
     year: Optional[str] = Field(default=None, description="이 칸이 기댄 통계의 기준 시점. 통계가 없으면 None")
+    one_in: Optional[int] = Field(default=None, description="이 칸의 확률을 'N명 중 1명'으로")
     assumption: str = Field(default="", description="이 칸의 가정 한 문장 — 화면의 툴팁")
 
 
@@ -57,6 +58,9 @@ class CountryOut(BaseModel):
     name_en: str
     region: str
     income_level: str
+    births_per_year: Optional[int] = None
+    births_per_minute: Optional[float] = None
+    minutes_per_birth: Optional[float] = None
 
 
 class NarrativeOut(BaseModel):
