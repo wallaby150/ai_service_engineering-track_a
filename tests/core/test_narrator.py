@@ -78,3 +78,26 @@ def test_birth_paragraph_says_one_in_n_and_pace(engine, narrator):
     assert facts["country_one_in"] == 2  # 가짜 스냅샷에서 AAA는 출생아의 60%
     first = narrator.narrate(life).paragraphs[0]
     assert "2명 중 1명꼴" in first and "분에 1명" in first  # 출생아 600명/년 — 몇 분에 한 명
+
+
+def test_position_paragraph_follows_the_headline_rule(engine, narrator):
+    seen = set()
+    for seed in range(600):
+        life = engine.sample(seed, country="AAA")
+        text = " ".join(narrator.narrate(life).paragraphs)
+        assert "같은 해" not in text
+        if life.value("survival") in ("infant_death", "child_death"):
+            assert "같은 일을 겪습니다" in text
+            seen.add("death")
+        else:
+            assert "당신보다 낮은 소비 구간" in text
+            assert text.count("같은 구간") == 2  # 나라 안 한 번, 세계 한 번 — 경제 문단과 겹치지 않는다
+            seen.add("economy")
+    assert seen == {"death", "economy"}
+
+
+def test_no_economy_means_survival_position(engine, narrator):
+    life = next(engine.sample(s, country="BBB") for s in range(500)
+                if engine.sample(s, country="BBB").value("survival") == "survived_5")
+    assert "다섯 살을 맞지 못합니다" in narrator.narrate(life).paragraphs[-1] or \
+        any("세계로 넓히면" in p for p in narrator.narrate(life).paragraphs)

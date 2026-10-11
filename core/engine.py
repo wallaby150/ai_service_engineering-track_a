@@ -13,7 +13,7 @@ from __future__ import annotations
 import bisect
 import math
 import random
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from core.errors import UnknownValue
@@ -32,6 +32,7 @@ from core.model import (
     sex_dist,
     survival_dist,
 )
+from core.position import Headline, choose_headline, share_of
 from core.stats import Country, Snapshot
 
 MAX_SEED = 2**31 - 1
@@ -55,6 +56,7 @@ class Life:
     seed: int
     country: Country
     steps: Tuple[Step, ...]
+    headline: Optional[Headline] = field(default=None, compare=False)  # 출생 코호트 안의 위치 한 줄
 
     def value(self, node: str) -> Optional[str]:
         for s in self.steps:
@@ -276,7 +278,7 @@ class Engine:
     def sample(self, seed: int, country: Optional[str] = None) -> Life:
         fixed = self.check_country(country)
         steps = self._draw(random.Random(seed), fixed)
-        return Life(seed=seed, country=self._by_iso3[steps[0].value or ""], steps=steps)
+        return Life(seed=seed, country=self._by_iso3[steps[0].value or ""], steps=steps, headline=self._headline(steps))
 
     def sample_until(self, target: Target, seed: int, max_tries: int) -> UntilResult:
         """조건이 나올 때까지 시드를 하나씩 올려 가며 뽑는다. 상한을 넘으면 멈춘다."""
@@ -285,9 +287,43 @@ class Engine:
             s_i = (seed + i) % (MAX_SEED + 1)  # 돌려받은 시드로 다시 요청할 수 있게 범위 안에 감는다
             steps = self._draw(random.Random(s_i), None)
             if target.matches({s.node: s.value for s in steps}):
-                life = Life(seed=s_i, country=self._by_iso3[steps[0].value or ""], steps=steps)
+                life = Life(seed=s_i, country=self._by_iso3[steps[0].value or ""], steps=steps,
+                            headline=self._headline(steps))
                 return UntilResult(True, i + 1, max_tries, life)
         return UntilResult(False, max_tries, max_tries, None)
+
+    # ── 출생 코호트 안의 위치 ─────────────────────────────────
+    def _world_tables(self) -> Dict[str, object]:
+        """세계 비율은 정확한 확률로 한 번만 계산한다(통계가 있는 나라의 출생아 기준)."""
+        if getattr(self, "_world_cache", None) is None:
+            eco = [self.probability(Target(economy=b)) for b in ECONOMIES]
+            surv = {s: [self.probability(Target(sex=s, survival=o)) for o in SURVIVALS] for s in SEXES}
+            self._world_cache = {
+                "economy": ([(b, o.p or 0.0) for b, o in zip(ECONOMIES, eco)], eco[0].coverage),
+                "survival": {s: ([(v, o.p or 0.0) for v, o in zip(SURVIVALS, odds)], odds[0].coverage)
+                             for s, odds in surv.items()},
+            }
+        return self._world_cache  # type: ignore[return-value]
+
+    def _headline(self, steps: Tuple[Step, ...]) -> Optional[Headline]:
+        values = {s.node: s for s in steps}
+        iso3, sex = values["country"].value or "", values["sex"].value or ""
+        survival, economy = values["survival"].value, values["economy"].value
+        kind = choose_headline(survival, economy)
+        if kind is None:
+            return None
+        world = self._world_tables()
+        if kind == "economy":
+            probs, coverage = world["economy"]  # type: ignore[index]
+            country = self._eco[iso3].probs  # type: ignore[union-attr]
+            value, year = economy or "", values["economy"].year
+        else:
+            probs, coverage = world["survival"][sex]  # type: ignore[index]
+            country = self._surv[(iso3, sex)].probs  # type: ignore[union-attr]
+            value, year = survival or "", values["survival"].year
+        return Headline(node=kind, value=value, country=share_of(kind, country, value),
+                        world=share_of(kind, probs, value) if coverage else None,
+                        world_coverage=coverage, year=year)
 
     # ── 역확률 ────────────────────────────────────────────
     def _covered(self, c: Country, target: Target, sexes: Sequence[str]) -> bool:

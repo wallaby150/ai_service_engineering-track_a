@@ -71,6 +71,23 @@ class NarrativeOut(BaseModel):
     note: Optional[str] = None
 
 
+class ShareOut(BaseModel):
+    below: float = Field(description="나보다 불리한 쪽의 비율")
+    same: float
+    above: float
+
+
+class HeadlineOut(BaseModel):
+    node: str = Field(description="무엇을 요약했나: economy | survival (core/position.py의 규칙)")
+    node_label: str
+    value: str
+    value_label: Optional[str]
+    year: Optional[str]
+    country: ShareOut = Field(description="이 나라에서 태어나는 아이(생존이면 같은 성별) 중")
+    world: Optional[ShareOut] = Field(description="통계가 있는 나라의 출생아 전체 중")
+    world_coverage: float
+
+
 class LifeOut(BaseModel):
     seed: int
     country: CountryOut
@@ -79,6 +96,7 @@ class LifeOut(BaseModel):
     one_in: Optional[int]
     complete: bool = Field(description="모든 칸에 통계가 있었는가")
     life_expectancy: Optional[float]
+    headline: Optional[HeadlineOut] = None
     narrative: NarrativeOut
 
 

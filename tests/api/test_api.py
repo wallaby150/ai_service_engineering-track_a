@@ -123,3 +123,10 @@ def test_life_has_one_in_n_and_birth_pace(client):
     assert life["steps"][0]["one_in"] == 2
     assert life["country"]["births_per_year"] == 600
     assert life["country"]["minutes_per_birth"] == pytest.approx(525960 / 600)
+
+
+def test_life_carries_headline(client):
+    life = client.post("/api/simulate", json={"seed": 3, "country": "AAA"}).json()
+    h = life["headline"]
+    assert h["node"] in ("economy", "survival")
+    assert h["country"]["below"] + h["country"]["same"] + h["country"]["above"] == pytest.approx(1)

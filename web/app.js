@@ -44,6 +44,18 @@ function pace(c) {
   return `<p class="pace">${esc(c.name_ko)}에서는 한 해 ${man(c.births_per_year)} 명, ${speed}이 태어납니다.</p>`;
 }
 
+// 위치 한 줄 — 무엇을 요약할지는 서버(core/position.py)가 골랐다. 여기서는 비율을 표기만 한다
+function position(h) {
+  if (!h) return "";
+  const p = (x) => `${(x * 100).toFixed(1)}%`;
+  const what = h.node === "economy" ? "소비 구간" : "결과";
+  const who = h.node === "economy" ? "이 나라에서 태어나는 아이" : "이 나라에서 태어나는 같은 성별 아이";
+  const world = h.world
+    ? `<br>세계(통계가 있는 나라의 출생아 ${p(h.world_coverage)}): 불리한 쪽 ${p(h.world.below)} · 같음 ${p(h.world.same)} · 유리한 쪽 ${p(h.world.above)}` : "";
+  return `<p class="position"><b>${esc(h.node_label)} — ${esc(h.value_label)}</b>${h.year ? ` <span class="badge">${esc(h.year)}</span>` : ""}<br>
+    ${who} 중 ${what}이 나보다 불리한 쪽 ${p(h.country.below)} · 같음 ${p(h.country.same)} · 유리한 쪽 ${p(h.country.above)}${world}</p>`;
+}
+
 const times = (n) => (n == null ? "—" : `${n.toLocaleString("ko-KR")}번`);
 
 function setStatus(id, text, isError = false) {
@@ -105,6 +117,7 @@ function renderLife(life, fixedCountry) {
   return `
     <div class="big">${esc(life.country.name_ko)}${place(life)}에서 ${esc(life.steps[1].value_label)}아이로 태어났습니다</div>
     ${pace(life.country)}
+    ${position(life.headline)}
     <ul class="chain">${steps}</ul>
     <p>이 조합이 그대로 나올 확률은 <b>${oneIn(life.one_in)}</b>입니다${life.complete ? "" : " (통계가 없는 칸은 빼고 계산)"}.</p>
     <div class="story" data-seed="${life.seed}" data-country="${fixedCountry ? life.country.iso3 : ""}">
