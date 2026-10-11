@@ -99,3 +99,6 @@
 - 모든 칸이 기준 연도(`year`)와 가정 한 문장(`assumption`)을 싣는다. 화면은 연도·추정·통계 없음 배지와
   접어 둔 가정 설명으로 보여 주고, 역확률 풀이에도 칸별 출처를 붙인다.
 - 가정 문장은 `core/model.py`의 `NODE_ASSUMPTIONS`에 둔다. `probability-model.md`와 짝이다.
+
+### 체감 단위 (feature/one-in)
+- 칸마다 "N명 중 1명", 국가는 "한 해 약 N만 명, 1분에 약 N명 / 약 N분에 1명"을 함께 쓴다. 값은 `core/units.py`가 낸다.

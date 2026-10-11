@@ -29,6 +29,21 @@ function oneIn(n) {
   if (n < 1.05) return "거의 확실";
   return `약 ${Math.round(n).toLocaleString("ko-KR")}분의 1`;
 }
+// 표기만 바꾼다(값은 서버가 낸 것): 24,291,700 → "약 2,429만"
+function man(n) {
+  if (n == null) return "—";
+  if (n < 10000) return `약 ${Math.round(n).toLocaleString("ko-KR")}`;
+  return `약 ${Math.round(n / 10000).toLocaleString("ko-KR")}만`;
+}
+
+function pace(c) {
+  if (!c.births_per_year) return "";
+  const speed = c.births_per_minute >= 1
+    ? `1분에 약 ${c.births_per_minute.toFixed(1)}명`
+    : `약 ${c.minutes_per_birth.toFixed(1)}분에 1명`;
+  return `<p class="pace">${esc(c.name_ko)}에서는 한 해 ${man(c.births_per_year)} 명, ${speed}이 태어납니다.</p>`;
+}
+
 const times = (n) => (n == null ? "—" : `${n.toLocaleString("ko-KR")}번`);
 
 function setStatus(id, text, isError = false) {
@@ -84,11 +99,12 @@ function renderLife(life, fixedCountry) {
   const steps = life.steps.map((s) => `
     <li><span class="k">${esc(s.node_label)}</span>
         <span class="v">${esc(s.value_label ?? "통계 없음")}</span>
-        <span class="p">${pct(s.p)}</span>
+        <span class="p">${pct(s.p)}${s.one_in ? `<span class="oi">${s.one_in.toLocaleString("ko-KR")}명 중 1명</span>` : ""}</span>
         ${evidence(s)}</li>`).join("");
   const share = `${location.origin}${location.pathname}?seed=${life.seed}${fixedCountry ? `&country=${life.country.iso3}` : ""}`;
   return `
     <div class="big">${esc(life.country.name_ko)}${place(life)}에서 ${esc(life.steps[1].value_label)}아이로 태어났습니다</div>
+    ${pace(life.country)}
     <ul class="chain">${steps}</ul>
     <p>이 조합이 그대로 나올 확률은 <b>${oneIn(life.one_in)}</b>입니다${life.complete ? "" : " (통계가 없는 칸은 빼고 계산)"}.</p>
     <div class="story" data-seed="${life.seed}" data-country="${fixedCountry ? life.country.iso3 : ""}">

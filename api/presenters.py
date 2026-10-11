@@ -8,6 +8,7 @@ from api.schemas import CountryOut, LifeOut, NarrativeOut, OddsOut, StepOut, Tar
 from core.engine import Life, Odds, Step
 from core.model import NODE_ASSUMPTIONS, NODE_LABELS, label_of
 from core.narrator import Narrative
+from core.units import births_per_minute, minutes_per_birth, one_in
 from core.stats import Snapshot
 
 NODE_SOURCE = {"country": "births", "sex": "sex_ratio", "survival": "survival", "economy": "economy"}
@@ -31,6 +32,7 @@ def step_out(step: Step, snapshot: Snapshot) -> StepOut:
         assumed=step.assumed,
         source=source_of(step.node, snapshot),
         year=step.year,
+        one_in=one_in(step.p),
         assumption=NODE_ASSUMPTIONS.get(step.node, ""),
     )
 
@@ -46,7 +48,9 @@ def life_out(life: Life, narrative: Narrative, snapshot: Snapshot) -> LifeOut:
     return LifeOut(
         seed=life.seed,
         country=CountryOut(
-            iso3=c.iso3, name_ko=c.name_ko, name_en=c.name_en, region=c.region, income_level=c.income_level
+            iso3=c.iso3, name_ko=c.name_ko, name_en=c.name_en, region=c.region, income_level=c.income_level,
+            births_per_year=c.births, births_per_minute=births_per_minute(c.births),
+            minutes_per_birth=minutes_per_birth(c.births),
         ),
         steps=[step_out(s, snapshot) for s in life.steps],
         joint_p=life.joint_p,
