@@ -65,6 +65,26 @@ function position(h) {
     이 나라에서 태어나는 아이 중 더 낮은 구간 ${p(h.country.below)} · 같은 구간 ${p(h.country.same)} · 더 높은 구간 ${p(h.country.above)}${world}</p>`;
 }
 
+// 두 나라 값을 나란히 놓기만 한다. 차이·배율은 계산하지 않는다(숫자는 서버의 core가 낸다)
+function compare(life) {
+  const home = $("home-country").value;
+  const a = profiles[life.country.iso3], b = profiles[home];
+  if (!home || !a || !b || home === life.country.iso3) return "";
+  const sex = life.steps[1].value, sexLabel = life.steps[1].value_label;
+  const v = (x, unit = "") => (x === null || x === undefined ? "통계 없음" : `${x}${unit}`);
+  const yr = (y) => (y ? `<span class="yr">${esc(String(y))}년</span>` : "");
+  const rows = [
+    [`다섯 살을 맞지 못하는 ${sexLabel}아이 (1,000명당)`, (p) => v(p.by_sex[sex].u5mr_per_1000, "명") + yr(p.survival_year)],
+    [`${sexLabel === "남자" ? "남성" : "여성"} 기대수명`, (p) => v(p.by_sex[sex].life_expectancy, "세") + yr(p.life_expectancy_year)],
+    ["하루 $3.00 미만(극빈) 인구 비율", (p) => v(p.pct_below_3_00, "%") + yr(p.economy_year)],
+    ["하루 $8.30 미만 인구 비율", (p) => v(p.pct_below_8_30, "%") + yr(p.economy_year)],
+    ["세계 출생아 중 비중", (p) => v(p.share_of_world_births_pct, "%")],
+  ];
+  const body = rows.map(([k, f]) => `<tr><td>${esc(k)}</td><td>${f(a)}</td><td>${f(b)}</td></tr>`).join("");
+  return `<table class="compare"><caption>내가 실제로 태어난 나라와 나란히</caption>
+    <thead><tr><th></th><th>${esc(a.name_ko)}</th><th>${esc(b.name_ko)} (내 나라)</th></tr></thead><tbody>${body}</tbody></table>`;
+}
+
 function peers(list) {
   if (!list || !list.length) return "";
   const items = list.map((x) => `<li><b>${esc(x.country_name)}</b> · ${x.summary.map(esc).join(" · ")}
@@ -82,6 +102,13 @@ function setStatus(id, text, isError = false) {
 
 // ── 초기화 ───────────────────────────────────────────
 let live = false; // 서버에 AI 서사가 붙어 있는가 (/api/config)
+let lastLife = null; // 마지막 '다시 태어나기' 결과 — 내 나라를 바꾸면 이걸 다시 그린다
+let profiles = {}; // 나라별 비교 지표 — 전부 한 번 받아 두고 '내 나라'는 브라우저 안에서 고른다
+
+// '내 실제 나라'는 이 브라우저에만 둔다. 저장소를 못 쓰는 환경(사생활 보호 창 등)에서도 화면은 돈다
+const HOME_KEY = "reborn.home-country";
+function loadHome() { try { return localStorage.getItem(HOME_KEY) || ""; } catch (e) { return ""; } }
+function saveHome(v) { try { v ? localStorage.setItem(HOME_KEY, v) : localStorage.removeItem(HOME_KEY); } catch (e) { /* 저장 못 해도 이번 화면에선 쓴다 */ } }
 
 async function init() {
   try {
@@ -92,6 +119,10 @@ async function init() {
       : `v${config.version} · AI 서사 사용 중 (${config.narrator})`;
     const opts = meta.countries.map((c) => `<option value="${c.iso3}">${esc(c.name_ko)}</option>`).join("");
     $("reborn-country").insertAdjacentHTML("beforeend", opts);
+    $("home-country").insertAdjacentHTML("beforeend", opts);
+    $("home-country").value = loadHome();
+    api("/profiles").then((r) => { profiles = Object.fromEntries(r.profiles.map((x) => [x.iso3, x])); })
+      .catch(() => { /* 비교표만 빠진다 */ });
     $("odds-country").insertAdjacentHTML("beforeend", opts);
     const korean = ["province", "employment", "occupation"].filter((n) => meta.nodes[n]);
     $("odds-korea").hidden = korean.length === 0;  // 한국 상세 데이터가 있을 때만
@@ -135,6 +166,7 @@ function renderLife(life, fixedCountry) {
     ${pace(life.country)}
     ${position(life.headline)}
     <ul class="chain">${steps}</ul>
+    ${compare(life)}
     ${peers(life.same_moment)}
     <p>이 조합이 그대로 나올 확률은 <b>${oneIn(life.one_in)}</b>입니다${life.complete ? "" : " (통계가 없는 칸은 빼고 계산)"}.</p>
     <div class="story" data-seed="${life.seed}" data-country="${fixedCountry ? life.country.iso3 : ""}">
@@ -190,6 +222,7 @@ async function reborn() {
   setStatus("reborn-status", "다시 태어나는 중…");
   try {
     const life = await api("/simulate", body);
+    lastLife = { life, fixed: body.country };
     $("reborn-result").innerHTML = renderLife(life, body.country);
     $("reborn-result").hidden = false;
     setStatus("reborn-status", `시드 ${life.seed}`);
@@ -266,5 +299,9 @@ async function tryUntil() {
 }
 
 $("reborn-go").addEventListener("click", reborn);
+$("home-country").addEventListener("change", (ev) => {
+  saveHome(ev.target.value);
+  if (lastLife) $("reborn-result").innerHTML = renderLife(lastLife.life, lastLife.fixed);  // 같은 인생, 비교표만 바뀐다
+});
 $("odds-go").addEventListener("click", odds);
 init();

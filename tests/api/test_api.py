@@ -139,3 +139,10 @@ def test_simulate_returns_four_peers_that_replay(client):
     peer = a["same_moment"][0]
     again = client.post("/api/simulate", json={"seed": peer["seed"]}).json()
     assert again["country"]["iso3"] == peer["country"]
+
+
+def test_profiles_cover_every_country_and_take_no_input(client):
+    body = client.get("/api/profiles").json()
+    assert {p["iso3"] for p in body["profiles"]} == {"AAA", "BBB", "CCC"}
+    spec = client.get("/openapi.json").json()["paths"]["/api/profiles"]["get"]
+    assert not spec.get("parameters") and "requestBody" not in spec  # 사용자의 나라를 받는 자리가 없다

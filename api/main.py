@@ -38,6 +38,7 @@ from api.schemas import (
     ValueMeta,
 )
 from api.settings import build_story_narrator, load_dotenv, story_model
+from core.context import all_profiles
 from core.engine import Engine, Target, new_seed
 from core.errors import UnknownValue
 from core.model import LABELS, NODE_ASSUMPTIONS, NODE_LABELS
@@ -139,6 +140,14 @@ def create_app(
                      **({f"korea_{key}": v for key, v in snapshot.korea.sources.items()} if snapshot.korea else {})},
             snapshot={key: manifest.get(key) for key in ("fetched_at", "birth_coverage", "license")},
         )
+
+    profiles_cache = all_profiles(snapshot)
+
+    @app.get("/api/profiles")
+    def profiles() -> dict:
+        """모든 나라의 비교 지표. 화면이 이걸 받아 '내 실제 나라'를 브라우저 안에서 고른다.
+        그래서 이 엔드포인트는 어떤 입력도 받지 않는다 — 사용자의 나라가 서버로 오지 않게."""
+        return {"profiles": profiles_cache}
 
     @app.post("/api/simulate", response_model=LifeOut)
     def simulate(req: SimulateRequest) -> LifeOut:

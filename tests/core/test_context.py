@@ -32,3 +32,29 @@ def test_region_peers_has_rows(snapshot):
 def test_run_tool_explains_bad_requests(snapshot):
     assert "가능한 조회" in run_tool(snapshot, "delete_everything", "AAA")["error"]
     assert "가능한 값" in run_tool(snapshot, "world_comparison", "AAA", "height")["error"]
+
+
+def test_comparison_profile_matches_the_snapshot(snapshot):
+    from core.context import comparison_profile
+
+    p = comparison_profile(snapshot, "AAA")
+    assert p["by_sex"]["female"]["u5mr_per_1000"] == 80.0
+    assert p["by_sex"]["male"]["life_expectancy"] == 60.0
+    assert p["pct_below_3_00"] == 10.0 and p["economy_year"] == 2022
+    assert p["share_of_world_births_pct"] == 60.0
+
+
+def test_comparison_profile_keeps_missing_as_none(snapshot):
+    from core.context import comparison_profile
+
+    p = comparison_profile(snapshot, "BBB")
+    assert p["pct_below_3_00"] is None and p["economy_year"] is None
+    assert comparison_profile(snapshot, "CCC")["by_sex"]["male"]["life_expectancy"] is None
+
+
+def test_all_profiles_cover_every_country_and_hold_no_differences(snapshot):
+    from core.context import all_profiles
+
+    profiles = all_profiles(snapshot)
+    assert {p["iso3"] for p in profiles} == {"AAA", "BBB", "CCC"}
+    assert not any("diff" in k or "ratio" in k for p in profiles for k in p)
