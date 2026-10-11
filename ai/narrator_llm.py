@@ -24,7 +24,7 @@ from core.engine import Life
 from core.facts import facts_of
 from core.narrator import Narrative, Narrator
 from core.stats import Snapshot
-from core.verify import allowed_numbers, missing_required, unsupported_numbers
+from core.verify import allowed_numbers, allowed_years, missing_required, unsupported_numbers
 
 PROMPTS_DIR = Path(__file__).resolve().parents[1] / "prompts"
 MAX_STEPS = 3
@@ -137,6 +137,7 @@ class LlmNarrator:
 
     def _write(self, life: Life, facts: Dict[str, object], evidence: Dict[str, object], report: StoryReport) -> StoryReport:
         allowed = allowed_numbers(facts, evidence)
+        years = allowed_years(facts, evidence)
         required = self._required(life, facts)
         evidence_text = "\n".join(_wrap(k, v) for k, v in evidence.items())
         feedback = ""
@@ -150,7 +151,7 @@ class LlmNarrator:
             )
             report.calls += calls
             text = " ".join([story.title, *story.paragraphs])
-            bad = unsupported_numbers(text, allowed)
+            bad = unsupported_numbers(text, allowed, years)
             missing = missing_required(text, required)
             report.violations.append(bad + missing)
             if not bad and not missing:

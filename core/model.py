@@ -9,12 +9,15 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Dict, Optional, Tuple
 
-from core.stats import Country, Snapshot
+from core.stats import Country, Korea, Province, Snapshot
 
 SEXES = ("male", "female")
 SURVIVALS = ("infant_death", "child_death", "survived_5")
 ECONOMIES = ("below_3_00", "below_4_20", "below_8_30", "above_8_30")
-NODES = ("country", "sex", "survival", "economy")
+EMPLOYMENTS = ("employed", "not_employed")
+NODES = ("country", "sex", "survival", "economy", "province", "employment", "occupation")
+KOREA_NODES = ("province", "employment", "occupation")  # 대한민국에서 태어났을 때만 열린다
+KOREA_ISO3 = "KOR"
 
 DEFAULT_SEX_RATIO = 1.05
 
@@ -31,8 +34,12 @@ LABELS: Dict[str, Dict[str, str]] = {
         "below_8_30": "하루 $4.20~$8.30",
         "above_8_30": "하루 $8.30 이상",
     },
+    "employment": {"employed": "일하고 있다", "not_employed": "일하지 않고 있다"},
 }
-NODE_LABELS = {"country": "국가", "sex": "성별", "survival": "다섯 살까지", "economy": "가정의 경제 수준"}
+NODE_LABELS = {
+    "country": "국가", "sex": "성별", "survival": "다섯 살까지", "economy": "가정의 경제 수준",
+    "province": "태어난 시도", "employment": "어른이 되어", "occupation": "직업(대분류)",
+}
 
 
 @dataclass(frozen=True)
@@ -79,6 +86,44 @@ def economy_dist(country: Country) -> Optional[Dist]:
         return None
     a, b, c = e.pct_below_3_00 / 100, e.pct_below_4_20 / 100, e.pct_below_8_30 / 100
     return Dist((("below_3_00", a), ("below_4_20", b - a), ("below_8_30", c - b), ("above_8_30", 1 - c)))
+
+def province_dist(korea: Korea, sex: str) -> Dist:
+    """P(시도 | 대한민국, 성별) = 그 성별 출생아 중 시도의 비중."""
+    total = sum(p.births[sex] for p in korea.provinces)
+    return Dist(tuple((p.code, p.births[sex] / total) for p in korea.provinces))
+
+
+def employment_dist(province: Province, sex: str) -> Optional[Dist]:
+    """P(일한다 | 시도, 성별) = 15세 이상 고용률. 다섯 살 이후 성인이 될 때까지의 사망·이사는 모델에 없다."""
+    rate = province.employment_rate_pct.get(sex)
+    if rate is None:
+        return None
+    return Dist((("employed", rate / 100), ("not_employed", 1 - rate / 100)))
+
+
+def occupation_dist(province: Province, sex: str) -> Optional[Dist]:
+    """P(직업 | 시도, 성별, 일한다) = 그 시도·성별 취업자의 직업 대분류 비중."""
+    counts = province.occupations.get(sex)
+    if not counts:
+        return None
+    total = sum(counts.values())
+    return Dist(tuple((code, n / total) for code, n in sorted(counts.items())))
+
+
+def label_of(snapshot: Snapshot, node: str, value: Optional[str]) -> Optional[str]:
+    """칸의 값 → 사람이 읽는 이름. 국가·시도·직업은 스냅샷에서, 나머지는 LABELS에서."""
+    if value is None:
+        return None
+    if node == "country":
+        c = snapshot.get(value)
+        return c.name_ko if c else None
+    if node == "province":
+        p = snapshot.korea.province(value) if snapshot.korea else None
+        return p.name if p else None
+    if node == "occupation":
+        return snapshot.korea.occupation_labels.get(value) if snapshot.korea else None
+    return LABELS.get(node, {}).get(value)
+
 
 # World Bank 분류의 한국어 이름. 서사와 화면이 영어 원문을 그대로 쓰지 않게 한다
 REGION_LABELS = {

@@ -27,6 +27,9 @@
             padding: 20px; margin-top: 20px; }
   section h2 { margin: 0 0 12px; font-size: 20px; }
   .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
+  .controls + .controls { margin-top: 10px; }
+  .controls.korea { padding: 10px; border: 1px dashed var(--line); border-radius: 8px; }
+  .korea-tag { width: 100%; font-size: 13px; color: var(--muted); }
   label { display: flex; flex-direction: column; font-size: 13px; color: var(--muted); gap: 4px; }
   select, input { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
                   background: var(--bg); color: var(--ink); min-width: 140px; }
@@ -93,6 +96,14 @@
       <label>성별 <select id="odds-sex"><option value="">상관없음</option></select></label>
       <label>다섯 살까지 <select id="odds-survival"><option value="">상관없음</option></select></label>
       <label>경제 수준 <select id="odds-economy"><option value="">상관없음</option></select></label>
+    </div>
+    <div class="controls korea" id="odds-korea" hidden>
+      <span class="korea-tag">대한민국 상세 — 고르면 국가는 대한민국으로 정해집니다</span>
+      <label>태어난 시도 <select id="odds-province"><option value="">상관없음</option></select></label>
+      <label>어른이 되어 <select id="odds-employment"><option value="">상관없음</option></select></label>
+      <label>직업(대분류) <select id="odds-occupation"><option value="">상관없음</option></select></label>
+    </div>
+    <div class="controls">
       <button id="odds-go">확률 계산</button>
     </div>
     <div class="status" id="odds-status"></div>
@@ -103,6 +114,6 @@
     데이터: World Bank WDI · UN IGME · World Bank PIP. 통계는 집단의 분포일 뿐, 한 사람의 삶을 규정하지 않습니다.
   </footer>
 </main>
-<script src="app.js"></script>
+<script src="app.js?v=2026-10-06"></script><!-- 바꾸면 날짜도 바꾼다: 브라우저가 예전 파일을 쓰지 않게 -->
 </body>
 </html>

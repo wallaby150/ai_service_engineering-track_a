@@ -50,7 +50,8 @@ log = logging.getLogger("reborn.api")
 
 
 def _target(t: TargetIn) -> Target:
-    return Target(country=t.country, sex=t.sex, survival=t.survival, economy=t.economy)
+    return Target(country=t.country, sex=t.sex, survival=t.survival, economy=t.economy,
+                  province=t.province, employment=t.employment, occupation=t.occupation)
 
 
 _FROM_ENV = object()
@@ -118,6 +119,14 @@ def create_app(
             )
             for node, key in (("sex", "sex_ratio"), ("survival", "survival"), ("economy", "economy"))
         }
+        k = snapshot.korea
+        if k is not None:  # 한국 상세 — 화면은 이 칸들을 "대한민국에서만"으로 보여 준다
+            nodes["province"] = NodeMeta(label=NODE_LABELS["province"], source=k.sources.get("region", ""),
+                                         values=[ValueMeta(value=p.code, label=p.name) for p in k.provinces])
+            nodes["employment"] = NodeMeta(label=NODE_LABELS["employment"], source=k.sources.get("employment", ""),
+                                           values=[ValueMeta(value=v, label=lb) for v, lb in LABELS["employment"].items()])
+            nodes["occupation"] = NodeMeta(label=NODE_LABELS["occupation"], source=k.sources.get("occupation", ""),
+                                           values=[ValueMeta(value=c, label=lb) for c, lb in sorted(k.occupation_labels.items())])
         countries = sorted(
             (CountryMeta(iso3=c.iso3, name_ko=c.name_ko, share=c.births / total) for c in snapshot.countries),
             key=lambda c: c.name_ko,
@@ -125,8 +134,9 @@ def create_app(
         return MetaOut(
             nodes=nodes,
             countries=countries,
-            sources=snapshot.sources,
-            snapshot={k: manifest.get(k) for k in ("fetched_at", "birth_coverage", "license")},
+            sources={**snapshot.sources,
+                     **({f"korea_{key}": v for key, v in snapshot.korea.sources.items()} if snapshot.korea else {})},
+            snapshot={key: manifest.get(key) for key in ("fetched_at", "birth_coverage", "license")},
         )
 
     @app.post("/api/simulate", response_model=LifeOut)

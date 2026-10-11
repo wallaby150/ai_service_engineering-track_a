@@ -50,7 +50,9 @@ async function init() {
     const opts = meta.countries.map((c) => `<option value="${c.iso3}">${esc(c.name_ko)}</option>`).join("");
     $("reborn-country").insertAdjacentHTML("beforeend", opts);
     $("odds-country").insertAdjacentHTML("beforeend", opts);
-    for (const node of ["sex", "survival", "economy"]) {
+    const korean = ["province", "employment", "occupation"].filter((n) => meta.nodes[n]);
+    $("odds-korea").hidden = korean.length === 0;  // 한국 상세 데이터가 있을 때만
+    for (const node of ["sex", "survival", "economy", ...korean]) {
       $(`odds-${node}`).insertAdjacentHTML("beforeend",
         meta.nodes[node].values.map((v) => `<option value="${v.value}">${esc(v.label)}</option>`).join(""));
     }
@@ -71,13 +73,18 @@ function renderLife(life, fixedCountry) {
         <span class="src">${esc(s.source)}${s.assumed ? " · 가정값 사용" : ""}</span></li>`).join("");
   const share = `${location.origin}${location.pathname}?seed=${life.seed}${fixedCountry ? `&country=${life.country.iso3}` : ""}`;
   return `
-    <div class="big">${esc(life.country.name_ko)}에서 ${esc(life.steps[1].value_label)}아이로 태어났습니다</div>
+    <div class="big">${esc(life.country.name_ko)}${place(life)}에서 ${esc(life.steps[1].value_label)}아이로 태어났습니다</div>
     <ul class="chain">${steps}</ul>
-    <p>이 조합으로 태어날 확률은 <b>${oneIn(life.one_in)}</b>입니다${life.complete ? "" : " (통계가 없는 칸은 빼고 계산)"}.</p>
+    <p>이 조합이 그대로 나올 확률은 <b>${oneIn(life.one_in)}</b>입니다${life.complete ? "" : " (통계가 없는 칸은 빼고 계산)"}.</p>
     <div class="story" data-seed="${life.seed}" data-country="${fixedCountry ? life.country.iso3 : ""}">
       ${renderStory(life.narrative)}
     </div>
     <p class="share">같은 인생 다시 보기: <a href="${esc(share)}">${esc(share)}</a></p>`;
+}
+
+function place(life) {
+  const p = life.steps.find((s) => s.node === "province");
+  return p && p.value_label ? ` ${esc(p.value_label)}` : "";
 }
 
 function renderStory(n, extra = "") {
@@ -135,7 +142,7 @@ async function reborn() {
 // ── 이렇게 태어날 확률 ────────────────────────────────
 function target() {
   const t = {};
-  for (const k of ["country", "sex", "survival", "economy"]) {
+  for (const k of ["country", "sex", "survival", "economy", "province", "employment", "occupation"]) {
     const v = $(`odds-${k}`).value;
     if (v) t[k] = v;
   }

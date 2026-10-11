@@ -5,7 +5,8 @@
 **한 사람의 삶으로 이어 볼 방법이 없다.**
 
 이 서비스는 흩어진 공공 통계를 **하나의 조건부 확률 모델**로 묶는다. 버튼 한 번이 실제 통계에
-비례해 뽑힌 한 사람의 출생 조건이 되고(국가 → 성별 → 다섯 살까지의 생존 → 가정의 경제 수준),
+비례해 뽑힌 한 사람의 출생 조건이 되고(국가 → 성별 → 다섯 살까지의 생존 → 가정의 경제 수준,
+대한민국에서 태어났다면 시도 → 어른이 되어 일하는가 → 직업까지),
 반대로 "내가 원하는 조건으로 태어날 확률"이 얼마나 되는지, 그 조건이 나올 때까지 몇 번을 다시
 태어나야 하는지도 숫자로 보여 준다.
 
@@ -20,8 +21,8 @@
 |---|---|---|
 | v0.1 | 문서, 확률 모델 설계, 동작하지 않는 샘플 화면 | 완료 |
 | v0.2 | AI 없이 도는 뽑기·역확률 + 목 UI + 테스트 | 완료 |
-| v0.3 | 한국 상세(시도·직업·소득 분위) | 예정 |
 | v0.5 | AI 인생 서사(ReWOO) + 코드 검증 | 완료 |
+| v0.6 | 한국 상세: 시도 · 어른이 되어 일하는가 · 직업(대분류) — 처음 로드맵의 v0.3 | 완료 |
 
 ## 실행 방법
 
@@ -74,6 +75,8 @@ python scripts/eval_stories.py --n 10   # 실제 모델 호출. 결과: reports/
 ```bash
 python scripts/fetch_worldbank.py   # 원본 → data/raw/ (커밋하지 않음)
 python scripts/prepare_data.py      # → data/snapshot/ + reports/prepare_report.txt
+python scripts/fetch_kosis.py       # 한국 상세 원본 → data/raw/kosis/ (.env의 KOSIS_API_KEY 필요)
+python scripts/prepare_korea.py     # → data/snapshot/korea.json + reports/prepare_korea_report.txt
 ```
 
 ## 데이터 출처
@@ -85,6 +88,9 @@ python scripts/prepare_data.py      # → data/snapshot/ + reports/prepare_repor
 | 영아·5세 미만 사망률(성별) | World Bank WDI / UN IGME (`SP.DYN.IMRT.*`, `SH.DYN.MORT.*`) | 생존 |
 | 기대수명(성별) | World Bank WDI (`SP.DYN.LE00.*`) | 맥락 정보 |
 | 하루 $3.00 / $4.20 / $8.30 빈곤율(2021 PPP) | World Bank PIP (`SI.POV.DDAY`, `SI.POV.LMIC`, `SI.POV.UMIC`) | 경제 수준 |
+| 시도·성별 출생아 수 (2025년) | KOSIS 인구동향조사 (`INH_1B81A01`) | 태어난 시도 (대한민국) |
+| 시도·성별 고용률 (2025년 하반기) | KOSIS 지역별고용조사 (`DT_1ES3B01J`) | 어른이 되어 일하는가 (대한민국) |
+| 시도·성·직업 대분류별 취업인구 (2020년) | KOSIS 인구총조사 (`DT_1PC2021`) | 직업 (대한민국) |
 
 통계마다 가정과 한계가 있다. 무엇을 어떻게 이어 붙였는지는 [docs/probability-model.md](docs/probability-model.md)에 있다.
 
@@ -98,7 +104,7 @@ python scripts/prepare_data.py      # → data/snapshot/ + reports/prepare_repor
 
 ## 라이선스
 
-코드는 [MIT](LICENSE). 데이터는 각 출처의 이용 조건을 따른다(World Bank 데이터는 CC BY 4.0).
+코드는 [MIT](LICENSE). 데이터는 각 출처의 이용 조건을 따른다(World Bank 데이터는 CC BY 4.0, KOSIS는 출처 표시).
 
 ---
 
