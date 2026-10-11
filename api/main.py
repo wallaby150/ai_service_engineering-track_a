@@ -40,7 +40,7 @@ from api.schemas import (
 from api.settings import build_story_narrator, load_dotenv, story_model
 from core.engine import Engine, Target, new_seed
 from core.errors import UnknownValue
-from core.model import LABELS, NODE_LABELS
+from core.model import LABELS, NODE_ASSUMPTIONS, NODE_LABELS
 from core.narrator import Narrator
 from core.narrator_scripted import ScriptedNarrator
 from core.stats import load_manifest, load_snapshot
@@ -116,16 +116,17 @@ def create_app(
                 label=NODE_LABELS[node],
                 values=[ValueMeta(value=v, label=label) for v, label in LABELS[node].items()],
                 source=snapshot.sources.get(key, ""),
+                assumption=NODE_ASSUMPTIONS[node],
             )
             for node, key in (("sex", "sex_ratio"), ("survival", "survival"), ("economy", "economy"))
         }
         k = snapshot.korea
         if k is not None:  # 한국 상세 — 화면은 이 칸들을 "대한민국에서만"으로 보여 준다
-            nodes["province"] = NodeMeta(label=NODE_LABELS["province"], source=k.sources.get("region", ""),
+            nodes["province"] = NodeMeta(label=NODE_LABELS["province"], assumption=NODE_ASSUMPTIONS["province"], source=k.sources.get("region", ""),
                                          values=[ValueMeta(value=p.code, label=p.name) for p in k.provinces])
-            nodes["employment"] = NodeMeta(label=NODE_LABELS["employment"], source=k.sources.get("employment", ""),
+            nodes["employment"] = NodeMeta(label=NODE_LABELS["employment"], assumption=NODE_ASSUMPTIONS["employment"], source=k.sources.get("employment", ""),
                                            values=[ValueMeta(value=v, label=lb) for v, lb in LABELS["employment"].items()])
-            nodes["occupation"] = NodeMeta(label=NODE_LABELS["occupation"], source=k.sources.get("occupation", ""),
+            nodes["occupation"] = NodeMeta(label=NODE_LABELS["occupation"], assumption=NODE_ASSUMPTIONS["occupation"], source=k.sources.get("occupation", ""),
                                            values=[ValueMeta(value=c, label=lb) for c, lb in sorted(k.occupation_labels.items())])
         countries = sorted(
             (CountryMeta(iso3=c.iso3, name_ko=c.name_ko, share=c.births / total) for c in snapshot.countries),
