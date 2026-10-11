@@ -123,3 +123,27 @@ def test_sample_until_stops_at_the_cap(engine):
     result = engine.sample_until(impossible, seed=0, max_tries=500)
     assert not result.found
     assert result.tries == 500
+
+
+def test_world_steps_carry_their_reference_year(engine):
+    life = engine.sample(1, country="AAA")
+    years = {s.node: s.year for s in life.steps}
+    assert years["sex"] == "2024년" and years["economy"] == "2022년"
+    assert years["survival"] == "2024년"
+    assert years["country"] is None  # 가짜 스냅샷에는 출생아 기준 연도가 없다 — 지어내지 않는다
+
+
+def test_missing_statistic_has_no_year(engine):
+    life = engine.sample(1, country="BBB")
+    eco = next(s for s in life.steps if s.node == "economy")
+    assert eco.value is None and eco.year is None
+
+
+def test_assumed_value_is_flagged(engine):
+    sex = next(s for s in engine.sample(1, country="CCC").steps if s.node == "sex")
+    assert sex.assumed  # CCC는 성비가 없어 1.05를 썼다
+
+
+def test_years_do_not_change_what_a_seed_draws(engine):
+    assert [(s.node, s.value) for s in engine.sample(77).steps] == [
+        (s.node, s.value) for s in engine.sample(77).steps]
