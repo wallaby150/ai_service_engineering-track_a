@@ -81,6 +81,7 @@ def world_comparison(snapshot: Snapshot, iso3: str, metric: str) -> Dict[str, ob
         "world_average": _r(world),
         "ratio_to_world": _r(value / world) if value is not None and world else None,
         "rank_high_to_low": rank,
+        "rank_meaning": "1이 값이 가장 높은 나라다. 순위를 쓸 때는 '높은 쪽에서 N번째(M개국 중)'처럼 방향을 밝힌다",
         "countries_with_data": len(rows),
     }
 
