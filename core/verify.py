@@ -78,3 +78,25 @@ def missing_required(text: str, required: Iterable[float]) -> List[float]:
     """반드시 들어가야 하는 숫자 중 본문에 없는 것. 반올림한 표기도 인정한다."""
     found = set(numbers_in(text))
     return [r for r in required if not ({r, round(r), round(r, 1)} & found)]
+
+
+# ── 반복이 아니라 해석인가 (AI 해석가, 2026-10-11) ──────────────────
+_NON_TEXT = re.compile(r"[\s\d.,·()\[\]%$~\-—\"'“”‘’!?:;]+")
+
+
+def _grams(text: str, n: int = 3) -> Set[str]:
+    s = _NON_TEXT.sub("", text)
+    return {s[i:i + n] for i in range(len(s) - n + 1)}
+
+
+def overlap_ratio(text: str, reference: str, n: int = 3) -> float:
+    """text의 글자 n-gram 가운데 reference에도 있는 비율. 숫자·기호·공백은 빼고 본다(문장 반복을 재려고)."""
+    g = _grams(text, n)
+    return len(g & _grams(reference, n)) / len(g) if g else 0.0
+
+
+def new_evidence(text: str, novel_numbers: Set[float], names: Iterable[str]) -> List[str]:
+    """화면에 없는 근거를 쓴 흔적: 템플릿에 없던 숫자, 다른 나라 이름. 무엇이 걸렸는지 목록으로 돌려준다."""
+    hits = [f"{n:g}" for n in sorted({x for x in numbers_in(text) if x in novel_numbers or round(x, 1) in novel_numbers})]
+    hits += [name for name in sorted(set(names)) if name and name in text]
+    return hits

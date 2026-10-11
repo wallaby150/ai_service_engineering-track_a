@@ -110,3 +110,10 @@ def facts_of(life: Life) -> Dict[str, Fact]:
     facts.update(_korea_facts(steps))
     facts.update(_headline_facts(life))
     return facts
+
+
+def peer_facts(life: Life) -> Dict[str, Fact]:
+    """같은 순간 태어난 다른 사람의 사실 — 해석가가 대비를 만들 재료. 뽑힌 값과 그 나라 통계만 담는다."""
+    f = facts_of(life)
+    keys = ("country", "sex", "survival", "economy", "u5mr_per_1000", "life_expectancy", "province", "occupation")
+    return {k: f[k] for k in keys if f.get(k) is not None}

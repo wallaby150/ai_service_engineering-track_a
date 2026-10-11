@@ -101,3 +101,11 @@ def test_no_economy_means_survival_position(engine, narrator):
                 if engine.sample(s, country="BBB").value("survival") == "survived_5")
     assert "다섯 살을 맞지 못합니다" in narrator.narrate(life).paragraphs[-1] or \
         any("세계로 넓히면" in p for p in narrator.narrate(life).paragraphs)
+
+
+def test_peer_facts_hold_only_drawn_values(engine):
+    from core.facts import peer_facts
+
+    life = engine.sample(5, country="BBB")
+    p = peer_facts(life)
+    assert p["country"] == "나나라" and "economy" not in p  # BBB는 경제 통계가 없다 — 키를 넣지 않는다
