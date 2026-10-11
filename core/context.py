@@ -122,3 +122,37 @@ def run_tool(snapshot: Snapshot, name: str, iso3: str, metric: Optional[str] = N
             return {"error": f"metric={metric!r} 는 지원하지 않는다. 가능한 값: {list(METRICS)}"}
         return fn(snapshot, iso3, metric)
     return fn(snapshot, iso3)
+
+
+def comparison_profile(snapshot: Snapshot, iso3: str) -> Dict[str, object]:
+    """'내 실제 나라'와 나란히 놓을 지표. 차이·배율은 내지 않는다 — 화면은 두 값을 나란히 보여 주기만 한다.
+    통계가 없으면 None 그대로다."""
+    c = snapshot.get(iso3)
+    if c is None:
+        raise KeyError(iso3)
+    by_sex = {}
+    for sex in ("male", "female"):
+        s = c.survival.get(sex)
+        by_sex[sex] = {
+            "imr_per_1000": s.imr if s else None,
+            "u5mr_per_1000": s.u5mr if s else None,
+            "life_expectancy": _r(c.life_expectancy.get(sex)),
+        }
+    return {
+        "iso3": c.iso3,
+        "name_ko": c.name_ko,
+        "births_per_year": c.births,
+        "share_of_world_births_pct": _r(100 * c.births / snapshot.total_births, 2),
+        "pct_below_3_00": c.economy.pct_below_3_00 if c.economy else None,
+        "pct_below_8_30": c.economy.pct_below_8_30 if c.economy else None,
+        "economy_year": c.economy.year if c.economy else None,
+        "survival_year": next((s.year for s in c.survival.values() if s), None),
+        "life_expectancy_year": c.years.get("life_expectancy"),
+        "by_sex": by_sex,
+    }
+
+
+def all_profiles(snapshot: Snapshot) -> List[Dict[str, object]]:
+    """모든 나라의 비교 프로필. 화면이 이걸 한 번 받아 '내 나라'를 브라우저 안에서 고른다 —
+    그래서 사용자의 실제 나라는 서버로 가지 않는다."""
+    return sorted((comparison_profile(snapshot, c.iso3) for c in snapshot.countries), key=lambda p: str(p["name_ko"]))
