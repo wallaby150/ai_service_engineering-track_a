@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Optional, Sequence
 
-from api.schemas import CountryOut, HeadlineOut, LifeOut, NarrativeOut, OddsOut, ShareOut, StepOut, TargetIn
+from api.schemas import CountryOut, HeadlineOut, LifeOut, PeerOut, NarrativeOut, OddsOut, ShareOut, StepOut, TargetIn
 from core.engine import Life, Odds, Step
 from core.model import NODE_ASSUMPTIONS, NODE_LABELS, label_of
 from core.narrator import Narrative
@@ -56,7 +56,13 @@ def narrative_out(n: Narrative) -> NarrativeOut:
     )
 
 
-def life_out(life: Life, narrative: Narrative, snapshot: Snapshot) -> LifeOut:
+def peer_out(life: Life, snapshot: Snapshot) -> PeerOut:
+    summary = [step.label or label_of(snapshot, step.node, step.value) or "통계 없음"
+               for step in life.steps if step.node != "country"]
+    return PeerOut(seed=life.seed, country=life.country.iso3, country_name=life.country.name_ko, summary=summary)
+
+
+def life_out(life: Life, narrative: Narrative, snapshot: Snapshot, peers: Sequence[Life] = ()) -> LifeOut:
     c = life.country
     return LifeOut(
         seed=life.seed,
@@ -71,6 +77,7 @@ def life_out(life: Life, narrative: Narrative, snapshot: Snapshot) -> LifeOut:
         complete=life.complete,
         life_expectancy=life.life_expectancy,
         headline=headline_out(life, snapshot),
+        same_moment=[peer_out(p, snapshot) for p in peers],
         narrative=narrative_out(narrative),
     )
 

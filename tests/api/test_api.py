@@ -130,3 +130,12 @@ def test_life_carries_headline(client):
     h = life["headline"]
     assert h["node"] in ("economy", "survival")
     assert h["country"]["below"] + h["country"]["same"] + h["country"]["above"] == pytest.approx(1)
+
+
+def test_simulate_returns_four_peers_that_replay(client):
+    a = client.post("/api/simulate", json={"seed": 11, "country": "CCC"}).json()
+    assert len(a["same_moment"]) == 4
+    assert a == client.post("/api/simulate", json={"seed": 11, "country": "CCC"}).json()
+    peer = a["same_moment"][0]
+    again = client.post("/api/simulate", json={"seed": peer["seed"]}).json()
+    assert again["country"]["iso3"] == peer["country"]

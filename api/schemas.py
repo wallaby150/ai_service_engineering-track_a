@@ -88,6 +88,15 @@ class HeadlineOut(BaseModel):
     world_coverage: float
 
 
+class PeerOut(BaseModel):
+    """같은 순간 태어난 다른 한 사람 — 자기 시드로 다시 볼 수 있다."""
+
+    seed: int
+    country: str
+    country_name: str
+    summary: List[str] = Field(description="칸 값의 이름(성별, 생존, 경제, 한국이면 시도…). 통계 없음은 '통계 없음'")
+
+
 class LifeOut(BaseModel):
     seed: int
     country: CountryOut
@@ -97,6 +106,7 @@ class LifeOut(BaseModel):
     complete: bool = Field(description="모든 칸에 통계가 있었는가")
     life_expectancy: Optional[float]
     headline: Optional[HeadlineOut] = None
+    same_moment: List[PeerOut] = Field(default_factory=list, description="같은 순간 세계에서 태어난 다른 4명")
     narrative: NarrativeOut
 
 

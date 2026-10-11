@@ -144,7 +144,7 @@ def create_app(
     def simulate(req: SimulateRequest) -> LifeOut:
         seed = req.seed if req.seed is not None else new_seed()
         life = engine.sample(seed, country=req.country)
-        return life_out(life, narrator.narrate(life), snapshot)
+        return life_out(life, narrator.narrate(life), snapshot, engine.same_moment(seed))
 
     @app.post("/api/odds", response_model=OddsOut)
     def odds(req: TargetIn) -> OddsOut:
@@ -158,7 +158,7 @@ def create_app(
             return UntilOut(found=False, tries=0, max_tries=req.max_tries, odds=odds_out(o, snapshot))
         seed = req.seed if req.seed is not None else new_seed()
         r = engine.sample_until(target, seed=seed, max_tries=req.max_tries)
-        life = life_out(r.life, narrator.narrate(r.life), snapshot) if r.life else None
+        life = life_out(r.life, narrator.narrate(r.life), snapshot, engine.same_moment(r.life.seed)) if r.life else None
         return UntilOut(found=r.found, tries=r.tries, max_tries=r.max_tries, odds=odds_out(o, snapshot), life=life)
 
     @app.post("/api/story", response_model=StoryOut)

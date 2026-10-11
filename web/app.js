@@ -65,6 +65,13 @@ function position(h) {
     이 나라에서 태어나는 아이 중 더 낮은 구간 ${p(h.country.below)} · 같은 구간 ${p(h.country.same)} · 더 높은 구간 ${p(h.country.above)}${world}</p>`;
 }
 
+function peers(list) {
+  if (!list || !list.length) return "";
+  const items = list.map((x) => `<li><b>${esc(x.country_name)}</b> · ${x.summary.map(esc).join(" · ")}
+    <a href="?seed=${x.seed}">이 사람으로 보기</a></li>`).join("");
+  return `<div class="peers"><h3>같은 순간 세계에서 태어난 다른 ${list.length}명</h3><ul>${items}</ul></div>`;
+}
+
 const times = (n) => (n == null ? "—" : `${n.toLocaleString("ko-KR")}번`);
 
 function setStatus(id, text, isError = false) {
@@ -128,6 +135,7 @@ function renderLife(life, fixedCountry) {
     ${pace(life.country)}
     ${position(life.headline)}
     <ul class="chain">${steps}</ul>
+    ${peers(life.same_moment)}
     <p>이 조합이 그대로 나올 확률은 <b>${oneIn(life.one_in)}</b>입니다${life.complete ? "" : " (통계가 없는 칸은 빼고 계산)"}.</p>
     <div class="story" data-seed="${life.seed}" data-country="${fixedCountry ? life.country.iso3 : ""}">
       ${renderStory(life.narrative)}
