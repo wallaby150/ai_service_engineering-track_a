@@ -70,3 +70,11 @@ def test_korean_life_gets_province_and_adult_paragraphs(korea_engine, narrator):
         if life.value("survival") != "survived_5":
             assert "어른이 된" not in text
     assert seen_job and seen_idle
+
+
+def test_birth_paragraph_says_one_in_n_and_pace(engine, narrator):
+    life = engine.sample(3, country="AAA")
+    facts = facts_of(life)
+    assert facts["country_one_in"] == 2  # 가짜 스냅샷에서 AAA는 출생아의 60%
+    first = narrator.narrate(life).paragraphs[0]
+    assert "2명 중 1명꼴" in first and "분에 1명" in first  # 출생아 600명/년 — 몇 분에 한 명

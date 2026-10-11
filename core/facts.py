@@ -11,12 +11,17 @@ from typing import Dict, Optional, Union
 
 from core.engine import Life
 from core.model import INCOME_LABELS, LABELS, REGION_LABELS
+from core.units import births_per_minute, minutes_per_birth, one_in
 
 Fact = Union[str, float, int, None]
 
 
 def _pct(x: Optional[float]) -> Optional[float]:
     return None if x is None else round(x * 100, 2)
+
+
+def _round(x: Optional[float], digits: int) -> Optional[float]:
+    return None if x is None else round(x, digits)
 
 
 def _year(text: Optional[str]) -> Optional[int]:
@@ -74,6 +79,9 @@ def facts_of(life: Life) -> Dict[str, Fact]:
         "economy": LABELS["economy"].get(economy or ""),
         "country_share_pct": _pct(steps["country"].p),
         "births_per_year": c.births,
+        "country_one_in": one_in(steps["country"].p),  # 세계 출생아 'N명 중 1명'이 이 나라에서 태어난다
+        "births_per_minute": _round(births_per_minute(c.births), 2),
+        "minutes_per_birth": _round(minutes_per_birth(c.births), 1),
         "imr_per_1000": surv.imr if surv else None,
         "u5mr_per_1000": surv.u5mr if surv else None,
         "survivors_per_1000": None if surv is None else round(1000 - surv.u5mr, 1),

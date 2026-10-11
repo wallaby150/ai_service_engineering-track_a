@@ -33,11 +33,11 @@ class ScriptedNarrator:
 
     def narrate(self, life: Life) -> Narrative:
         f = facts_of(life)
-        used: List[str] = ["country", "sex", "country_share_pct", "births_per_year"]
+        used: List[str] = ["country", "sex", "country_share_pct", "births_per_year", "country_one_in"]
         child = CHILD.get(str(f["sex"]), "아이")
         paragraphs = [
             f"{f['country']}에서 {child}로 태어났습니다. {_share_sentence(float(f['country_share_pct'] or 0))}"
-            f"(한 해 약 {_num(f['births_per_year'], 0)}명)."
+            f"(한 해 약 {_num(f['births_per_year'], 0)}명). {self._pace(f)}"
         ]
         if f.get("province"):
             used += ["province", "province_share_pct"]
@@ -124,3 +124,16 @@ class ScriptedNarrator:
             f"어른이 된 당신은 일하지 않고 있습니다. {where} 100명 중 약 {_num(f['not_employed_pct'])}명이 "
             f"그렇습니다({f['employment_period']}). 학업, 돌봄, 은퇴, 구직처럼 그 이유는 통계에 없습니다."
         )
+
+    @staticmethod
+    def _pace(f: dict) -> str:
+        """'N명 중 1명꼴'과 태어나는 빠르기. 1분에 한 명이 넘으면 분당 명수, 아니면 몇 분에 한 명."""
+        parts = []
+        if f.get("country_one_in"):
+            parts.append(f"세계 신생아 약 {_num(f['country_one_in'], 0)}명 중 1명꼴입니다.")
+        rate, gap = f.get("births_per_minute"), f.get("minutes_per_birth")
+        if rate and rate >= 1:
+            parts.append(f"이 나라에서는 1분에 약 {_num(rate)}명이 태어납니다.")
+        elif gap:
+            parts.append(f"이 나라에서는 약 {_num(gap)}분에 1명이 태어납니다.")
+        return " ".join(parts)
