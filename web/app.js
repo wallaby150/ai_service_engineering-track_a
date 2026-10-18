@@ -203,12 +203,14 @@ async function writeStory(box) {
       slot.outerHTML = `<p class="note">${esc(n.note || "AI 해석을 만들지 못했습니다.")}</p>`;
       return;
     }
-    const calls = `<p class="share">조회 ${r.plan.map((p) => esc(p.tool + (p.metric ? `(${p.metric})` : ""))).join(", ")}`
-      + ` · 작성 ${r.attempts}회 · 모델 호출 ${r.llm_calls.length}번 · $${r.cost_usd.toFixed(4)}</p>`;
+    const calls = r.cached
+      ? `<p class="share">같은 데이터·프롬프트·모델로 전에 만든 해석을 다시 보여 드립니다 · 모델 호출 0번</p>`
+      : `<p class="share">조회 ${r.plan.map((p) => esc(p.tool + (p.metric ? `(${p.metric})` : ""))).join(", ")}`
+        + ` · 작성 ${r.attempts}회 · 모델 호출 ${r.llm_calls.length}번 · $${r.cost_usd.toFixed(4)}</p>`;
     slot.outerHTML = `<div class="ai-note">
       <h3>${esc(n.title)} <span class="tag">AI 해석</span></h3>
       ${n.paragraphs.map((p) => `<p>${esc(p)}</p>`).join("")}
-      <p class="share">화면에 없는 비교만 덧붙였습니다. 숫자는 코드가 근거와 대조했습니다.</p>${calls}</div>`;
+      <p class="share">화면에 없는 비교만 덧붙였습니다. 숫자는 AI가 아니라 코드가 근거에서 채웠습니다.</p>${calls}</div>`;
   } catch (e) {
     btn.disabled = false;
     btn.textContent = "AI 해석 보기";

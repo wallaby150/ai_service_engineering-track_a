@@ -11,9 +11,12 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
-from dataclasses import dataclass, field
+import threading
+from collections import OrderedDict
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from string import Template
 from typing import Dict, List, Literal, Optional, Tuple
@@ -34,6 +37,7 @@ MAX_STEPS = 3
 MAX_OVERLAP = 0.35  # 해석 글자의 35%를 넘게 화면 글과 겹치면 '다시 말하기'로 본다
 MIN_NEW_EVIDENCE = 2  # 화면에 없는 근거(새 참조·같은 순간 다른 나라 이름)를 적어도 둘
 DEFAULT_TITLE = "화면 밖의 맥락"  # 제목 문장이 검사에 걸리면 이 제목을 쓴다
+CACHE_SIZE = 512  # 기억해 둘 해석 수. 넘치면 가장 오래 안 쓴 것부터 버린다
 # 위치 한 줄이 고른 칸 → 세계와 견줄 지표. 해석가가 늘 받는 조회(계획자가 고르지 않아도 코드가 넣는다)
 HEADLINE_METRIC = {"economy": "poverty_3_00", "survival": "u5mr"}
 log = logging.getLogger("reborn.narrator")
@@ -69,6 +73,7 @@ class StoryReport:
     dropped: List[List[Tuple[str, str]]] = field(default_factory=list)  # 시도마다 버린 (문장, 이유)
     overlap: List[float] = field(default_factory=list)  # 시도마다 화면 글과 겹친 비율
     new_evidence: List[List[str]] = field(default_factory=list)  # 시도마다 살아남은 글이 쓴 화면 밖 근거
+    cached: bool = False  # 같은 버전으로 전에 만든 해석을 다시 꺼냈는가(모델 호출 0회)
 
     @property
     def cost_usd(self) -> float:
@@ -77,6 +82,15 @@ class StoryReport:
 
 def _load(name: str) -> Template:
     return Template((PROMPTS_DIR / name).read_text(encoding="utf-8"))
+
+
+def _digest(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:12]
+
+
+def data_version(snapshot: Snapshot) -> str:
+    """스냅샷 내용의 지문. 통계를 다시 만들면 바뀐다."""
+    return _digest(repr(snapshot))
 
 
 def _wrap(name: str, payload: object) -> str:
@@ -88,7 +102,8 @@ def _wrap(name: str, payload: object) -> str:
 class LlmNarrator:
     name = "llm"
 
-    def __init__(self, client: LlmClient, snapshot: Snapshot, fallback: Narrator, max_solver_attempts: int = 2) -> None:
+    def __init__(self, client: LlmClient, snapshot: Snapshot, fallback: Narrator, max_solver_attempts: int = 2,
+                 cache_size: int = CACHE_SIZE) -> None:
         self.client = client
         self.snapshot = snapshot
         self.fallback = fallback
@@ -96,6 +111,16 @@ class LlmNarrator:
         self._planner = _load("planner.md")
         self._solver = _load("solver.md")
         self._engine: Optional[Engine] = None  # 같은 순간 4명을 뽑을 때만 만든다
+        # 캐시 키의 버전(13주차): 데이터·프롬프트·모델 중 하나라도 바뀌면 예전 해석은 쓰지 않는다. 시간(TTL)으로는 버리지 않는다
+        self.version = {
+            "data": data_version(snapshot),
+            "prompt": _digest(self._planner.template + self._solver.template + json.dumps(
+                {n: d for n, (d, _) in TOOLS.items()}, ensure_ascii=False)),
+            "model": ",".join([client.model, *client.fallbacks]),
+        }
+        self._cache: "OrderedDict[tuple, StoryReport]" = OrderedDict()
+        self._cache_size = cache_size
+        self._lock = threading.Lock()  # 핸들러가 워커 스레드에서 돈다
 
     def _peers(self, life: Life) -> List[Dict[str, object]]:
         if self._engine is None:
@@ -105,7 +130,25 @@ class LlmNarrator:
     def narrate(self, life: Life) -> Narrative:
         return self.story(life).narrative
 
+    def _key(self, life: Life) -> tuple:
+        return (tuple(self.version.values()), life.seed, tuple((st.node, st.value) for st in life.steps))
+
     def story(self, life: Life) -> StoryReport:
+        key = self._key(life)
+        with self._lock:
+            hit = self._cache.get(key)
+            if hit is not None:
+                self._cache.move_to_end(key)
+                return replace(hit, calls=[], cached=True)  # 다시 꺼낸 해석은 모델을 부르지 않았다 — 비용 0
+        report = self._story(life)
+        if report.narrative.narrator == "llm" and self._cache_size > 0:  # 실패(템플릿)는 기억하지 않는다 — 다음엔 다시 해 본다
+            with self._lock:
+                self._cache[key] = report
+                while len(self._cache) > self._cache_size:
+                    self._cache.popitem(last=False)
+        return report
+
+    def _story(self, life: Life) -> StoryReport:
         report = StoryReport(narrative=self.fallback.narrate(life))
         facts = facts_of(life)
         try:

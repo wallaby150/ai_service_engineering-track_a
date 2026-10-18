@@ -193,6 +193,7 @@ def create_app(
                 for c in report.calls
             ],
             cost_usd=report.cost_usd,
+            cached=report.cached,
         )
 
     if WEB_DIR.exists():

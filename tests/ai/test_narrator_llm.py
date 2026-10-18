@@ -160,3 +160,51 @@ def test_cost_is_recorded(engine, life):
     report = narrator.story(life)
     assert report.cost_usd == pytest.approx(0.002)
     assert [c.role for c in report.calls] == ["planner", "solver"]
+
+
+# ── 버전 기준 캐시 (13주차: 키 = 데이터 · 프롬프트 · 모델) ─────────────
+def test_same_life_same_version_is_served_from_cache(engine, life):
+    narrator, llm = make(engine, [response(PLAN), response(interpretation(engine, life))])
+    first = narrator.story(life)
+    again = narrator.story(engine.sample(life.seed, country="AAA"))
+    assert len(llm.calls) == 2  # 두 번째는 모델을 부르지 않았다
+    assert again.cached and not first.cached and again.cost_usd == 0
+    assert again.narrative == first.narrative
+
+
+def test_changing_any_version_misses_the_cache(engine, life):
+    narrator, llm = make(engine, [response(PLAN), response(interpretation(engine, life))] * 2)
+    narrator.story(life)
+    narrator.version = dict(narrator.version, prompt="changed")  # 프롬프트를 고쳤다
+    assert not narrator.story(life).cached and len(llm.calls) == 4
+
+
+def test_version_names_data_prompt_and_model(engine, snapshot):
+    from ai.narrator_llm import data_version
+
+    narrator, _ = make(engine, [])
+    assert set(narrator.version) == {"data", "prompt", "model"}
+    assert narrator.version["model"] == "fake/model"
+    assert data_version(engine.snapshot) == data_version(snapshot) and len(data_version(snapshot)) == 12
+
+
+def test_failures_are_not_cached(engine, life):
+    repeat = {"title": "다시 말하기", "paragraphs": list(ScriptedNarrator().narrate(life).paragraphs)}
+    narrator, llm = make(engine, [response(PLAN), response(repeat), response(repeat),
+                                  response(PLAN), response(interpretation(engine, life))])
+    assert narrator.story(life).narrative.narrator == "scripted"
+    assert narrator.story(life).narrative.narrator == "llm"  # 다음엔 다시 해 본다
+
+
+def test_cache_is_bounded(engine, life):
+    second = next(engine.sample(s, country="AAA") for s in range(life.seed + 1, 1000)
+                  if engine.sample(s, country="AAA").value("survival") == "survived_5"
+                  and len(other_names(engine, engine.sample(s, country="AAA"))) >= 2)
+    responses = [response(PLAN), response(interpretation(engine, life)),
+                 response(PLAN), response(interpretation(engine, second))]
+    llm = ScriptedLLM(responses)
+    client = LlmClient("fake/model", ledger=Ledger(1.0), completion_fn=llm, cost_fn=lambda r: 0.001)
+    narrator = LlmNarrator(client, engine.snapshot, ScriptedNarrator(), cache_size=1)
+    assert narrator.story(life).narrative.narrator == "llm"
+    assert narrator.story(second).narrative.narrator == "llm"
+    assert len(narrator._cache) == 1 and narrator.story(second).cached  # 마지막 것만 남는다
