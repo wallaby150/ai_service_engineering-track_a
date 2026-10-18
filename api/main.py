@@ -38,9 +38,10 @@ from api.schemas import (
     ValueMeta,
 )
 from api.settings import build_story_narrator, load_dotenv, story_model
+from core.context import all_profiles
 from core.engine import Engine, Target, new_seed
 from core.errors import UnknownValue
-from core.model import LABELS, NODE_LABELS
+from core.model import LABELS, NODE_ASSUMPTIONS, NODE_LABELS
 from core.narrator import Narrator
 from core.narrator_scripted import ScriptedNarrator
 from core.stats import load_manifest, load_snapshot
@@ -116,16 +117,17 @@ def create_app(
                 label=NODE_LABELS[node],
                 values=[ValueMeta(value=v, label=label) for v, label in LABELS[node].items()],
                 source=snapshot.sources.get(key, ""),
+                assumption=NODE_ASSUMPTIONS[node],
             )
             for node, key in (("sex", "sex_ratio"), ("survival", "survival"), ("economy", "economy"))
         }
         k = snapshot.korea
         if k is not None:  # 한국 상세 — 화면은 이 칸들을 "대한민국에서만"으로 보여 준다
-            nodes["province"] = NodeMeta(label=NODE_LABELS["province"], source=k.sources.get("region", ""),
+            nodes["province"] = NodeMeta(label=NODE_LABELS["province"], assumption=NODE_ASSUMPTIONS["province"], source=k.sources.get("region", ""),
                                          values=[ValueMeta(value=p.code, label=p.name) for p in k.provinces])
-            nodes["employment"] = NodeMeta(label=NODE_LABELS["employment"], source=k.sources.get("employment", ""),
+            nodes["employment"] = NodeMeta(label=NODE_LABELS["employment"], assumption=NODE_ASSUMPTIONS["employment"], source=k.sources.get("employment", ""),
                                            values=[ValueMeta(value=v, label=lb) for v, lb in LABELS["employment"].items()])
-            nodes["occupation"] = NodeMeta(label=NODE_LABELS["occupation"], source=k.sources.get("occupation", ""),
+            nodes["occupation"] = NodeMeta(label=NODE_LABELS["occupation"], assumption=NODE_ASSUMPTIONS["occupation"], source=k.sources.get("occupation", ""),
                                            values=[ValueMeta(value=c, label=lb) for c, lb in sorted(k.occupation_labels.items())])
         countries = sorted(
             (CountryMeta(iso3=c.iso3, name_ko=c.name_ko, share=c.births / total) for c in snapshot.countries),
@@ -139,11 +141,19 @@ def create_app(
             snapshot={key: manifest.get(key) for key in ("fetched_at", "birth_coverage", "license")},
         )
 
+    profiles_cache = all_profiles(snapshot)
+
+    @app.get("/api/profiles")
+    def profiles() -> dict:
+        """모든 나라의 비교 지표. 화면이 이걸 받아 '내 실제 나라'를 브라우저 안에서 고른다.
+        그래서 이 엔드포인트는 어떤 입력도 받지 않는다 — 사용자의 나라가 서버로 오지 않게."""
+        return {"profiles": profiles_cache}
+
     @app.post("/api/simulate", response_model=LifeOut)
     def simulate(req: SimulateRequest) -> LifeOut:
         seed = req.seed if req.seed is not None else new_seed()
         life = engine.sample(seed, country=req.country)
-        return life_out(life, narrator.narrate(life), snapshot)
+        return life_out(life, narrator.narrate(life), snapshot, engine.same_moment(seed))
 
     @app.post("/api/odds", response_model=OddsOut)
     def odds(req: TargetIn) -> OddsOut:
@@ -157,7 +167,7 @@ def create_app(
             return UntilOut(found=False, tries=0, max_tries=req.max_tries, odds=odds_out(o, snapshot))
         seed = req.seed if req.seed is not None else new_seed()
         r = engine.sample_until(target, seed=seed, max_tries=req.max_tries)
-        life = life_out(r.life, narrator.narrate(r.life), snapshot) if r.life else None
+        life = life_out(r.life, narrator.narrate(r.life), snapshot, engine.same_moment(r.life.seed)) if r.life else None
         return UntilOut(found=r.found, tries=r.tries, max_tries=r.max_tries, odds=odds_out(o, snapshot), life=life)
 
     @app.post("/api/story", response_model=StoryOut)

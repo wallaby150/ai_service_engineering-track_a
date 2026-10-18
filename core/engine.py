@@ -13,7 +13,7 @@ from __future__ import annotations
 import bisect
 import math
 import random
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from core.errors import UnknownValue
@@ -32,6 +32,7 @@ from core.model import (
     sex_dist,
     survival_dist,
 )
+from core.position import Headline, choose_headline, share_of
 from core.stats import Country, Snapshot
 
 MAX_SEED = 2**31 - 1
@@ -55,6 +56,7 @@ class Life:
     seed: int
     country: Country
     steps: Tuple[Step, ...]
+    headline: Optional[Headline] = field(default=None, compare=False)  # 출생 코호트 안의 위치 한 줄
 
     def value(self, node: str) -> Optional[str]:
         for s in self.steps:
@@ -143,6 +145,21 @@ def tries_needed(p: float, q: float) -> Optional[int]:
     return max(1, math.ceil(math.log1p(-q) / math.log1p(-p)))
 
 
+def same_moment_seeds(seed: int, n: int = 4) -> List[int]:
+    """같은 순간 세계 어딘가에서 태어난 다른 n명의 시드.
+
+    본 인생의 난수(random.Random(seed))와 따로 뽑는다 — 본 인생은 그대로다. 문자열 시드는 sha512로
+    정수가 되므로 실행·플랫폼·PYTHONHASHSEED와 무관하게 같은 값을 낸다.
+    """
+    rng = random.Random(f"{seed}:same-moment")
+    out: List[int] = []
+    while len(out) < n:
+        s = rng.randint(0, MAX_SEED)
+        if s != seed and s not in out:
+            out.append(s)
+    return out
+
+
 def new_seed() -> int:
     return random.SystemRandom().randint(0, MAX_SEED)
 
@@ -203,6 +220,22 @@ class Engine:
         return Target(self.check_country(target.country), target.sex, target.survival, target.economy,
                       target.province, target.employment, target.occupation)
 
+    # ── 기준 연도 ──────────────────────────────────────────
+    @staticmethod
+    def _year_of(node: str, c: Country, sex: Optional[str]) -> Optional[str]:
+        """세계 칸이 기댄 통계의 기준 연도. 나라마다 '가장 최근 값'의 연도가 다르다."""
+        year: Optional[int] = None
+        if node == "country":
+            year = c.years.get("births")
+        elif node == "sex":
+            year = c.years.get("sex_ratio")
+        elif node == "survival":
+            surv = c.survival.get(sex or "")
+            year = surv.year if surv else None
+        elif node == "economy":
+            year = c.economy.year if c.economy else None
+        return f"{year}년" if year else None
+
     # ── 뽑기 ──────────────────────────────────────────────
     def _draw(self, rng: random.Random, fixed_country: Optional[str]) -> Tuple[Step, ...]:
         u = [rng.random() for _ in range(DRAWS)]
@@ -211,11 +244,12 @@ class Engine:
         else:
             i = min(bisect.bisect_right(self._cum, u[0] * self._cum[-1]), len(self._cum) - 1)
             iso3 = self._countries[i].iso3
-        steps = [Step("country", iso3, self._country_p[iso3])]
+        c = self._by_iso3[iso3]
+        steps = [Step("country", iso3, self._country_p[iso3], year=self._year_of("country", c, None))]
 
         sd = self._sex[iso3]
         sex, p_sex = _pick(sd, u[1])
-        steps.append(Step("sex", sex, p_sex, sd.assumed))
+        steps.append(Step("sex", sex, p_sex, sd.assumed, year=self._year_of("sex", c, sex)))
 
         survival: Optional[str] = None
         vd = self._surv[(iso3, sex)]
@@ -223,14 +257,14 @@ class Engine:
             steps.append(Step("survival", None, None))
         else:
             survival, p = _pick(vd, u[2])
-            steps.append(Step("survival", survival, p, vd.assumed))
+            steps.append(Step("survival", survival, p, vd.assumed, year=self._year_of("survival", c, sex)))
 
         ed = self._eco[iso3]
         if ed is None:
             steps.append(Step("economy", None, None))
         else:
             v, p = _pick(ed, u[3])
-            steps.append(Step("economy", v, p, ed.assumed))
+            steps.append(Step("economy", v, p, ed.assumed, year=self._year_of("economy", c, None)))
 
         if iso3 == KOREA_ISO3 and self._korea_on:
             steps.extend(self._draw_korea(sex, survival, u[4], u[5], u[6]))
@@ -259,7 +293,11 @@ class Engine:
     def sample(self, seed: int, country: Optional[str] = None) -> Life:
         fixed = self.check_country(country)
         steps = self._draw(random.Random(seed), fixed)
-        return Life(seed=seed, country=self._by_iso3[steps[0].value or ""], steps=steps)
+        return Life(seed=seed, country=self._by_iso3[steps[0].value or ""], steps=steps, headline=self._headline(steps))
+
+    def same_moment(self, seed: int, n: int = 4) -> List[Life]:
+        """같은 순간 태어난 다른 n명. 국가를 고정하지 않고 세계에서 뽑는다."""
+        return [self.sample(s) for s in same_moment_seeds(seed, n)]
 
     def sample_until(self, target: Target, seed: int, max_tries: int) -> UntilResult:
         """조건이 나올 때까지 시드를 하나씩 올려 가며 뽑는다. 상한을 넘으면 멈춘다."""
@@ -268,9 +306,43 @@ class Engine:
             s_i = (seed + i) % (MAX_SEED + 1)  # 돌려받은 시드로 다시 요청할 수 있게 범위 안에 감는다
             steps = self._draw(random.Random(s_i), None)
             if target.matches({s.node: s.value for s in steps}):
-                life = Life(seed=s_i, country=self._by_iso3[steps[0].value or ""], steps=steps)
+                life = Life(seed=s_i, country=self._by_iso3[steps[0].value or ""], steps=steps,
+                            headline=self._headline(steps))
                 return UntilResult(True, i + 1, max_tries, life)
         return UntilResult(False, max_tries, max_tries, None)
+
+    # ── 출생 코호트 안의 위치 ─────────────────────────────────
+    def _world_tables(self) -> Dict[str, object]:
+        """세계 비율은 정확한 확률로 한 번만 계산한다(통계가 있는 나라의 출생아 기준)."""
+        if getattr(self, "_world_cache", None) is None:
+            eco = [self.probability(Target(economy=b)) for b in ECONOMIES]
+            surv = {s: [self.probability(Target(sex=s, survival=o)) for o in SURVIVALS] for s in SEXES}
+            self._world_cache = {
+                "economy": ([(b, o.p or 0.0) for b, o in zip(ECONOMIES, eco)], eco[0].coverage),
+                "survival": {s: ([(v, o.p or 0.0) for v, o in zip(SURVIVALS, odds)], odds[0].coverage)
+                             for s, odds in surv.items()},
+            }
+        return self._world_cache  # type: ignore[return-value]
+
+    def _headline(self, steps: Tuple[Step, ...]) -> Optional[Headline]:
+        values = {s.node: s for s in steps}
+        iso3, sex = values["country"].value or "", values["sex"].value or ""
+        survival, economy = values["survival"].value, values["economy"].value
+        kind = choose_headline(survival, economy)
+        if kind is None:
+            return None
+        world = self._world_tables()
+        if kind == "economy":
+            probs, coverage = world["economy"]  # type: ignore[index]
+            country = self._eco[iso3].probs  # type: ignore[union-attr]
+            value, year = economy or "", values["economy"].year
+        else:
+            probs, coverage = world["survival"][sex]  # type: ignore[index]
+            country = self._surv[(iso3, sex)].probs  # type: ignore[union-attr]
+            value, year = survival or "", values["survival"].year
+        return Headline(node=kind, value=value, country=share_of(kind, country, value),
+                        world=share_of(kind, probs, value) if coverage else None,
+                        world_coverage=coverage, year=year)
 
     # ── 역확률 ────────────────────────────────────────────
     def _covered(self, c: Country, target: Target, sexes: Sequence[str]) -> bool:
@@ -357,17 +429,19 @@ class Engine:
         c = self._by_iso3[target.country or ""]
         if target.korean and (not target.sex or (target.adult and not target.province)):
             return ()
-        steps = [Step("country", c.iso3, self._country_p[c.iso3] / covered_mass)]
+        steps = [Step("country", c.iso3, self._country_p[c.iso3] / covered_mass, year=self._year_of("country", c, None))]
         if target.sex:
-            steps.append(Step("sex", target.sex, self._sex[c.iso3].p(target.sex), self._sex[c.iso3].assumed))
+            steps.append(Step("sex", target.sex, self._sex[c.iso3].p(target.sex), self._sex[c.iso3].assumed,
+                              year=self._year_of("sex", c, target.sex)))
         if target.survival or target.adult:
             value = "survived_5" if target.adult else target.survival
             p = sum(self._sex[c.iso3].p(s) * self._survival_factor(c.iso3, s, target) for s in sexes) / sum(
                 self._sex[c.iso3].p(s) for s in sexes
             )
-            steps.append(Step("survival", value, p))
+            steps.append(Step("survival", value, p, year=self._year_of("survival", c, target.sex or sexes[0])))
         if target.economy:
-            steps.append(Step("economy", target.economy, self._eco[c.iso3].p(target.economy)))  # type: ignore[union-attr]
+            steps.append(Step("economy", target.economy, self._eco[c.iso3].p(target.economy),  # type: ignore[union-attr]
+                              year=self._year_of("economy", c, None)))
         if target.korean:
             sex = target.sex or ""
             if target.province:

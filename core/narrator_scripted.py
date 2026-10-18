@@ -33,11 +33,11 @@ class ScriptedNarrator:
 
     def narrate(self, life: Life) -> Narrative:
         f = facts_of(life)
-        used: List[str] = ["country", "sex", "country_share_pct", "births_per_year"]
+        used: List[str] = ["country", "sex", "country_share_pct", "births_per_year", "country_one_in"]
         child = CHILD.get(str(f["sex"]), "아이")
         paragraphs = [
             f"{f['country']}에서 {child}로 태어났습니다. {_share_sentence(float(f['country_share_pct'] or 0))}"
-            f"(한 해 약 {_num(f['births_per_year'], 0)}명)."
+            f"(한 해 약 {_num(f['births_per_year'], 0)}명). {self._pace(f)}"
         ]
         if f.get("province"):
             used += ["province", "province_share_pct"]
@@ -81,14 +81,19 @@ class ScriptedNarrator:
         if f["economy"] is None:
             paragraphs.append("이 나라의 가구 소비(빈곤율) 통계는 없어, 태어난 가정의 경제 수준은 알 수 없습니다.")
         else:
-            used += ["economy", "economy_band_pct"]
-            text = (
-                f"태어난 가정의 소비 수준은 {f['economy']}입니다. "
-                f"이 나라 사람 100명 중 약 {_num(f['economy_band_pct'])}명이 같은 구간에 있습니다."
-            )
+            used.append("economy")
+            text = f"태어난 가정의 소비 수준은 {f['economy']}입니다."
+            if f.get("headline") != "economy":  # 위치 문단이 같은 비율을 말하면 여기서는 빼서 겹치지 않게
+                used.append("economy_band_pct")
+                text += f" 이 나라 사람 100명 중 약 {_num(f['economy_band_pct'])}명이 같은 구간에 있습니다."
             if life.value("economy") == "below_3_00":
                 text += " 하루 $3.00은 세계은행이 정한 극빈선입니다."
             paragraphs.append(text)
+
+        position = self._position(f, child)
+        if position:
+            used += [k for k in f if k.startswith("headline_") and f[k] is not None]
+            paragraphs.append(position)
 
         closing = []
         if life.complete and f["joint_one_in"]:
@@ -124,3 +129,43 @@ class ScriptedNarrator:
             f"어른이 된 당신은 일하지 않고 있습니다. {where} 100명 중 약 {_num(f['not_employed_pct'])}명이 "
             f"그렇습니다({f['employment_period']}). 학업, 돌봄, 은퇴, 구직처럼 그 이유는 통계에 없습니다."
         )
+
+    @staticmethod
+    def _pace(f: dict) -> str:
+        """'N명 중 1명꼴'과 태어나는 빠르기. 1분에 한 명이 넘으면 분당 명수, 아니면 몇 분에 한 명."""
+        parts = []
+        if f.get("country_one_in"):
+            parts.append(f"세계 신생아 약 {_num(f['country_one_in'], 0)}명 중 1명꼴입니다.")
+        rate, gap = f.get("births_per_minute"), f.get("minutes_per_birth")
+        if rate and rate >= 1:
+            parts.append(f"이 나라에서는 1분에 약 {_num(rate)}명이 태어납니다.")
+        elif gap:
+            parts.append(f"이 나라에서는 약 {_num(gap)}분에 1명이 태어납니다.")
+        return " ".join(parts)
+
+    @staticmethod
+    def _position(f: dict, child: str) -> str:
+        """위치 한 줄(core/position.py가 고른 칸). '같은 해'라고 말하지 않는다 — 기준 연도로 말한다."""
+        kind = f.get("headline")
+        when = f"({f['headline_period']} 기준)" if f.get("headline_period") else ""
+        if kind == "economy":
+            text = (
+                f"이 나라에서 태어나는 아이 100명으로 보면{when} 약 {_num(f['headline_country_below_per_100'])}명은 "
+                f"당신보다 낮은 소비 구간, 약 {_num(f['headline_country_same_per_100'])}명은 같은 구간, "
+                f"약 {_num(f['headline_country_above_per_100'])}명은 더 높은 구간의 가정에서 태어납니다."
+            )
+            if f.get("headline_world_same_per_100") is not None:
+                text += (
+                    f" 세계 신생아로 넓히면 같은 구간은 100명 중 약 {_num(f['headline_world_same_per_100'])}명, "
+                    f"더 낮은 구간은 약 {_num(f['headline_world_below_per_100'])}명입니다"
+                    f"(빈곤율 통계가 있는 나라의 출생아 {_num(f['headline_world_coverage_pct'])}% 기준)."
+                )
+            return text
+        if kind == "survival" and f.get("headline_world_same_per_1000") is not None:
+            if f.get("survival") == "다섯 살까지 살아남았다":
+                lost = (f["headline_world_below_per_1000"] or 0)
+                return (f"세계로 넓히면 {child} 1,000명 중 약 {_num(lost)}명이 다섯 살을 맞지 못합니다"
+                        f"(사망 통계가 있는 나라의 출생아 {_num(f['headline_world_coverage_pct'])}% 기준).")
+            return (f"세계로 넓히면 {child} 1,000명 중 약 {_num(f['headline_world_same_per_1000'])}명이 같은 일을 겪습니다"
+                    f"(사망 통계가 있는 나라의 출생아 {_num(f['headline_world_coverage_pct'])}% 기준).")
+        return ""

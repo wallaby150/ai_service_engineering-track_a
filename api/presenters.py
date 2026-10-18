@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Optional, Sequence
 
-from api.schemas import CountryOut, LifeOut, NarrativeOut, OddsOut, StepOut, TargetIn
+from api.schemas import CountryOut, HeadlineOut, LifeOut, PeerOut, NarrativeOut, OddsOut, ShareOut, StepOut, TargetIn
 from core.engine import Life, Odds, Step
-from core.model import NODE_LABELS, label_of
+from core.model import NODE_ASSUMPTIONS, NODE_LABELS, label_of
 from core.narrator import Narrative
+from core.units import births_per_minute, minutes_per_birth, one_in
 from core.stats import Snapshot
 
 NODE_SOURCE = {"country": "births", "sex": "sex_ratio", "survival": "survival", "economy": "economy"}
@@ -30,7 +31,23 @@ def step_out(step: Step, snapshot: Snapshot) -> StepOut:
         p=step.p,
         assumed=step.assumed,
         source=source_of(step.node, snapshot),
+        year=step.year,
+        one_in=one_in(step.p),
+        assumption=NODE_ASSUMPTIONS.get(step.node, ""),
     )
+
+
+def headline_out(life: Life, snapshot: Snapshot) -> Optional[HeadlineOut]:
+    h = life.headline
+    if h is None:
+        return None
+
+    def share(x):  # type: ignore[no-untyped-def]
+        return ShareOut(below=x.below, same=x.same, above=x.above) if x else None
+
+    return HeadlineOut(node=h.node, node_label=NODE_LABELS[h.node], value=h.value,
+                       value_label=label_of(snapshot, h.node, h.value), year=h.year,
+                       country=share(h.country), world=share(h.world), world_coverage=h.world_coverage)
 
 
 def narrative_out(n: Narrative) -> NarrativeOut:
@@ -39,18 +56,28 @@ def narrative_out(n: Narrative) -> NarrativeOut:
     )
 
 
-def life_out(life: Life, narrative: Narrative, snapshot: Snapshot) -> LifeOut:
+def peer_out(life: Life, snapshot: Snapshot) -> PeerOut:
+    summary = [step.label or label_of(snapshot, step.node, step.value) or "통계 없음"
+               for step in life.steps if step.node != "country"]
+    return PeerOut(seed=life.seed, country=life.country.iso3, country_name=life.country.name_ko, summary=summary)
+
+
+def life_out(life: Life, narrative: Narrative, snapshot: Snapshot, peers: Sequence[Life] = ()) -> LifeOut:
     c = life.country
     return LifeOut(
         seed=life.seed,
         country=CountryOut(
-            iso3=c.iso3, name_ko=c.name_ko, name_en=c.name_en, region=c.region, income_level=c.income_level
+            iso3=c.iso3, name_ko=c.name_ko, name_en=c.name_en, region=c.region, income_level=c.income_level,
+            births_per_year=c.births, births_per_minute=births_per_minute(c.births),
+            minutes_per_birth=minutes_per_birth(c.births),
         ),
         steps=[step_out(s, snapshot) for s in life.steps],
         joint_p=life.joint_p,
         one_in=round(1 / life.joint_p) if life.joint_p > 0 else None,
         complete=life.complete,
         life_expectancy=life.life_expectancy,
+        headline=headline_out(life, snapshot),
+        same_moment=[peer_out(p, snapshot) for p in peers],
         narrative=narrative_out(narrative),
     )
 

@@ -91,3 +91,58 @@ def test_story_without_key_returns_template_with_note(client):
 def test_until_seed_wraps_inside_range(engine):
     r = engine.sample_until(Target(sex="female"), seed=MAX_SEED, max_tries=50)
     assert 0 <= r.life.seed <= MAX_SEED
+
+
+def test_steps_expose_year_and_assumption(client):
+    life = client.post("/api/simulate", json={"seed": 1, "country": "AAA"}).json()
+    by = {s["node"]: s for s in life["steps"]}
+    assert by["economy"]["year"] == "2022년"
+    assert "낮게" in by["economy"]["assumption"]
+
+
+def test_missing_statistic_has_no_year_over_http(client):
+    life = client.post("/api/simulate", json={"seed": 1, "country": "BBB"}).json()
+    eco = next(s for s in life["steps"] if s["node"] == "economy")
+    assert eco["value"] is None and eco["year"] is None and eco["assumption"]
+
+
+def test_meta_nodes_carry_assumptions(client):
+    meta = client.get("/api/meta").json()
+    assert all(n["assumption"] for n in meta["nodes"].values())
+
+
+def test_odds_explanation_has_sources_and_years(client):
+    r = client.post("/api/odds", json={"country": "AAA", "economy": "below_3_00"}).json()
+    assert r["steps"][0]["source"] == "test"  # 가짜 스냅샷은 출생아 출처만 정의한다
+    assert all("source" in s and "assumption" in s for s in r["steps"])
+    assert next(s for s in r["steps"] if s["node"] == "economy")["year"] == "2022년"
+
+
+def test_life_has_one_in_n_and_birth_pace(client):
+    life = client.post("/api/simulate", json={"seed": 1, "country": "AAA"}).json()
+    assert life["steps"][0]["one_in"] == 2
+    assert life["country"]["births_per_year"] == 600
+    assert life["country"]["minutes_per_birth"] == pytest.approx(525960 / 600)
+
+
+def test_life_carries_headline(client):
+    life = client.post("/api/simulate", json={"seed": 3, "country": "AAA"}).json()
+    h = life["headline"]
+    assert h["node"] in ("economy", "survival")
+    assert h["country"]["below"] + h["country"]["same"] + h["country"]["above"] == pytest.approx(1)
+
+
+def test_simulate_returns_four_peers_that_replay(client):
+    a = client.post("/api/simulate", json={"seed": 11, "country": "CCC"}).json()
+    assert len(a["same_moment"]) == 4
+    assert a == client.post("/api/simulate", json={"seed": 11, "country": "CCC"}).json()
+    peer = a["same_moment"][0]
+    again = client.post("/api/simulate", json={"seed": peer["seed"]}).json()
+    assert again["country"]["iso3"] == peer["country"]
+
+
+def test_profiles_cover_every_country_and_take_no_input(client):
+    body = client.get("/api/profiles").json()
+    assert {p["iso3"] for p in body["profiles"]} == {"AAA", "BBB", "CCC"}
+    spec = client.get("/openapi.json").json()["paths"]["/api/profiles"]["get"]
+    assert not spec.get("parameters") and "requestBody" not in spec  # 사용자의 나라를 받는 자리가 없다

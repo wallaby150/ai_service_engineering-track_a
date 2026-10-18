@@ -45,8 +45,11 @@ class StepOut(BaseModel):
     value: Optional[str] = Field(description="None이면 그 나라에 통계가 없다")
     value_label: Optional[str]
     p: Optional[float] = Field(description="앞 칸이 정해졌을 때 이 값이 나올 조건부 확률")
-    assumed: bool
+    assumed: bool = Field(description="통계가 없어 정해 둔 값(예: 성비 1.05)을 썼는가 — 화면의 '추정' 표시")
     source: str
+    year: Optional[str] = Field(default=None, description="이 칸이 기댄 통계의 기준 시점. 통계가 없으면 None")
+    one_in: Optional[int] = Field(default=None, description="이 칸의 확률을 'N명 중 1명'으로")
+    assumption: str = Field(default="", description="이 칸의 가정 한 문장 — 화면의 툴팁")
 
 
 class CountryOut(BaseModel):
@@ -55,6 +58,9 @@ class CountryOut(BaseModel):
     name_en: str
     region: str
     income_level: str
+    births_per_year: Optional[int] = None
+    births_per_minute: Optional[float] = None
+    minutes_per_birth: Optional[float] = None
 
 
 class NarrativeOut(BaseModel):
@@ -65,6 +71,32 @@ class NarrativeOut(BaseModel):
     note: Optional[str] = None
 
 
+class ShareOut(BaseModel):
+    below: float = Field(description="나보다 불리한 쪽의 비율")
+    same: float
+    above: float
+
+
+class HeadlineOut(BaseModel):
+    node: str = Field(description="무엇을 요약했나: economy | survival (core/position.py의 규칙)")
+    node_label: str
+    value: str
+    value_label: Optional[str]
+    year: Optional[str]
+    country: ShareOut = Field(description="이 나라에서 태어나는 아이(생존이면 같은 성별) 중")
+    world: Optional[ShareOut] = Field(description="통계가 있는 나라의 출생아 전체 중")
+    world_coverage: float
+
+
+class PeerOut(BaseModel):
+    """같은 순간 태어난 다른 한 사람 — 자기 시드로 다시 볼 수 있다."""
+
+    seed: int
+    country: str
+    country_name: str
+    summary: List[str] = Field(description="칸 값의 이름(성별, 생존, 경제, 한국이면 시도…). 통계 없음은 '통계 없음'")
+
+
 class LifeOut(BaseModel):
     seed: int
     country: CountryOut
@@ -73,6 +105,8 @@ class LifeOut(BaseModel):
     one_in: Optional[int]
     complete: bool = Field(description="모든 칸에 통계가 있었는가")
     life_expectancy: Optional[float]
+    headline: Optional[HeadlineOut] = None
+    same_moment: List[PeerOut] = Field(default_factory=list, description="같은 순간 세계에서 태어난 다른 4명")
     narrative: NarrativeOut
 
 
@@ -105,6 +139,7 @@ class NodeMeta(BaseModel):
     label: str
     values: List[ValueMeta]
     source: str
+    assumption: str = ""
 
 
 class CountryMeta(BaseModel):
