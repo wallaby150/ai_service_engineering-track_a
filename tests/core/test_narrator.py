@@ -77,7 +77,7 @@ def test_birth_paragraph_says_one_in_n_and_pace(engine, narrator):
     facts = facts_of(life)
     assert facts["country_one_in"] == 2  # 가짜 스냅샷에서 AAA는 출생아의 60%
     first = narrator.narrate(life).paragraphs[0]
-    assert "2명 중 1명꼴" in first and "분에 1명" in first  # 출생아 600명/년 — 몇 분에 한 명
+    assert "2번에 1번꼴" in first and "분에 1명" in first  # 출생아 600명/년 — 몇 분에 한 명
 
 
 def test_position_paragraph_follows_the_headline_rule(engine, narrator):

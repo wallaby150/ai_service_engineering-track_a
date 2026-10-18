@@ -132,10 +132,10 @@ class ScriptedNarrator:
 
     @staticmethod
     def _pace(f: dict) -> str:
-        """'N명 중 1명꼴'과 태어나는 빠르기. 1분에 한 명이 넘으면 분당 명수, 아니면 몇 분에 한 명."""
+        """'N번에 1번꼴'과 태어나는 빠르기. 1분에 한 명이 넘으면 분당 명수, 아니면 몇 분에 한 명."""
         parts = []
         if f.get("country_one_in"):
-            parts.append(f"세계 신생아 약 {_num(f['country_one_in'], 0)}명 중 1명꼴입니다.")
+            parts.append(f"다시 태어나면 약 {_num(f['country_one_in'], 0)}번에 1번꼴로 이 나라에서 태어납니다.")
         rate, gap = f.get("births_per_minute"), f.get("minutes_per_birth")
         if rate and rate >= 1:
             parts.append(f"이 나라에서는 1분에 약 {_num(rate)}명이 태어납니다.")

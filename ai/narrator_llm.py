@@ -35,7 +35,7 @@ from core.verify import overlap_ratio
 PROMPTS_DIR = Path(__file__).resolve().parents[1] / "prompts"
 MAX_STEPS = 3
 MAX_OVERLAP = 0.35  # 해석 글자의 35%를 넘게 화면 글과 겹치면 '다시 말하기'로 본다
-MIN_NEW_EVIDENCE = 2  # 화면에 없는 근거(새 참조·같은 순간 다른 나라 이름)를 적어도 둘
+MIN_NEW_EVIDENCE = 2  # 화면에 없는 근거(새 참조·다른 사람들의 나라 이름)를 적어도 둘
 DEFAULT_TITLE = "화면 밖의 맥락"  # 제목 문장이 검사에 걸리면 이 제목을 쓴다
 CACHE_SIZE = 512  # 기억해 둘 해석 수. 넘치면 가장 오래 안 쓴 것부터 버린다
 # 위치 한 줄이 고른 칸 → 세계와 견줄 지표. 해석가가 늘 받는 조회(계획자가 고르지 않아도 코드가 넣는다)
@@ -110,7 +110,7 @@ class LlmNarrator:
         self.max_solver_attempts = max_solver_attempts
         self._planner = _load("planner.md")
         self._solver = _load("solver.md")
-        self._engine: Optional[Engine] = None  # 같은 순간 4명을 뽑을 때만 만든다
+        self._engine: Optional[Engine] = None  # 세계 어딘가의 다른 4명을 뽑을 때만 만든다
         # 캐시 키의 버전(13주차): 데이터·프롬프트·모델 중 하나라도 바뀌면 예전 해석은 쓰지 않는다. 시간(TTL)으로는 버리지 않는다
         self.version = {
             "data": data_version(snapshot),
@@ -240,8 +240,8 @@ class LlmNarrator:
             if overlap > MAX_OVERLAP:
                 problems.append(f"화면에 이미 있는 글을 되풀이했다(겹침 {overlap:.0%}). 화면이 말하지 않은 것만 써라.")
             if len(hits) < MIN_NEW_EVIDENCE:
-                problems.append("화면에 없는 근거가 모자란다. '(화면에 이미 있음)' 표시가 없는 근거 id나 같은 순간 "
-                                "태어난 사람을 적어도 두 가지 써라.")
+                problems.append("화면에 없는 근거가 모자란다. '(화면에 이미 있음)' 표시가 없는 근거 id나 세계 어딘가의 "
+                                "다른 사람을 적어도 두 가지 써라.")
             feedback = "\n[직전 원고의 문제]\n" + "\n".join(problems) + "\n고쳐서 다시 써라."
         return self._fall_back(life, report, "AI가 화면에 없는 해석을 만들지 못해 템플릿 서사만 보여 드립니다.")
 

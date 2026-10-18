@@ -81,15 +81,15 @@ function compare(life) {
     ["세계 출생아 중 비중", (p) => v(p.share_of_world_births_pct, "%")],
   ];
   const body = rows.map(([k, f]) => `<tr><td>${esc(k)}</td><td>${f(a)}</td><td>${f(b)}</td></tr>`).join("");
-  return `<table class="compare"><caption>내가 실제로 태어난 나라와 나란히</caption>
-    <thead><tr><th></th><th>${esc(a.name_ko)}</th><th>${esc(b.name_ko)} (내 나라)</th></tr></thead><tbody>${body}</tbody></table>`;
+  return `<table class="compare"><caption>비교 기준 나라와 나란히</caption>
+    <thead><tr><th></th><th>${esc(a.name_ko)}</th><th>${esc(b.name_ko)} (비교 기준)</th></tr></thead><tbody>${body}</tbody></table>`;
 }
 
 function peers(list) {
   if (!list || !list.length) return "";
   const items = list.map((x) => `<li><b>${esc(x.country_name)}</b> · ${x.summary.map(esc).join(" · ")}
     <a href="?seed=${x.seed}">이 사람으로 보기</a></li>`).join("");
-  return `<div class="peers"><h3>같은 순간 세계에서 태어난 다른 ${list.length}명</h3><ul>${items}</ul></div>`;
+  return `<div class="peers"><h3>세계 어딘가의 다른 ${list.length}명</h3><ul>${items}</ul></div>`;
 }
 
 const times = (n) => (n == null ? "—" : `${n.toLocaleString("ko-KR")}번`);
@@ -102,10 +102,10 @@ function setStatus(id, text, isError = false) {
 
 // ── 초기화 ───────────────────────────────────────────
 let live = false; // 서버에 AI 서사가 붙어 있는가 (/api/config)
-let lastLife = null; // 마지막 '다시 태어나기' 결과 — 내 나라를 바꾸면 이걸 다시 그린다
-let profiles = {}; // 나라별 비교 지표 — 전부 한 번 받아 두고 '내 나라'는 브라우저 안에서 고른다
+let lastLife = null; // 마지막 '다시 태어나기' 결과 — 비교 기준 나라를 바꾸면 이걸 다시 그린다
+let profiles = {}; // 나라별 비교 지표 — 전부 한 번 받아 두고 비교 기준 나라는 브라우저 안에서 고른다
 
-// '내 실제 나라'는 이 브라우저에만 둔다. 저장소를 못 쓰는 환경(사생활 보호 창 등)에서도 화면은 돈다
+// 비교 기준 나라는 이 브라우저에만 둔다. 저장소를 못 쓰는 환경(사생활 보호 창 등)에서도 화면은 돈다
 const HOME_KEY = "reborn.home-country";
 function loadHome() { try { return localStorage.getItem(HOME_KEY) || ""; } catch (e) { return ""; } }
 function saveHome(v) { try { v ? localStorage.setItem(HOME_KEY, v) : localStorage.removeItem(HOME_KEY); } catch (e) { /* 저장 못 해도 이번 화면에선 쓴다 */ } }
@@ -158,7 +158,7 @@ function renderLife(life, fixedCountry) {
   const steps = life.steps.map((s) => `
     <li><span class="k">${esc(s.node_label)}</span>
         <span class="v">${esc(s.value_label ?? "통계 없음")}</span>
-        <span class="p">${pct(s.p)}${s.one_in ? `<span class="oi">${s.one_in.toLocaleString("ko-KR")}명 중 1명</span>` : ""}</span>
+        <span class="p">${pct(s.p)}${s.one_in ? `<span class="oi">${s.one_in <= 1 ? "거의 매번" : `${s.one_in.toLocaleString("ko-KR")}번에 1번꼴`}</span>` : ""}</span>
         ${evidence(s)}</li>`).join("");
   const share = `${location.origin}${location.pathname}?seed=${life.seed}${fixedCountry ? `&country=${life.country.iso3}` : ""}`;
   return `
