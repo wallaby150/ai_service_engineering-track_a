@@ -51,7 +51,7 @@ class Ref:
     value: float
     unit: str
     digits: int
-    novel: bool  # 화면(템플릿)에 없는 근거인가 — 조회 결과와 같은 순간의 사람들
+    novel: bool  # 화면(템플릿)에 없는 근거인가 — 조회 결과와 세계 어딘가의 다른 사람들
     prefix: str = ""  # 값 앞에 코드가 늘 붙이는 말 — 순위의 방향("높은 쪽에서")을 해석가가 뒤집지 못하게
     suffix: str = ""  # 값 뒤에 늘 붙는 말 — 순위의 모집단("(196개국 중)")
     # 이 값을 쓰는 문장에 있어야 하는 말. 묶음마다 하나 이상(지표 이름, 나라 이름, '세계 평균') — 뜻 없이 숫자만 두지 않게
@@ -97,7 +97,7 @@ def build_catalog(facts: Dict[str, object], lookups: Sequence[Tuple[str, Optiona
     # 화면에 이미 있는 값 — 맥락용. 해석이 기대는 근거로는 세지 않는다
     cat.add(f"{country}에서 한 해 태어나는 아이 수", facts.get("births_per_year"), "명", 0, False)
     cat.add(f"세계 신생아 가운데 {country}에서 태어나는 비율", facts.get("country_share_pct"), "%", 2, False)
-    cat.add(f"세계 신생아 몇 명 중 1명꼴로 {country}에서 태어나는지", facts.get("country_one_in"), "명", 0, False)
+    cat.add(f"다시 태어나면 몇 번에 1번꼴로 {country}에서 태어나는지", facts.get("country_one_in"), "번", 0, False)
     cat.add(f"{country}에서 {child} 1,000명 중 첫돌 전에 숨지는 수", facts.get("imr_per_1000"), "명", 1, False)
     cat.add(f"{country}에서 {child} 1,000명 중 다섯 살 전에 숨지는 수", facts.get("u5mr_per_1000"), "명", 1, False)
     cat.add(f"{country} {adult}의 기대수명", facts.get("life_expectancy"), "세", 1, False)
@@ -138,7 +138,7 @@ def build_catalog(facts: Dict[str, object], lookups: Sequence[Tuple[str, Optiona
 
     for i, p in enumerate(peers, 1):
         p_child = CHILD.get(str(p.get("sex")), "아이")
-        who, at = f"같은 순간 {p.get('country')}에서 태어난 {p_child}(S{i})의 나라", ((str(p.get("country")),),)
+        who, at = f"세계 어딘가의 다른 사람 — {p.get('country')}에서 태어난 {p_child}(S{i})의 나라", ((str(p.get("country")),),)
         cat.add(f"{who}에서 {p_child} 1,000명 중 다섯 살 전에 숨지는 수", p.get("u5mr_per_1000"), "명", 1, True, mention=at)
         cat.add(f"{who}의 {ADULT.get(str(p.get('sex')), '사람')} 기대수명", p.get("life_expectancy"), "세", 1, True,
                 mention=at)
@@ -146,7 +146,7 @@ def build_catalog(facts: Dict[str, object], lookups: Sequence[Tuple[str, Optiona
 
 
 def peer_lines(peers: Sequence[Dict[str, object]]) -> List[str]:
-    """같은 순간 태어난 사람들의 뽑힌 값(글). 숫자가 아닌 사실이라 그대로 써도 된다."""
+    """세계 어딘가의 다른 사람들의 뽑힌 값(글). 숫자가 아닌 사실이라 그대로 써도 된다."""
     keys = ("sex", "survival", "economy", "province", "occupation")
     return [f"S{i}: {p.get('country')} · " + " · ".join(str(p[k]) for k in keys if p.get(k)) for i, p in enumerate(peers, 1)]
 
@@ -257,7 +257,7 @@ def render(paragraphs: Sequence[str], refs: Sequence[Ref]) -> Rendered:
 
 
 def novel_used(rendered: Rendered, refs: Sequence[Ref], peer_names: Iterable[str]) -> List[str]:
-    """살아남은 글이 기댄 '화면에 없는 근거': 새 참조 id와, 이름으로 언급한 같은 순간의 나라."""
+    """살아남은 글이 기댄 '화면에 없는 근거': 새 참조 id와, 이름으로 언급한 다른 사람들의 나라."""
     novel_ids = {r.id for r in refs if r.novel}
     text = " ".join(rendered.paragraphs)
     hits: List[str] = [rid for rid in rendered.used if rid in novel_ids]

@@ -81,15 +81,15 @@ function compare(life) {
     ["세계 출생아 중 비중", (p) => v(p.share_of_world_births_pct, "%")],
   ];
   const body = rows.map(([k, f]) => `<tr><td>${esc(k)}</td><td>${f(a)}</td><td>${f(b)}</td></tr>`).join("");
-  return `<table class="compare"><caption>내가 실제로 태어난 나라와 나란히</caption>
-    <thead><tr><th></th><th>${esc(a.name_ko)}</th><th>${esc(b.name_ko)} (내 나라)</th></tr></thead><tbody>${body}</tbody></table>`;
+  return `<table class="compare"><caption>비교 기준 나라와 나란히</caption>
+    <thead><tr><th></th><th>${esc(a.name_ko)}</th><th>${esc(b.name_ko)} (비교 기준)</th></tr></thead><tbody>${body}</tbody></table>`;
 }
 
 function peers(list) {
   if (!list || !list.length) return "";
   const items = list.map((x) => `<li><b>${esc(x.country_name)}</b> · ${x.summary.map(esc).join(" · ")}
     <a href="?seed=${x.seed}">이 사람으로 보기</a></li>`).join("");
-  return `<div class="peers"><h3>같은 순간 세계에서 태어난 다른 ${list.length}명</h3><ul>${items}</ul></div>`;
+  return `<div class="peers"><h3>세계 어딘가의 다른 ${list.length}명</h3><ul>${items}</ul></div>`;
 }
 
 const times = (n) => (n == null ? "—" : `${n.toLocaleString("ko-KR")}번`);
@@ -102,10 +102,10 @@ function setStatus(id, text, isError = false) {
 
 // ── 초기화 ───────────────────────────────────────────
 let live = false; // 서버에 AI 서사가 붙어 있는가 (/api/config)
-let lastLife = null; // 마지막 '다시 태어나기' 결과 — 내 나라를 바꾸면 이걸 다시 그린다
-let profiles = {}; // 나라별 비교 지표 — 전부 한 번 받아 두고 '내 나라'는 브라우저 안에서 고른다
+let lastLife = null; // 마지막 '다시 태어나기' 결과 — 비교 기준 나라를 바꾸면 이걸 다시 그린다
+let profiles = {}; // 나라별 비교 지표 — 전부 한 번 받아 두고 비교 기준 나라는 브라우저 안에서 고른다
 
-// '내 실제 나라'는 이 브라우저에만 둔다. 저장소를 못 쓰는 환경(사생활 보호 창 등)에서도 화면은 돈다
+// 비교 기준 나라는 이 브라우저에만 둔다. 저장소를 못 쓰는 환경(사생활 보호 창 등)에서도 화면은 돈다
 const HOME_KEY = "reborn.home-country";
 function loadHome() { try { return localStorage.getItem(HOME_KEY) || ""; } catch (e) { return ""; } }
 function saveHome(v) { try { v ? localStorage.setItem(HOME_KEY, v) : localStorage.removeItem(HOME_KEY); } catch (e) { /* 저장 못 해도 이번 화면에선 쓴다 */ } }
@@ -158,7 +158,7 @@ function renderLife(life, fixedCountry) {
   const steps = life.steps.map((s) => `
     <li><span class="k">${esc(s.node_label)}</span>
         <span class="v">${esc(s.value_label ?? "통계 없음")}</span>
-        <span class="p">${pct(s.p)}${s.one_in ? `<span class="oi">${s.one_in.toLocaleString("ko-KR")}명 중 1명</span>` : ""}</span>
+        <span class="p">${pct(s.p)}${s.one_in ? `<span class="oi">${s.one_in <= 1 ? "거의 매번" : `${s.one_in.toLocaleString("ko-KR")}번에 1번꼴`}</span>` : ""}</span>
         ${evidence(s)}</li>`).join("");
   const share = `${location.origin}${location.pathname}?seed=${life.seed}${fixedCountry ? `&country=${life.country.iso3}` : ""}`;
   return `
@@ -267,9 +267,7 @@ function renderOdds(o) {
       <div class="stat"><div class="n">${times(o.tries_50)}</div><div class="d">50% 확률로 한 번은 나오는 횟수</div></div>
       <div class="stat"><div class="n">${times(o.tries_90)}</div><div class="d">90% 확률로 한 번은 나오는 횟수</div></div>
     </div>
-    ${steps}${cover}
-    <p><button class="secondary" id="odds-until">될 때까지 다시 태어나기</button></p>
-    <div id="until-result"></div>`;
+    ${steps}${cover}`;
 }
 
 async function odds() {
@@ -280,8 +278,6 @@ async function odds() {
     const o = await api("/odds", target());
     $("odds-result").innerHTML = renderOdds(o);
     $("odds-result").hidden = false;
-    const until = $("odds-until");
-    if (until) until.addEventListener("click", tryUntil);
     setStatus("odds-status", "");
   } catch (e) {
     setStatus("odds-status", e.message, true);
@@ -290,18 +286,40 @@ async function odds() {
   }
 }
 
+// ── 될 때까지 다시 태어나기 — 위 확률 섹션에서 고른 조건을 그대로 쓴다 ──────
+function chosen() {
+  return Object.keys(target()).map((k) => {
+    const sel = $(`odds-${k}`);
+    return `${sel.closest("label").firstChild.textContent.trim()} ${sel.options[sel.selectedIndex].text}`;
+  });
+}
+
+function showUntilTarget() {
+  const list = chosen();
+  $("until-target").textContent = list.length
+    ? `조건: ${list.join(" · ")} — 이 조건이 나올 때까지 실제로 다시 태어나 봅니다(최대 10만 번).`
+    : "위에서 고른 조건이 나올 때까지 실제로 다시 태어나 봅니다. 먼저 조건을 하나 이상 고르세요.";
+}
+
 async function tryUntil() {
-  const btn = $("odds-until");
+  if (!chosen().length) {
+    setStatus("until-status", "위 \"이렇게 태어날 확률\"에서 조건을 하나 이상 고르세요.", true);
+    return;
+  }
+  const btn = $("until-go");
   btn.disabled = true;
-  setStatus("odds-status", "조건이 나올 때까지 다시 태어나는 중… (최대 10만 번)");
+  setStatus("until-status", "조건이 나올 때까지 다시 태어나는 중… (최대 10만 번)");
   try {
     const r = await api("/until", { target: target() });
     $("until-result").innerHTML = r.found
-      ? `<p><b>${times(r.tries)}</b> 만에 태어났습니다.</p>${renderLife(r.life, null)}`
-      : `<p class="note">${times(r.max_tries)} 다시 태어나도 나오지 않았습니다. 평균적으로 ${times(r.odds.expected_tries && Math.round(r.odds.expected_tries))}이 필요합니다.</p>`;
-    setStatus("odds-status", "");
+      ? `<p><b>${times(r.tries)}</b> 만에 태어났습니다. 평균적으로는 ${times(r.odds.expected_tries && Math.round(r.odds.expected_tries))}이 필요한 조건입니다.</p>${renderLife(r.life, null)}`
+      : r.tries === 0
+        ? `<p class="note">${esc(r.odds.reason || "이 조건은 확률이 0이거나 계산할 수 없어 다시 태어나 보지 않았습니다.")}</p>`
+        : `<p class="note">${times(r.max_tries)} 다시 태어나도 나오지 않았습니다. 평균적으로 ${times(r.odds.expected_tries && Math.round(r.odds.expected_tries))}이 필요합니다.</p>`;
+    $("until-result").hidden = false;
+    setStatus("until-status", "");
   } catch (e) {
-    setStatus("odds-status", e.message, true);
+    setStatus("until-status", e.message, true);
   } finally {
     btn.disabled = false;
   }
@@ -313,4 +331,9 @@ $("home-country").addEventListener("change", (ev) => {
   if (lastLife) $("reborn-result").innerHTML = renderLife(lastLife.life, lastLife.fixed);  // 같은 인생, 비교표만 바뀐다
 });
 $("odds-go").addEventListener("click", odds);
+$("until-go").addEventListener("click", tryUntil);
+document.querySelectorAll("#odds select").forEach((el) => el.addEventListener("change", () => {
+  setStatus("until-status", "");
+  showUntilTarget();
+}));
 init();
