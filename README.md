@@ -76,6 +76,7 @@ uvicorn api.main:app --reload
 
 ```bash
 python scripts/eval_stories.py --n 10   # 실제 모델 호출. 결과: reports/story_eval.md
+python scripts/eval_ask.py              # 질문 해석 18문항. 결과: reports/ask_eval.md
 ```
 
 ### 데이터 다시 만들기

@@ -6,6 +6,7 @@
 - 데이터 재생성: `python scripts/fetch_worldbank.py && python scripts/prepare_data.py`
 - 한국 상세 재생성: `python scripts/fetch_kosis.py && python scripts/prepare_korea.py` (KOSIS_API_KEY 필요)
 - 서사 평가(실제 모델 호출, `.env` 키 필요): `python scripts/eval_stories.py --n 10`
+- 질문 해석 평가(실제 모델 호출): `python scripts/eval_ask.py` — 프롬프트 `parse_target.md`를 고치면 다시 돌린다
 
 ## 커밋 전 검증
 - `pytest`가 키 없이 통과해야 한다
