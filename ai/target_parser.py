@@ -13,9 +13,9 @@ from __future__ import annotations
 from dataclasses import dataclass, field, replace
 from pathlib import Path
 from string import Template
-from typing import Dict, List, Literal, Optional, Tuple
+from typing import Annotated, Dict, List, Literal, Optional, Tuple
 
-from pydantic import BaseModel, Field, create_model
+from pydantic import AfterValidator, BaseModel, Field, create_model
 
 from ai.cache import VersionedCache, data_version, digest
 from ai.llm import LlmCall, LlmClient
@@ -26,6 +26,9 @@ from core.model import KOREA_ISO3, KOREA_NODES, NODE_LABELS, target_choices
 PROMPTS_DIR = Path(__file__).resolve().parents[1] / "prompts"
 MAX_QUESTION = 200
 CACHE_SIZE = 1024
+# 값이 이보다 많은 칸은 enum 대신 문자열로 보내고 코드가 목록과 대조한다.
+# Gemini가 국가 217개 enum을 400(INVALID_ARGUMENT)으로 거부했다(2026-10-18 확인)
+MAX_ENUM = 50
 
 
 class DroppedOut(BaseModel):
@@ -53,12 +56,27 @@ class Parsed:
         return sum(c.cost_usd or 0.0 for c in self.calls)
 
 
+def _one_of(node: str, codes: Tuple[str, ...]):
+    allowed = set(codes)
+
+    def check(v: Optional[str]) -> Optional[str]:
+        if v is not None and v not in allowed:
+            raise ValueError(f"{node}={v!r}는 목록에 없다. 목록의 코드만 쓴다")
+        return v
+    return check
+
+
 def _schema(choices: Dict[str, Tuple[Tuple[str, str], ...]]) -> type:
     """칸마다 값 enum과 근거 말(phrase)을 가진 평평한 스키마. 한국 칸은 통계가 있을 때만 생긴다."""
     fields: Dict[str, object] = {}
     for node, values in choices.items():
         codes = tuple(v for v, _ in values)
-        fields[node] = (Optional[Literal[codes]], Field(default=None, description=f"{NODE_LABELS[node]}. 질문에 없으면 null"))
+        desc = f"{NODE_LABELS[node]}. 질문에 없으면 null"
+        if len(codes) <= MAX_ENUM:
+            fields[node] = (Optional[Literal[codes]], Field(default=None, description=desc))
+        else:  # 목록 밖 값은 검증 오류 → structured()가 오류를 보여 주고 한 번 더 묻는다
+            fields[node] = (Annotated[Optional[str], AfterValidator(_one_of(node, codes))],
+                            Field(default=None, description=desc + ". 목록의 코드만"))
         fields[f"{node}_phrase"] = (Optional[str], Field(default=None, max_length=40, description=f"{node} 값의 근거가 된 질문 속 말"))
     fields["dropped"] = (List[DroppedOut], Field(default_factory=list, description="조건으로 바꾸지 못한 말"))
     return create_model("AskTarget", **fields)  # type: ignore[call-overload]

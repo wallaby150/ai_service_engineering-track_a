@@ -85,3 +85,14 @@ def test_prompt_substitutes_cleanly():
 
     out = Template((PROMPTS_DIR / "parse_target.md").read_text(encoding="utf-8")).substitute(choices="c", question="q")
     assert "$" not in out.replace("$3.00", "").replace("$4.20", "").replace("$8.30", "")
+
+
+def test_long_lists_are_checked_by_code_instead_of_enum(engine, monkeypatch):
+    import ai.target_parser as tp
+
+    monkeypatch.setattr(tp, "MAX_ENUM", 2)  # 국가 3개 > 2 — 실제 데이터의 217개국과 같은 길
+    parser, llm = make(engine, [response({"country": "ZZZ", "dropped": []}),
+                                response({"country": "BBB", "country_phrase": "나나라", "dropped": []})])
+    assert "enum" not in str(parser._schema.model_json_schema()["properties"]["country"])
+    assert parser.parse("나나라").target == Target(country="BBB")
+    assert "목록에 없다" in llm.calls[1]["messages"][-1]["content"]
