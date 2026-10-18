@@ -114,9 +114,10 @@ async function init() {
   try {
     const [config, meta] = await Promise.all([api("/config"), api("/meta")]);
     live = config.mode === "live";
+    $("ask").hidden = !live;  // 키가 없으면 질문 칸을 보이지 않는다 — 폼은 그대로
     $("banner").textContent = config.mode === "offline"
       ? `v${config.version} · AI 없이 동작 중 — 확률은 코드가 계산하고, 이야기는 템플릿이 씁니다.`
-      : `v${config.version} · AI 서사 사용 중 (${config.narrator})`;
+      : `v${config.version} · AI 사용 중 — 질문 해석과 결과 해석 (${config.narrator}). 확률은 언제나 코드가 계산합니다.`;
     const opts = meta.countries.map((c) => `<option value="${c.iso3}">${esc(c.name_ko)}</option>`).join("");
     $("reborn-country").insertAdjacentHTML("beforeend", opts);
     $("home-country").insertAdjacentHTML("beforeend", opts);
@@ -286,6 +287,44 @@ async function odds() {
   }
 }
 
+// ── 질문으로 계산하기 — AI는 조건으로 옮기기만 하고, 폼을 채운 뒤 숫자는 서버의 core가 낸다 ──
+const ASK_FIELDS = ["country", "sex", "survival", "economy", "province", "employment", "occupation"];
+
+function renderReading(r) {
+  const chips = r.readings.map((x) => `<span class="chip">${x.phrase ? `<q>${esc(x.phrase)}</q> → ` : ""}${esc(x.field_label)}: <b>${esc(x.value_label || x.value)}</b></span>`).join("");
+  const dropped = r.dropped.length
+    ? `<ul class="dropped">${r.dropped.map((d) => `<li>뺀 말 <q>${esc(d.phrase)}</q> — ${esc(d.reason)}</li>`).join("")}</ul>` : "";
+  const how = r.cached ? "같은 질문을 전에 해석한 결과입니다(모델 호출 0번)." : `해석 비용 $${r.cost_usd.toFixed(4)}`;
+  return `${chips ? `<div class="chips">${chips}</div>` : ""}${dropped}
+    <p class="share">아래 폼을 이 조건으로 채웠습니다. 해석이 틀렸으면 폼에서 고치고 "확률 계산"을 누르세요. ${how}</p>`;
+}
+
+async function ask() {
+  const q = $("ask-q").value.trim();
+  if (!q) return;
+  const btn = $("ask-go");
+  btn.disabled = true;
+  setStatus("ask-status", "질문을 조건으로 옮기는 중…");
+  try {
+    const r = await api("/ask", { question: q });
+    for (const k of ASK_FIELDS) { const el = $(`odds-${k}`); if (el) el.value = r.target[k] || ""; }
+    showUntilTarget();
+    $("ask-reading").innerHTML = renderReading(r);
+    if (r.odds) {
+      $("odds-result").innerHTML = renderOdds(r.odds);
+      $("odds-result").hidden = false;
+      setStatus("ask-status", "");
+    } else {
+      $("odds-result").hidden = true;
+      setStatus("ask-status", "질문에서 계산할 수 있는 조건을 찾지 못했습니다. 아래 폼에서 골라 보세요.", true);
+    }
+  } catch (e) {
+    setStatus("ask-status", e.message, true);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
 // ── 될 때까지 다시 태어나기 — 위 확률 섹션에서 고른 조건을 그대로 쓴다 ──────
 function chosen() {
   return Object.keys(target()).map((k) => {
@@ -331,6 +370,8 @@ $("home-country").addEventListener("change", (ev) => {
   if (lastLife) $("reborn-result").innerHTML = renderLife(lastLife.life, lastLife.fixed);  // 같은 인생, 비교표만 바뀐다
 });
 $("odds-go").addEventListener("click", odds);
+$("ask-go").addEventListener("click", ask);
+$("ask-q").addEventListener("keydown", (ev) => { if (ev.key === "Enter" && !ev.isComposing) ask(); });
 $("until-go").addEventListener("click", tryUntil);
 document.querySelectorAll("#odds select").forEach((el) => el.addEventListener("change", () => {
   setStatus("until-status", "");

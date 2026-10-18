@@ -65,6 +65,7 @@ uvicorn api.main:app --reload
 
 | 화면 | API | 하는 일 |
 |---|---|---|
+| 질문으로 계산하기 | `POST /api/ask` | "서울에서 일하는 여자로 태어날 확률은?"처럼 물으면 AI가 허용된 조건으로만 옮기고(어느 말에서 왔는지, 옮기지 못한 말과 이유까지), 확률은 코드가 계산한다. 키가 없으면 폼을 쓴다 |
 | 이렇게 태어날 확률 | `POST /api/odds` | 고른 조건의 정확한 확률, 평균 시도 횟수, 50%·90% 확률로 나오는 횟수 |
 | 될 때까지 다시 태어나기 | `POST /api/until` | 조건이 나올 때까지 실제로 뽑는다(상한 10만 번) |
 | 다시 태어나기 | `POST /api/simulate` | 통계에 비례해 국가 → 성별 → 다섯 살까지의 생존 → 경제 수준을 뽑는다. 국가를 고정할 수 있고, 같은 시드는 같은 인생(공유 링크). 칸마다 "N번에 1번꼴"·기준 연도·추정/통계 없음 표시·가정 설명, 출생 코호트 안의 위치 한 줄, 세계 어딘가의 다른 4명 |
@@ -75,6 +76,7 @@ uvicorn api.main:app --reload
 
 ```bash
 python scripts/eval_stories.py --n 10   # 실제 모델 호출. 결과: reports/story_eval.md
+python scripts/eval_ask.py              # 질문 해석 18문항. 결과: reports/ask_eval.md
 ```
 
 ### 데이터 다시 만들기

@@ -152,3 +152,20 @@ INCOME_LABELS = {
     "Lower middle income": "중하위 소득국",
     "Low income": "저소득국",
 }
+
+
+def target_choices(snapshot: Snapshot) -> Dict[str, Tuple[Tuple[str, str], ...]]:
+    """역확률 조건으로 고를 수 있는 값 전부: 칸 → ((값, 한글 이름), …). 한국 칸은 한국 상세 통계가 있을 때만.
+    폼(/api/meta)과 자연어 해석기가 같은 목록을 본다."""
+    out: Dict[str, Tuple[Tuple[str, str], ...]] = {
+        "country": tuple((c.iso3, c.name_ko) for c in snapshot.countries),
+        "sex": tuple(LABELS["sex"].items()),
+        "survival": tuple(LABELS["survival"].items()),
+        "economy": tuple(LABELS["economy"].items()),
+    }
+    k = snapshot.korea
+    if k is not None:
+        out["province"] = tuple((p.code, p.name) for p in k.provinces)
+        out["employment"] = tuple(LABELS["employment"].items())
+        out["occupation"] = tuple(sorted(k.occupation_labels.items()))
+    return out

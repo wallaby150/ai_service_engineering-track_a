@@ -52,6 +52,13 @@
   table.compare th, table.compare td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: right; }
   table.compare th:first-child, table.compare td:first-child { text-align: left; color: var(--muted); }
   table.compare .yr { display: block; font-size: 11px; color: var(--muted); }
+  .ask { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px dashed var(--line); }
+  .ask .controls label { flex: 1 1 280px; }
+  .ask input { width: 100%; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .chip { font-size: 13px; padding: 2px 10px; border-radius: 999px; background: var(--chip); }
+  .chip q { color: var(--muted); }
+  .dropped { margin: 6px 0 0; padding-left: 18px; font-size: 13px; color: var(--muted); }
   .ai-note { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--line); }
   .ai-note h3 { margin: 0 0 6px; font-size: 15px; }
   .peers { margin-top: 14px; }
@@ -103,6 +110,16 @@
 
   <section id="odds">
     <h2>이렇게 태어날 확률</h2>
+    <div class="ask" id="ask" hidden>
+      <div class="controls">
+        <label>질문으로 계산하기 (AI가 아래 조건으로 옮기고, 확률은 코드가 계산합니다)
+          <input id="ask-q" maxlength="200" placeholder="예: 서울에서 일하는 여자로 태어날 확률은?">
+        </label>
+        <button id="ask-go">물어보기</button>
+      </div>
+      <div class="status" id="ask-status"></div>
+      <div id="ask-reading"></div>
+    </div>
     <div class="controls">
       <label>국가 <select id="odds-country"><option value="">상관없음</option></select></label>
       <label>성별 <select id="odds-sex"><option value="">상관없음</option></select></label>
@@ -157,6 +174,6 @@
     데이터: World Bank WDI · UN IGME · World Bank PIP. 통계는 집단의 분포일 뿐, 한 사람의 삶을 규정하지 않습니다.
   </footer>
 </main>
-<script src="app.js?v=2026-10-18c"></script><!-- 바꾸면 날짜도 바꾼다: 브라우저가 예전 파일을 쓰지 않게 -->
+<script src="app.js?v=2026-10-18d"></script><!-- 바꾸면 날짜도 바꾼다: 브라우저가 예전 파일을 쓰지 않게 -->
 </body>
 </html>

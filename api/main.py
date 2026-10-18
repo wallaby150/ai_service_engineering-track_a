@@ -18,9 +18,14 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
+from ai.llm import BudgetExceeded, LlmError, RateLimited  # 가벼운 모듈이다 — LiteLLM은 실제 호출 때만 import
 from api import __version__
 from api.presenters import life_out, narrative_out, odds_out
 from api.schemas import (
+    AskOut,
+    AskRequest,
+    DroppedOut,
+    ReadingOut,
     ConfigOut,
     CountryMeta,
     LifeOut,
@@ -37,11 +42,11 @@ from api.schemas import (
     UntilRequest,
     ValueMeta,
 )
-from api.settings import build_story_narrator, load_dotenv, story_model
+from api.settings import build_ai, load_dotenv, story_model
 from core.context import all_profiles
 from core.engine import Engine, Target, new_seed
 from core.errors import UnknownValue
-from core.model import LABELS, NODE_ASSUMPTIONS, NODE_LABELS
+from core.model import LABELS, NODE_ASSUMPTIONS, NODE_LABELS, label_of
 from core.narrator import Narrator
 from core.narrator_scripted import ScriptedNarrator
 from core.stats import load_manifest, load_snapshot
@@ -59,15 +64,19 @@ _FROM_ENV = object()
 
 
 def create_app(
-    engine: Optional[Engine] = None, narrator: Optional[Narrator] = None, story_narrator: object = _FROM_ENV
+    engine: Optional[Engine] = None, narrator: Optional[Narrator] = None, story_narrator: object = _FROM_ENV,
+    target_parser: object = _FROM_ENV,
 ) -> FastAPI:
     """narrator: 뽑기와 함께 바로 돌려줄 서사(빠른 템플릿).
-    story_narrator: /api/story에서 쓸 AI 서사. 기본은 환경변수로 조립하고, 키가 없으면 None."""
+    story_narrator: /api/story에서 쓸 AI 서사. target_parser: /api/ask에서 쓸 자연어 질문 해석기.
+    둘 다 기본은 환경변수로 조립하고(비용 장부 하나를 함께 쓴다), 키가 없으면 None."""
     engine = engine or Engine(load_snapshot())
     narrator = narrator or ScriptedNarrator()
     snapshot = engine.snapshot
-    if story_narrator is _FROM_ENV:
-        story_narrator = build_story_narrator(snapshot, narrator)
+    if story_narrator is _FROM_ENV or target_parser is _FROM_ENV:
+        built_story, built_parser = build_ai(engine, narrator)
+        story_narrator = built_story if story_narrator is _FROM_ENV else story_narrator
+        target_parser = built_parser if target_parser is _FROM_ENV else target_parser
     manifest = load_manifest()
 
     app = FastAPI(
@@ -194,6 +203,38 @@ def create_app(
             ],
             cost_usd=report.cost_usd,
             cached=report.cached,
+        )
+
+    @app.post("/api/ask", response_model=AskOut)
+    def ask(req: AskRequest, request: Request):
+        """자연어 질문 → 조건(모델은 허용 목록에서 고르기만) → 역확률(core). 키가 없거나 모델이 실패하면 503 — 폼은 그대로 쓸 수 있다."""
+        def unavailable(detail: str) -> JSONResponse:
+            return JSONResponse(status_code=503, content={
+                "error": "AskUnavailable", "detail": detail, "request_id": getattr(request.state, "request_id", None)})
+
+        if target_parser is None:
+            return unavailable("AI 키가 설정되지 않아 질문으로 계산할 수 없습니다. 아래 폼에서 조건을 고르세요.")
+        try:
+            parsed = target_parser.parse(req.question)  # type: ignore[attr-defined]
+        except BudgetExceeded:
+            return unavailable("AI 예산을 다 써서 질문으로 계산할 수 없습니다. 아래 폼에서 조건을 고르세요.")
+        except RateLimited:
+            return unavailable("AI 요청 한도에 걸렸습니다. 잠시 후 다시 묻거나 아래 폼에서 조건을 고르세요.")
+        except LlmError:
+            return unavailable("AI가 질문을 해석하지 못했습니다. 아래 폼에서 조건을 고르세요.")
+        t = parsed.target
+        return AskOut(
+            question=req.question,
+            target=TargetIn(country=t.country, sex=t.sex, survival=t.survival, economy=t.economy,
+                            province=t.province, employment=t.employment, occupation=t.occupation),
+            readings=[ReadingOut(field=r.field, field_label=NODE_LABELS[r.field], value=r.value,
+                                 value_label=label_of(snapshot, r.field, r.value), phrase=r.phrase) for r in parsed.readings],
+            dropped=[DroppedOut(phrase=p, reason=why) for p, why in parsed.dropped],
+            odds=odds_out(engine.probability(t), snapshot) if t.fields() else None,
+            cached=parsed.cached,
+            llm_calls=[LlmCallOut(role=c.role, model=c.model, prompt_tokens=c.prompt_tokens,
+                                  completion_tokens=c.completion_tokens, cost_usd=c.cost_usd, ms=c.ms) for c in parsed.calls],
+            cost_usd=parsed.cost_usd,
         )
 
     if WEB_DIR.exists():

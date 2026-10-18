@@ -6,6 +6,7 @@
 - 데이터 재생성: `python scripts/fetch_worldbank.py && python scripts/prepare_data.py`
 - 한국 상세 재생성: `python scripts/fetch_kosis.py && python scripts/prepare_korea.py` (KOSIS_API_KEY 필요)
 - 서사 평가(실제 모델 호출, `.env` 키 필요): `python scripts/eval_stories.py --n 10`
+- 질문 해석 평가(실제 모델 호출): `python scripts/eval_ask.py` — 프롬프트 `parse_target.md`를 고치면 다시 돌린다
 
 ## 커밋 전 검증
 - `pytest`가 키 없이 통과해야 한다
@@ -25,5 +26,5 @@
 - 프롬프트는 `prompts/`에 둔다. `string.Template`이라 달러 기호는 `$$`로 쓴다
 - 테스트는 실제 모델을 부르지 않는다. `tests/ai/fakes.py`의 각본 LLM을 쓴다
 - 통계가 없으면 0이 아니라 None(데이터 없음)이다
-- AI 자리는 `core/narrator.py`의 `Narrator` 하나. 시그니처를 바꿔야 하면 먼저 말한다
+- AI 자리는 둘이다: 서사(`core/narrator.py`의 `Narrator`)와 자연어 → 역확률 조건(`ai/target_parser.py`의 `TargetParser`). 둘 다 숫자를 내지 않는다. `Narrator` 시그니처를 바꿔야 하면 먼저 말한다
 - Python 3.9에서도 돌아야 한다 (`Optional[...]`, `from __future__ import annotations`)
