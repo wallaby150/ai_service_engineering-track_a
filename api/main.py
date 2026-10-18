@@ -178,7 +178,7 @@ def create_app(
             n = narrator.narrate(life)
             return StoryOut(
                 seed=life.seed, narrative=narrative_out(n).model_copy(update={"note": "AI 키가 설정되지 않아 템플릿 서사입니다."}),
-                plan=[], attempts=0, violations=[], llm_calls=[], cost_usd=0.0,
+                plan=[], attempts=0, dropped=[], llm_calls=[], cost_usd=0.0,
             )
         report = story_narrator.story(life)  # type: ignore[attr-defined]
         return StoryOut(
@@ -186,7 +186,7 @@ def create_app(
             narrative=narrative_out(report.narrative),
             plan=[PlanStepOut(id=str(p["id"]), tool=str(p["tool"]), metric=p["metric"], why=str(p["why"])) for p in report.plan],
             attempts=report.attempts,
-            violations=report.violations,
+            dropped=[[f"{why} | {sentence}" for sentence, why in d] for d in report.dropped],
             llm_calls=[
                 LlmCallOut(role=c.role, model=c.model, prompt_tokens=c.prompt_tokens,
                            completion_tokens=c.completion_tokens, cost_usd=c.cost_usd, ms=c.ms)

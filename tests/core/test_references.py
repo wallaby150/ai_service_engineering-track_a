@@ -13,7 +13,9 @@ from core.references import (
 R = {
     "R1": Ref("R1", "가나라의 5세 미만 사망률이 세계 평균의 몇 배인지", 1.56, "배", 1, True),
     "R2": Ref("R2", "가나라에서 한 해 태어나는 아이 수", 242917, "명", 0, False),
-    "R3": Ref("R3", "가나라 순위", 13, "번째", 0, True),
+    "R3": Ref("R3", "가나라 순위", 13, "번째", 0, True, prefix="높은 쪽에서 "),
+    "R5": Ref("R5", "다나라에서 1,000명 중 다섯 살 전에 숨지는 수", 81.8, "명", 1, True, forbid=("살아남",)),
+    "R4": Ref("R4", "가나라 기대수명이 세계 평균의 몇 배인지", 1.1, "배", 1, True, mention=(("기대수명", "수명"),)),
 }
 
 
@@ -25,14 +27,30 @@ def test_ref_text_formats_value_and_unit():
 
 def test_render_fills_references_and_drops_double_units():
     out = render(["세계 평균의 {R1}배입니다. 높은 쪽에서 {R3}입니다."], list(R.values()))
-    assert out.paragraphs == ["세계 평균의 1.6배입니다. 높은 쪽에서 13번째입니다."]
+    assert out.paragraphs == ["세계 평균의 1.6배입니다. 높은 쪽에서 13번째입니다."]  # 방향은 한 번만
     assert out.used == ["R1", "R3"] and out.dropped == []
+
+
+@pytest.mark.parametrize("written, filled", [
+    ("1,000명 중 {R2}가 태어납니다.", "1,000명 중 242,917명이 태어납니다."),
+    ("{R1}는 큰 차이입니다.", "1.6배는 큰 차이입니다."),
+    ("{R2}로 나타납니다.", "242,917명으로 나타납니다."),
+    ("{R3}을 차지합니다.", "높은 쪽에서 13번째를 차지합니다."),
+    ("같은 순간 다나라의 아이(S2)는 {R1}입니다.", "같은 순간 다나라의 아이는 1.6배입니다."),
+    ("{R2}이라는 수와 {R1}의 차이입니다.", "242,917명이라는 수와 1.6배의 차이입니다."),  # '이라는'은 조사로 보지 않는다
+])
+def test_particles_follow_the_filled_value(written, filled):
+    assert render([written], list(R.values())).paragraphs == [filled]
 
 
 @pytest.mark.parametrize("sentence, reason", [
     ("세계 평균의 {R9}입니다.", "없는 참조"),
     ("1,000명 중 26.7명이 숨집니다.", "숫자를 직접 씀"),
     ("2024년 기준입니다.", "숫자를 직접 씀"),
+    ("하루 {R3.00} 미만입니다.", "깨진 참조"),
+    ("순위는 낮은 쪽에서 {R3}입니다.", "순위 방향을 바꿈"),
+    ("세계 평균의 {R4}입니다.", "뜻을 밝히지 않음"),
+    ("다섯 살 전에 숨지는 수 {R5} 가운데 살아남았습니다.", "뜻을 뒤집음"),
     ("아쉽게도 {R1}입니다.", "쓰지 않는 말"),
     ("열심히 살아야 합니다.", "쓰지 않는 말"),
 ])
@@ -43,11 +61,12 @@ def test_bad_sentences_are_named(sentence, reason):
 def test_free_numbers_are_allowed():
     assert check_sentence("100명 중 {R1}, 1,000명 중이라면 달라집니다.", R) is None
     assert check_sentence("하루 $3.00 미만의 가정입니다.", R) is None
+    assert check_sentence("5세 미만 사망률은 세계 평균의 {R1}입니다.", R) is None
 
 
 def test_only_the_bad_sentence_is_dropped():
     out = render(["좋은 문장 {R1}입니다. 나쁜 문장 7.7명입니다.", "다음 문단 {R3}입니다."], list(R.values()))
-    assert out.paragraphs == ["좋은 문장 1.6배입니다.", "다음 문단 13번째입니다."]
+    assert out.paragraphs == ["좋은 문장 1.6배입니다.", "다음 문단 높은 쪽에서 13번째입니다."]
     assert out.dropped == [("나쁜 문장 7.7명입니다.", "숫자를 직접 씀: 7.7")]
 
 
@@ -61,7 +80,11 @@ def test_catalog_marks_screen_values_and_carries_meaning(engine, snapshot):
     births = next(r for r in refs if "한 해 태어나는" in r.meaning)
     assert births.meaning.startswith("가나라") and not births.novel
     ratio = next(r for r in refs if "몇 배" in r.meaning)
-    assert ratio.novel and ratio.unit == "배"
+    assert ratio.novel and ratio.unit == "배" and "사망률" in ratio.mention[0]
+    avg = next(r for r in refs if r.meaning.startswith("세계 평균"))
+    assert check_sentence(f"5세 미만 사망률은 {{{avg.id}}}입니다.", {avg.id: avg}).startswith("뜻을 밝히지 않음")
+    rank = next(r for r in refs if "순위" in r.meaning)
+    assert rank.text().startswith("높은 쪽에서 ") and rank.text().endswith("개국 중)")
     assert all(r.meaning for r in refs) and len({r.id for r in refs}) == len(refs)
     assert not any("가나라(나라 평균)" in r.meaning for r in refs)  # 이웃 목록에서 자기 나라는 뺀다
     lines = catalog_lines(refs)

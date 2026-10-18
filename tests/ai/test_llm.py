@@ -35,5 +35,5 @@ def test_prompts_substitute_cleanly():
     from ai.narrator_llm import _load
 
     _load("planner.md").substitute(tools="t", facts="f")
-    out = _load("solver.md").substitute(screen="s", facts="f", evidence="e", peers="p", feedback="")
-    assert "$" not in out.replace("$3.00", "")  # 남은 자리표시자가 없다(달러 기호는 $$로만 쓴다)
+    out = _load("solver.md").substitute(screen="s", facts="f", refs="r", peers="p", feedback="")
+    assert "$" not in out.replace("$3.00", "").replace("$4.20", "").replace("$8.30", "")  # 남은 자리표시자가 없다(달러 기호는 $$로만 쓴다)

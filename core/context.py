@@ -108,9 +108,14 @@ def region_peers(snapshot: Snapshot, iso3: str, limit: int = 5) -> Dict[str, obj
 
 # 서사 계획자가 고를 수 있는 조회 전부. 국가는 항상 코드가 넣는다 — 모델이 남의 나라를 고를 수 없다.
 TOOLS: Dict[str, Tuple[str, Callable[..., Dict[str, object]]]] = {
-    "country_profile": ("태어난 나라의 기본 통계(기대수명, 영아·5세 미만 사망률, 빈곤율, 출생아 수)", country_profile),
-    "world_comparison": ("태어난 나라의 지표를 세계 평균과 비교(배율·순위 포함). metric 필요", world_comparison),
-    "region_peers": ("같은 지역에서 출생아가 많은 나라들의 지표", region_peers),
+    "country_profile": ("태어난 나라의 기본 통계(기대수명, 영아·5세 미만 사망률, 빈곤율, 출생아 수). "
+                        "쓰지 않을 때: 화면에 이미 있는 이 나라 값만 다시 보게 되므로, 다른 성별의 기대수명이나 "
+                        "$8.30 빈곤율이 필요할 때만 고른다", country_profile),
+    "world_comparison": ("태어난 나라의 지표를 세계 평균과 비교(배율·순위 포함). metric 필요. "
+                         "쓰지 않을 때: 그 지표가 이 나라에 없으면(빈곤율 통계가 없는 나라 등) 고르지 않는다", world_comparison),
+    "region_peers": ("같은 지역에서 출생아가 많은 나라들의 지표. "
+                     "쓰지 않을 때: 같은 순간 태어난 사람과의 대비를 말하려는 것이라면 필요 없다(그건 코드가 따로 준다)",
+                     region_peers),
 }
 
 

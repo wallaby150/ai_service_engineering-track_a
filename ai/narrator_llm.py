@@ -2,9 +2,11 @@
 
 ① 계획자(LLM 1회): 어떤 맥락 조회를 할지 고른다. 결과 자리를 #E1, #E2 … 로 비워 둔다
 ② 실행(LLM 0회): 조회는 core/context.py의 결정적 코드가 한다. 나라는 코드가 넣는다
-③ 작성자(LLM 1회): 사실 + 조회 결과로 이야기를 쓴다
-④ 검증(코드): 이야기 속 숫자가 근거에 있는지 대조한다. 어긋나면 위반을 알려 한 번 더 쓰게 하고,
-   그래도 어긋나거나 모델이 실패하면 템플릿 서사로 떨어진다(정직한 실패)
+③ 해석가(LLM 1회): 화면 글 + 근거 목록(core/references.py)으로 화면에 없는 해석을 쓴다.
+   숫자는 직접 쓰지 않고 "{R3}"처럼 근거 id로 가리킨다 — 값과 단위는 코드가 채운다(13주차 "숫자는 참조로")
+④ 검증(코드): 문장 하나 단위로 없는 참조·직접 친 숫자·쓰지 않는 말을 버리고, 남은 글이 화면을 되풀이하지
+   않는지·새 근거를 둘 이상 쓰는지 본다. 모자라면 한 번 더 쓰게 하고, 그래도 모자라거나 모델이 실패하면
+   해석 없이 템플릿만 남는다(정직한 실패)
 """
 
 from __future__ import annotations
@@ -14,7 +16,7 @@ import logging
 from dataclasses import dataclass, field
 from pathlib import Path
 from string import Template
-from typing import Dict, List, Literal, Optional
+from typing import Dict, List, Literal, Optional, Tuple
 
 from pydantic import BaseModel, Field
 
@@ -24,12 +26,14 @@ from core.engine import Engine, Life
 from core.facts import facts_of, peer_facts
 from core.narrator import Narrative, Narrator
 from core.stats import Snapshot
-from core.verify import allowed_numbers, allowed_years, new_evidence, overlap_ratio, unsupported_numbers
+from core.references import build_catalog, catalog_lines, novel_used, peer_lines, render
+from core.verify import overlap_ratio
 
 PROMPTS_DIR = Path(__file__).resolve().parents[1] / "prompts"
 MAX_STEPS = 3
 MAX_OVERLAP = 0.35  # 해석 글자의 35%를 넘게 화면 글과 겹치면 '다시 말하기'로 본다
-MIN_NEW_EVIDENCE = 2  # 화면에 없는 근거(새 숫자·다른 나라 이름)를 적어도 둘
+MIN_NEW_EVIDENCE = 2  # 화면에 없는 근거(새 참조·같은 순간 다른 나라 이름)를 적어도 둘
+DEFAULT_TITLE = "화면 밖의 맥락"  # 제목 문장이 검사에 걸리면 이 제목을 쓴다
 # 위치 한 줄이 고른 칸 → 세계와 견줄 지표. 해석가가 늘 받는 조회(계획자가 고르지 않아도 코드가 넣는다)
 HEADLINE_METRIC = {"economy": "poverty_3_00", "survival": "u5mr"}
 log = logging.getLogger("reborn.narrator")
@@ -49,8 +53,8 @@ class Plan(BaseModel):
 
 
 class Story(BaseModel):
-    title: str = Field(max_length=60)
-    paragraphs: List[str] = Field(min_length=2, max_length=5)
+    title: str = Field(max_length=60, description="숫자 없이 20자 안팎")
+    paragraphs: List[str] = Field(min_length=2, max_length=5, description="숫자는 {R3}처럼 근거 id로만")
     facts_used: List[str] = Field(default_factory=list)
 
 
@@ -62,9 +66,9 @@ class StoryReport:
     calls: List[LlmCall] = field(default_factory=list)
     plan: List[Dict[str, Optional[str]]] = field(default_factory=list)
     attempts: int = 0
-    violations: List[List[float]] = field(default_factory=list)
+    dropped: List[List[Tuple[str, str]]] = field(default_factory=list)  # 시도마다 버린 (문장, 이유)
     overlap: List[float] = field(default_factory=list)  # 시도마다 화면 글과 겹친 비율
-    new_evidence: List[List[str]] = field(default_factory=list)  # 시도마다 화면에 없던 근거
+    new_evidence: List[List[str]] = field(default_factory=list)  # 시도마다 살아남은 글이 쓴 화면 밖 근거
 
     @property
     def cost_usd(self) -> float:
@@ -107,8 +111,8 @@ class LlmNarrator:
         try:
             steps = self._plan(facts, report)
             steps = self._with_required(life, steps, report)
-            evidence = self._execute(life, steps)
-            return self._write(life, facts, evidence, self._peers(life), report)
+            lookups = self._execute(life, steps)
+            return self._write(life, facts, lookups, self._peers(life), report)
         except BudgetExceeded:
             return self._fall_back(life, report, "AI 서사 예산을 다 써서 템플릿 서사로 보여 드립니다.")
         except RateLimited:
@@ -149,56 +153,52 @@ class LlmNarrator:
         return out
 
     # ② 실행 — LLM 없이
-    def _execute(self, life: Life, steps: List[PlanStep]) -> Dict[str, object]:
-        return {f"E{i + 1}": run_tool(self.snapshot, s.tool, life.country.iso3, s.metric) for i, s in enumerate(steps)}
+    def _execute(self, life: Life, steps: List[PlanStep]) -> List[Tuple[str, Optional[str], Dict[str, object]]]:
+        return [(s.tool, s.metric, run_tool(self.snapshot, s.tool, life.country.iso3, s.metric)) for s in steps]
 
     # ③ 작성 + ④ 검증
-    def _write(self, life: Life, facts: Dict[str, object], evidence: Dict[str, object],
+    def _write(self, life: Life, facts: Dict[str, object],
+               lookups: List[Tuple[str, Optional[str], Dict[str, object]]],
                peers: List[Dict[str, object]], report: StoryReport) -> StoryReport:
         screen = " ".join(self.fallback.narrate(life).paragraphs)  # 화면에 이미 있는 글 = 템플릿
-        allowed = allowed_numbers(facts, evidence, peers)
-        years = allowed_years(facts, evidence)
-        novel = allowed_numbers(evidence, peers) - allowed_numbers(facts)
-        names = {str(p["country"]) for p in peers} | {
-            str(x["country"]) for e in evidence.values() if isinstance(e, dict) for x in e.get("peers", [])}  # type: ignore[union-attr]
-        names.discard(str(facts.get("country")))
-        evidence_text = "\n".join(_wrap(k, v) for k, v in evidence.items())
-        peers_text = _wrap("SAME_MOMENT", peers)
+        refs = build_catalog(facts, lookups, peers)
+        names = sorted({str(p["country"]) for p in peers} - {str(facts.get("country"))})
+        words = {k: v for k, v in facts.items() if isinstance(v, str)}  # 글로 된 사실만. 숫자는 근거 목록으로
         feedback = ""
         for attempt in range(1, self.max_solver_attempts + 1):
             report.attempts = attempt
             prompt = self._solver.substitute(
-                screen=screen, facts=json.dumps(facts, ensure_ascii=False, indent=1),
-                evidence=evidence_text, peers=peers_text, feedback=feedback,
+                screen=screen, facts=json.dumps(words, ensure_ascii=False, indent=1),
+                refs=_wrap("REFERENCES", catalog_lines(refs)), peers=_wrap("SAME_MOMENT", peer_lines(peers)),
+                feedback=feedback,
             )
             story, calls = self.client.structured(
                 "solver", [{"role": "user", "content": prompt}], Story, "emit_story", "해석을 낸다"
             )
             report.calls += calls
-            text = " ".join([story.title, *story.paragraphs])
-            bad = unsupported_numbers(text, allowed, years)
+            body = render(story.paragraphs, refs)
+            title = render([story.title], refs)
+            text = " ".join(body.paragraphs)
             overlap = overlap_ratio(text, screen)
-            hits = new_evidence(text, novel, names)
-            report.violations.append(bad)
+            hits = novel_used(body, refs, names)
+            report.dropped.append(body.dropped + title.dropped)
             report.overlap.append(round(overlap, 3))
             report.new_evidence.append(hits)
-            if not bad and overlap <= MAX_OVERLAP and len(hits) >= MIN_NEW_EVIDENCE:
+            if body.paragraphs and overlap <= MAX_OVERLAP and len(hits) >= MIN_NEW_EVIDENCE:
                 report.narrative = Narrative(
-                    title=story.title,
-                    paragraphs=tuple(story.paragraphs),
+                    title=title.paragraphs[0] if title.paragraphs else DEFAULT_TITLE,
+                    paragraphs=tuple(body.paragraphs),
                     facts_used=tuple(k for k in story.facts_used if k in facts),
                     narrator="llm",
                 )
                 return report
-            log.info("NARRATOR REJECT attempt=%d unsupported=%s overlap=%.2f new=%s", attempt, bad, overlap, hits)
-            problems = []
-            if bad:
-                problems.append("근거에 없는 숫자를 썼다: " + ", ".join(f"{n:g}" for n in bad) + ". 빼거나 근거에 있는 값으로 바꿔라.")
+            log.info("NARRATOR REJECT attempt=%d dropped=%d overlap=%.2f new=%s", attempt, len(body.dropped), overlap, hits)
+            problems = [f"버린 문장: \"{s}\" — {why}" for s, why in body.dropped]
             if overlap > MAX_OVERLAP:
                 problems.append(f"화면에 이미 있는 글을 되풀이했다(겹침 {overlap:.0%}). 화면이 말하지 않은 것만 써라.")
             if len(hits) < MIN_NEW_EVIDENCE:
-                problems.append("화면에 없는 근거가 모자란다. 조회 결과(세계 배율·순위, 이웃 나라)나 같은 순간 태어난 사람을 "
-                                "적어도 두 가지 써라.")
+                problems.append("화면에 없는 근거가 모자란다. '(화면에 이미 있음)' 표시가 없는 근거 id나 같은 순간 "
+                                "태어난 사람을 적어도 두 가지 써라.")
             feedback = "\n[직전 원고의 문제]\n" + "\n".join(problems) + "\n고쳐서 다시 써라."
         return self._fall_back(life, report, "AI가 화면에 없는 해석을 만들지 못해 템플릿 서사만 보여 드립니다.")
 
