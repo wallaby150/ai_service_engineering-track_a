@@ -191,3 +191,32 @@ class StoryOut(BaseModel):
     cached: bool = Field(default=False, description="같은 데이터·프롬프트·모델 버전으로 전에 만든 해석을 다시 꺼냈는가")
     llm_calls: List[LlmCallOut]
     cost_usd: float
+
+
+class AskRequest(BaseModel):
+    question: str = Field(min_length=1, max_length=200, description="예: 서울에서 일하는 여자로 태어날 확률은?")
+
+
+class ReadingOut(BaseModel):
+    field: str
+    field_label: str
+    value: str
+    value_label: Optional[str]
+    phrase: str = Field(description="이 칸이 나온 질문 속 말")
+
+
+class DroppedOut(BaseModel):
+    phrase: str
+    reason: str
+
+
+class AskOut(BaseModel):
+    question: str
+    target: TargetIn = Field(description="해석된 조건. 화면은 이 값으로 폼을 채운다")
+    readings: List[ReadingOut]
+    dropped: List[DroppedOut] = Field(description="조건으로 바꾸지 못한 말과 이유 — 지어내지 않고 뺐다")
+    odds: Optional[OddsOut] = Field(description="해석된 조건의 역확률(/api/odds와 같은 계산). 조건이 하나도 없으면 null")
+    cached: bool
+    llm_calls: List[LlmCallOut]
+    cost_usd: float
+

@@ -118,4 +118,9 @@ sequenceDiagram
 - 질문은 200자에서 자르고 경계 마커로 감싼다(데이터로만 다룬다).
 - 같은 질문(공백 정리)은 서사와 같은 버전 기준 캐시(`ai/cache.py`, 데이터·프롬프트·모델 지문)로 모델을 다시 부르지 않는다.
 - 모델 실패(장애·한도·예산)는 예외로 올리고, 어떻게 알릴지는 문(`api/`)이 정한다.
+- **`POST /api/ask`** `{question}`(1~200자) → `{target, readings, dropped, odds, cached, llm_calls, cost_usd}`.
+  `odds`는 `/api/odds`와 같은 함수(`Engine.probability` → `odds_out`)로 내고, 조건이 하나도 없으면 null이다.
+  해석기가 없거나(키 없음) 모델이 실패·한도·예산이면 **503**과 "아래 폼에서 조건을 고르세요" — 폼과 `/api/odds`는 늘 돈다.
+- 서사와 해석기는 `api/settings.py`의 `build_ai`가 함께 만들고 **LLM 클라이언트와 비용 장부(`STORY_BUDGET_USD`)를 같이 쓴다**.
+  공개 환경에서 AI에 쓰는 총액이 하나여야 상한이 뜻을 갖는다.
 
