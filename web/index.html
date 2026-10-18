@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>다시 태어난다면</title>
+<title>다시 태어난다면 — 출생 조건 확률 계산기</title>
 <link rel="icon" href="data:,">
 <style>
   :root {
@@ -96,31 +96,10 @@
 <main>
   <header>
     <h1>다시 태어난다면</h1>
-    <p>실제 공공 통계에 비례해 뽑는 출생 조건, 그리고 원하는 조건으로 태어날 확률</p>
+    <p>이 조건으로 태어날 확률은 얼마이고, 다시 태어난다면 몇 번 만에 나올까 — 공공 통계로 계산합니다</p>
   </header>
 
   <div class="banner" id="banner">서버에 연결하는 중…</div>
-
-  <section id="reborn">
-    <h2>다시 태어나기</h2>
-    <div class="controls">
-      <label>국가
-        <select id="reborn-country"><option value="">통계에 맡기기</option></select>
-      </label>
-      <label>시드 (같은 시드 = 같은 인생)
-        <input id="reborn-seed" type="number" min="0" placeholder="비우면 무작위">
-      </label>
-      <button id="reborn-go">다시 태어나기</button>
-    </div>
-    <div class="controls home">
-      <label>내가 실제로 태어난 나라 (선택)
-        <select id="home-country"><option value="">비교하지 않기</option></select>
-      </label>
-      <span class="home-note">이 선택은 이 브라우저에만 저장되고 서버로 보내지 않습니다.</span>
-    </div>
-    <div class="status" id="reborn-status"></div>
-    <div id="reborn-result" hidden></div>
-  </section>
 
   <section id="odds">
     <h2>이렇게 태어날 확률</h2>
@@ -143,10 +122,41 @@
     <div id="odds-result" hidden></div>
   </section>
 
+  <section id="until">
+    <h2>될 때까지 다시 태어나기</h2>
+    <p class="share" id="until-target">위에서 고른 조건이 나올 때까지 실제로 다시 태어나 봅니다. 먼저 조건을 하나 이상 고르세요.</p>
+    <div class="controls">
+      <button id="until-go">될 때까지 다시 태어나기</button>
+    </div>
+    <div class="status" id="until-status"></div>
+    <div id="until-result" hidden></div>
+  </section>
+
+  <section id="reborn">
+    <h2>다시 태어나기</h2>
+    <div class="controls">
+      <label>국가
+        <select id="reborn-country"><option value="">통계에 맡기기</option></select>
+      </label>
+      <label>시드 (같은 시드 = 같은 인생)
+        <input id="reborn-seed" type="number" min="0" placeholder="비우면 무작위">
+      </label>
+      <button id="reborn-go">다시 태어나기</button>
+    </div>
+    <div class="controls home">
+      <label>내가 실제로 태어난 나라 (선택)
+        <select id="home-country"><option value="">비교하지 않기</option></select>
+      </label>
+      <span class="home-note">이 선택은 이 브라우저에만 저장되고 서버로 보내지 않습니다.</span>
+    </div>
+    <div class="status" id="reborn-status"></div>
+    <div id="reborn-result" hidden></div>
+  </section>
+
   <footer>
     데이터: World Bank WDI · UN IGME · World Bank PIP. 통계는 집단의 분포일 뿐, 한 사람의 삶을 규정하지 않습니다.
   </footer>
 </main>
-<script src="app.js?v=2026-10-18a"></script><!-- 바꾸면 날짜도 바꾼다: 브라우저가 예전 파일을 쓰지 않게 -->
+<script src="app.js?v=2026-10-18b"></script><!-- 바꾸면 날짜도 바꾼다: 브라우저가 예전 파일을 쓰지 않게 -->
 </body>
 </html>

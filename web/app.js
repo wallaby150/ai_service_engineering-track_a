@@ -267,9 +267,7 @@ function renderOdds(o) {
       <div class="stat"><div class="n">${times(o.tries_50)}</div><div class="d">50% 확률로 한 번은 나오는 횟수</div></div>
       <div class="stat"><div class="n">${times(o.tries_90)}</div><div class="d">90% 확률로 한 번은 나오는 횟수</div></div>
     </div>
-    ${steps}${cover}
-    <p><button class="secondary" id="odds-until">될 때까지 다시 태어나기</button></p>
-    <div id="until-result"></div>`;
+    ${steps}${cover}`;
 }
 
 async function odds() {
@@ -280,8 +278,6 @@ async function odds() {
     const o = await api("/odds", target());
     $("odds-result").innerHTML = renderOdds(o);
     $("odds-result").hidden = false;
-    const until = $("odds-until");
-    if (until) until.addEventListener("click", tryUntil);
     setStatus("odds-status", "");
   } catch (e) {
     setStatus("odds-status", e.message, true);
@@ -290,18 +286,40 @@ async function odds() {
   }
 }
 
+// ── 될 때까지 다시 태어나기 — 위 확률 섹션에서 고른 조건을 그대로 쓴다 ──────
+function chosen() {
+  return Object.keys(target()).map((k) => {
+    const sel = $(`odds-${k}`);
+    return `${sel.closest("label").firstChild.textContent.trim()} ${sel.options[sel.selectedIndex].text}`;
+  });
+}
+
+function showUntilTarget() {
+  const list = chosen();
+  $("until-target").textContent = list.length
+    ? `조건: ${list.join(" · ")} — 이 조건이 나올 때까지 실제로 다시 태어나 봅니다(최대 10만 번).`
+    : "위에서 고른 조건이 나올 때까지 실제로 다시 태어나 봅니다. 먼저 조건을 하나 이상 고르세요.";
+}
+
 async function tryUntil() {
-  const btn = $("odds-until");
+  if (!chosen().length) {
+    setStatus("until-status", "위 \"이렇게 태어날 확률\"에서 조건을 하나 이상 고르세요.", true);
+    return;
+  }
+  const btn = $("until-go");
   btn.disabled = true;
-  setStatus("odds-status", "조건이 나올 때까지 다시 태어나는 중… (최대 10만 번)");
+  setStatus("until-status", "조건이 나올 때까지 다시 태어나는 중… (최대 10만 번)");
   try {
     const r = await api("/until", { target: target() });
     $("until-result").innerHTML = r.found
-      ? `<p><b>${times(r.tries)}</b> 만에 태어났습니다.</p>${renderLife(r.life, null)}`
-      : `<p class="note">${times(r.max_tries)} 다시 태어나도 나오지 않았습니다. 평균적으로 ${times(r.odds.expected_tries && Math.round(r.odds.expected_tries))}이 필요합니다.</p>`;
-    setStatus("odds-status", "");
+      ? `<p><b>${times(r.tries)}</b> 만에 태어났습니다. 평균적으로는 ${times(r.odds.expected_tries && Math.round(r.odds.expected_tries))}이 필요한 조건입니다.</p>${renderLife(r.life, null)}`
+      : r.tries === 0
+        ? `<p class="note">${esc(r.odds.reason || "이 조건은 확률이 0이거나 계산할 수 없어 다시 태어나 보지 않았습니다.")}</p>`
+        : `<p class="note">${times(r.max_tries)} 다시 태어나도 나오지 않았습니다. 평균적으로 ${times(r.odds.expected_tries && Math.round(r.odds.expected_tries))}이 필요합니다.</p>`;
+    $("until-result").hidden = false;
+    setStatus("until-status", "");
   } catch (e) {
-    setStatus("odds-status", e.message, true);
+    setStatus("until-status", e.message, true);
   } finally {
     btn.disabled = false;
   }
@@ -313,4 +331,9 @@ $("home-country").addEventListener("change", (ev) => {
   if (lastLife) $("reborn-result").innerHTML = renderLife(lastLife.life, lastLife.fixed);  // 같은 인생, 비교표만 바뀐다
 });
 $("odds-go").addEventListener("click", odds);
+$("until-go").addEventListener("click", tryUntil);
+document.querySelectorAll("#odds select").forEach((el) => el.addEventListener("change", () => {
+  setStatus("until-status", "");
+  showUntilTarget();
+}));
 init();
