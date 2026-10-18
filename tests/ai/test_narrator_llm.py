@@ -5,8 +5,10 @@ from __future__ import annotations
 import pytest
 
 from ai.llm import Ledger, LlmClient
-from ai.narrator_llm import HEADLINE_METRIC, MAX_OVERLAP, LlmNarrator
-from core.context import world_comparison
+from ai.narrator_llm import DEFAULT_TITLE, HEADLINE_METRIC, MAX_OVERLAP, LlmNarrator
+from core.context import region_peers, world_comparison
+from core.facts import facts_of, peer_facts
+from core.references import build_catalog
 from core.narrator_scripted import ScriptedNarrator
 from tests.ai.fakes import ScriptedLLM, response
 
@@ -35,15 +37,26 @@ def life(engine):
                 and len(other_names(engine, engine.sample(s, country="AAA"))) >= 2)
 
 
-def interpretation(engine, life):
-    """화면에 없는 근거 둘 이상(같은 순간 다른 나라 이름, 세계 배율)으로 쓴 원고.
-    배율은 코드가 늘 넣는 조회(위치 한 줄의 지표)에서 가져온다."""
-    names = other_names(engine, life)
+def catalog(engine, life):
+    """PLAN을 받은 해석가가 보는 근거 목록과 같은 것: 계획(기대수명 비교, 이웃) + 코드가 넣는 위치 지표."""
+    snap, iso3 = engine.snapshot, life.country.iso3
+    lookups = [("world_comparison", "life_expectancy", world_comparison(snap, iso3, "life_expectancy")),
+               ("region_peers", None, region_peers(snap, iso3))]
     metric = HEADLINE_METRIC[life.headline.node]
-    ratio = world_comparison(engine.snapshot, life.country.iso3, metric)["ratio_to_world"]
+    lookups.append(("world_comparison", metric, world_comparison(snap, iso3, metric)))
+    return build_catalog(facts_of(life), lookups, [peer_facts(p) for p in engine.same_moment(life.seed)])
+
+
+def ratio_ref(engine, life):
+    return next(r for r in catalog(engine, life) if "기대수명" in r.meaning and "몇 배" in r.meaning)
+
+
+def interpretation(engine, life):
+    """화면에 없는 근거 둘 이상(같은 순간 다른 나라 이름, 세계 배율)으로 쓴 원고. 숫자는 참조로만."""
+    names = other_names(engine, life)
     return {"title": "같은 순간, 다른 출발",
             "paragraphs": [f"같은 순간 {names[0]}와 {names[1]}에서도 아이가 첫숨을 쉬었습니다.",
-                           f"세계 평균과 견주면 이 나라의 그 비율은 {ratio}배입니다."],
+                           f"세계 평균과 견주면 이 나라의 기대수명은 {{{ratio_ref(engine, life).id}}}입니다."],
             "facts_used": ["country", "not_a_fact"]}
 
 
@@ -57,7 +70,10 @@ def test_interpreter_gets_screen_and_required_lookups(engine, life):
     assert ("world_comparison", "poverty_3_00") in tools  # 위치 한 줄(경제)의 지표는 코드가 넣는다
     prompt = llm.calls[1]["messages"][0]["content"]
     assert "[화면에 이미 있는 글]" in prompt and ScriptedNarrator().narrate(life).paragraphs[0] in prompt
-    assert "<<<TOOL_RESULT SAME_MOMENT>>>" in prompt
+    assert "<<<TOOL_RESULT SAME_MOMENT>>>" in prompt and "<<<TOOL_RESULT REFERENCES>>>" in prompt
+    ref = ratio_ref(engine, life)
+    assert f"{ref.id} = {ref.text()}" in prompt  # 해석가는 값과 뜻을 보고 id로만 가리킨다
+    assert report.narrative.paragraphs[1].endswith(f"{ref.text()}입니다.")  # 값은 코드가 채운다
     assert report.narrative.facts_used == ("country",)  # 없는 키는 버린다
     assert report.overlap[0] <= MAX_OVERLAP and len(report.new_evidence[0]) >= 2
 
@@ -79,13 +95,29 @@ def test_no_new_evidence_is_sent_back(engine, life):
     assert "근거가 모자란다" in llm.calls[2]["messages"][0]["content"]
 
 
-def test_invented_number_gets_one_rewrite_then_passes(engine, life):
-    bad = interpretation(engine, life)
-    bad["paragraphs"].append("1,000명 중 777.7명이 행복합니다.")
+def test_typed_number_drops_only_that_sentence(engine, life):
+    story = interpretation(engine, life)
+    story["paragraphs"][1] += " 1,000명 중 777.7명이 행복합니다. 다행히 당신은 살아남았습니다."
+    narrator, llm = make(engine, [response(PLAN), response(story)])
+    report = narrator.story(life)
+    assert report.narrative.narrator == "llm" and report.attempts == 1  # 나머지가 기준을 넘으면 다시 쓰지 않는다
+    assert [why.split(":")[0] for _, why in report.dropped[0]] == ["숫자를 직접 씀", "쓰지 않는 말"]
+    text = " ".join(report.narrative.paragraphs)
+    assert "777.7" not in text and "다행히" not in text and "{R" not in text
+
+
+def test_title_with_a_number_is_replaced(engine, life):
+    story = dict(interpretation(engine, life), title="13번째 나라")
+    narrator, _ = make(engine, [response(PLAN), response(story)])
+    assert narrator.story(life).narrative.title == DEFAULT_TITLE
+
+
+def test_unknown_reference_is_dropped_and_sent_back(engine, life):
+    bad = {"title": "없는 근거", "paragraphs": ["세계 평균의 {R999}입니다.", "같은 순간의 일입니다."]}
     narrator, llm = make(engine, [response(PLAN), response(bad), response(interpretation(engine, life))])
     report = narrator.story(life)
-    assert report.narrative.narrator == "llm" and report.violations[0] == [777.7]
-    assert "777.7" in llm.calls[2]["messages"][0]["content"]
+    assert report.narrative.narrator == "llm" and report.attempts == 2
+    assert "없는 참조 R999" in llm.calls[2]["messages"][0]["content"]
 
 
 def test_still_failing_leaves_only_the_template(engine, life):
@@ -128,3 +160,51 @@ def test_cost_is_recorded(engine, life):
     report = narrator.story(life)
     assert report.cost_usd == pytest.approx(0.002)
     assert [c.role for c in report.calls] == ["planner", "solver"]
+
+
+# ── 버전 기준 캐시 (13주차: 키 = 데이터 · 프롬프트 · 모델) ─────────────
+def test_same_life_same_version_is_served_from_cache(engine, life):
+    narrator, llm = make(engine, [response(PLAN), response(interpretation(engine, life))])
+    first = narrator.story(life)
+    again = narrator.story(engine.sample(life.seed, country="AAA"))
+    assert len(llm.calls) == 2  # 두 번째는 모델을 부르지 않았다
+    assert again.cached and not first.cached and again.cost_usd == 0
+    assert again.narrative == first.narrative
+
+
+def test_changing_any_version_misses_the_cache(engine, life):
+    narrator, llm = make(engine, [response(PLAN), response(interpretation(engine, life))] * 2)
+    narrator.story(life)
+    narrator.version = dict(narrator.version, prompt="changed")  # 프롬프트를 고쳤다
+    assert not narrator.story(life).cached and len(llm.calls) == 4
+
+
+def test_version_names_data_prompt_and_model(engine, snapshot):
+    from ai.narrator_llm import data_version
+
+    narrator, _ = make(engine, [])
+    assert set(narrator.version) == {"data", "prompt", "model"}
+    assert narrator.version["model"] == "fake/model"
+    assert data_version(engine.snapshot) == data_version(snapshot) and len(data_version(snapshot)) == 12
+
+
+def test_failures_are_not_cached(engine, life):
+    repeat = {"title": "다시 말하기", "paragraphs": list(ScriptedNarrator().narrate(life).paragraphs)}
+    narrator, llm = make(engine, [response(PLAN), response(repeat), response(repeat),
+                                  response(PLAN), response(interpretation(engine, life))])
+    assert narrator.story(life).narrative.narrator == "scripted"
+    assert narrator.story(life).narrative.narrator == "llm"  # 다음엔 다시 해 본다
+
+
+def test_cache_is_bounded(engine, life):
+    second = next(engine.sample(s, country="AAA") for s in range(life.seed + 1, 1000)
+                  if engine.sample(s, country="AAA").value("survival") == "survived_5"
+                  and len(other_names(engine, engine.sample(s, country="AAA"))) >= 2)
+    responses = [response(PLAN), response(interpretation(engine, life)),
+                 response(PLAN), response(interpretation(engine, second))]
+    llm = ScriptedLLM(responses)
+    client = LlmClient("fake/model", ledger=Ledger(1.0), completion_fn=llm, cost_fn=lambda r: 0.001)
+    narrator = LlmNarrator(client, engine.snapshot, ScriptedNarrator(), cache_size=1)
+    assert narrator.story(life).narrative.narrator == "llm"
+    assert narrator.story(second).narrative.narrator == "llm"
+    assert len(narrator._cache) == 1 and narrator.story(second).cached  # 마지막 것만 남는다

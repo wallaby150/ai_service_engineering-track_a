@@ -187,6 +187,7 @@ class StoryOut(BaseModel):
     narrative: NarrativeOut
     plan: List[PlanStepOut] = Field(description="ReWOO 계획자가 고른 조회")
     attempts: int = Field(description="작성자가 쓴 횟수(검증에 걸리면 다시 쓴다)")
-    violations: List[List[float]] = Field(description="시도마다 근거에 없거나 빠진 숫자")
+    dropped: List[List[str]] = Field(description="시도마다 검사에 걸려 버린 문장('이유 | 문장')")
+    cached: bool = Field(default=False, description="같은 데이터·프롬프트·모델 버전으로 전에 만든 해석을 다시 꺼냈는가")
     llm_calls: List[LlmCallOut]
     cost_usd: float

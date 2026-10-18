@@ -27,7 +27,9 @@ def test_story_endpoint_reports_plan_calls_and_cost(engine):
     assert r["narrative"]["narrator"] == "llm"
     assert [p["tool"] for p in r["plan"]] == ["country_profile", "world_comparison", "region_peers"]
     assert [c["role"] for c in r["llm_calls"]] == ["planner", "solver"]
-    assert r["cost_usd"] == 0.004 and r["attempts"] == 1
+    assert r["cost_usd"] == 0.004 and r["attempts"] == 1 and r["cached"] is False
+    again = client.post("/api/story", json={"seed": seed, "country": "AAA"}).json()
+    assert again["cached"] is True and again["llm_calls"] == [] and again["narrative"] == r["narrative"]
 
 
 def test_story_keeps_simulate_fast_and_offline(engine):
