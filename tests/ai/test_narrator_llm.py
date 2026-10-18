@@ -180,7 +180,7 @@ def test_changing_any_version_misses_the_cache(engine, life):
 
 
 def test_version_names_data_prompt_and_model(engine, snapshot):
-    from ai.narrator_llm import data_version
+    from ai.cache import data_version
 
     narrator, _ = make(engine, [])
     assert set(narrator.version) == {"data", "prompt", "model"}

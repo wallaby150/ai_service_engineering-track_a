@@ -11,11 +11,8 @@
 
 from __future__ import annotations
 
-import hashlib
 import json
 import logging
-import threading
-from collections import OrderedDict
 from dataclasses import dataclass, field, replace
 from pathlib import Path
 from string import Template
@@ -23,6 +20,7 @@ from typing import Dict, List, Literal, Optional, Tuple
 
 from pydantic import BaseModel, Field
 
+from ai.cache import VersionedCache, data_version, digest
 from ai.llm import BudgetExceeded, LlmCall, LlmClient, LlmError, RateLimited
 from core.context import METRICS, TOOLS, run_tool
 from core.engine import Engine, Life
@@ -84,15 +82,6 @@ def _load(name: str) -> Template:
     return Template((PROMPTS_DIR / name).read_text(encoding="utf-8"))
 
 
-def _digest(text: str) -> str:
-    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:12]
-
-
-def data_version(snapshot: Snapshot) -> str:
-    """스냅샷 내용의 지문. 통계를 다시 만들면 바뀐다."""
-    return _digest(repr(snapshot))
-
-
 def _wrap(name: str, payload: object) -> str:
     """조회 결과를 경계 마커로 감싼다. 결과 안의 마커 문자열은 먼저 지운다(6주차)."""
     body = json.dumps(payload, ensure_ascii=False).replace("<<<", "").replace(">>>", "")
@@ -114,13 +103,11 @@ class LlmNarrator:
         # 캐시 키의 버전(13주차): 데이터·프롬프트·모델 중 하나라도 바뀌면 예전 해석은 쓰지 않는다. 시간(TTL)으로는 버리지 않는다
         self.version = {
             "data": data_version(snapshot),
-            "prompt": _digest(self._planner.template + self._solver.template + json.dumps(
+            "prompt": digest(self._planner.template + self._solver.template + json.dumps(
                 {n: d for n, (d, _) in TOOLS.items()}, ensure_ascii=False)),
             "model": ",".join([client.model, *client.fallbacks]),
         }
-        self._cache: "OrderedDict[tuple, StoryReport]" = OrderedDict()
-        self._cache_size = cache_size
-        self._lock = threading.Lock()  # 핸들러가 워커 스레드에서 돈다
+        self._cache: VersionedCache[StoryReport] = VersionedCache(cache_size)
 
     def _peers(self, life: Life) -> List[Dict[str, object]]:
         if self._engine is None:
@@ -135,17 +122,12 @@ class LlmNarrator:
 
     def story(self, life: Life) -> StoryReport:
         key = self._key(life)
-        with self._lock:
-            hit = self._cache.get(key)
-            if hit is not None:
-                self._cache.move_to_end(key)
-                return replace(hit, calls=[], cached=True)  # 다시 꺼낸 해석은 모델을 부르지 않았다 — 비용 0
+        hit = self._cache.get(key)
+        if hit is not None:
+            return replace(hit, calls=[], cached=True)  # 다시 꺼낸 해석은 모델을 부르지 않았다 — 비용 0
         report = self._story(life)
-        if report.narrative.narrator == "llm" and self._cache_size > 0:  # 실패(템플릿)는 기억하지 않는다 — 다음엔 다시 해 본다
-            with self._lock:
-                self._cache[key] = report
-                while len(self._cache) > self._cache_size:
-                    self._cache.popitem(last=False)
+        if report.narrative.narrator == "llm":  # 실패(템플릿)는 기억하지 않는다 — 다음엔 다시 해 본다
+            self._cache.put(key, report)
         return report
 
     def _story(self, life: Life) -> StoryReport:
